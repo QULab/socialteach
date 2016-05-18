@@ -1,4 +1,5 @@
-adapater: postgres
+development:
+  adapter: postgresql
   database: 
   username: 
   password: 
