@@ -12,7 +12,7 @@
 /db/*.sqlite3-journal
 
 # Ignore default database files
-/db/database.yml
+/config/database.yml
 
 # Ignore all logfiles and tempfiles.
 /log/*
