@@ -1,0 +1,4 @@
+adapater: postgres
+  database: 
+  username: 
+  password: 
