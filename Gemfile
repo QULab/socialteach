@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+gem 'mysql2', '~> 0.3.21'
 gem 'devise', '~> 3.2'
 gem 'activeadmin', '~> 1.0.0.pre2'
 # Use SCSS for stylesheets
