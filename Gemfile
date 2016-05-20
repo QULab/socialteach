@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 gem 'casein', '~>5.1.1'
 
-gem 'sqlite3'
+gem 'mysql2', '0.3.21'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
