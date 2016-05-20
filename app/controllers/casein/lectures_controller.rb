@@ -2,21 +2,21 @@
 
 module Casein
   class LecturesController < Casein::CaseinController
-  
+
     ## optional filters for defining usage according to Casein::AdminUser access_levels
     # before_filter :needs_admin, :except => [:action1, :action2]
     # before_filter :needs_admin_or_current_user, :only => [:action1, :action2]
-  
+
     def index
       @casein_page_title = 'Lectures'
   		@lectures = Lecture.order(sort_order(:name)).paginate :page => params[:page]
     end
-  
+
     def show
       @casein_page_title = 'View lecture'
       @lecture = Lecture.find params[:id]
     end
-  
+
     def new
       @casein_page_title = 'Add a new lecture'
     	@lecture = Lecture.new
@@ -24,7 +24,7 @@ module Casein
 
     def create
       @lecture = Lecture.new lecture_params
-    
+
       if @lecture.save
         flash[:notice] = 'Lecture created'
         redirect_to casein_lectures_path
@@ -33,12 +33,12 @@ module Casein
         render :action => :new
       end
     end
-  
+
     def update
       @casein_page_title = 'Update lecture'
-      
+
       @lecture = Lecture.find params[:id]
-    
+
       if @lecture.update_attributes lecture_params
         flash[:notice] = 'Lecture has been updated'
         redirect_to casein_lectures_path
@@ -47,7 +47,7 @@ module Casein
         render :action => :show
       end
     end
- 
+
     def destroy
       @lecture = Lecture.find params[:id]
 
@@ -55,11 +55,11 @@ module Casein
       flash[:notice] = 'Lecture has been deleted'
       redirect_to casein_lectures_path
     end
-  
+
     private
-      
+
       def lecture_params
-        params.require(:lecture).permit(:name, :description, :course)
+        params.require(:lecture).permit(:name, :description, :course_id)
       end
 
   end

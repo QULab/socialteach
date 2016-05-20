@@ -12,9 +12,9 @@
 
 <div class="row">
 	<div class="col-lg-6">
-		<%= casein_text_field f, f.object, :course %>
+		<%= casein_select f, f.object, :course, Course.order(:name).collect { |c| [c.name, c.id] } %>
 	</div>
 	<div class="col-lg-6">
-		
+
 	</div>
 </div>
