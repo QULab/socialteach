@@ -1,5 +1,5 @@
 # Change these
-server '139.59.130.13', port: your_port_num, roles: [:web, :app, :db], primary: true
+server '139.59.130.13', roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'https://dev.qu.tu-berlin.de/git/socialteach'
 set :application,     'socialteach'
