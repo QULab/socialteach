@@ -1,4 +1,4 @@
-class LessonsController < ApplicationController
+class LessonsController < BaseController
   before_action :set_lesson, only: [:show, :edit, :update, :destroy]
 
   # GET /lessons
