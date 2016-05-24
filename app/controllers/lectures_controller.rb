@@ -1,4 +1,4 @@
-class LecturesController < InheritedResources::Base
+class LecturesController < BaseController
 
   private
 
@@ -6,4 +6,3 @@ class LecturesController < InheritedResources::Base
       params.require(:lecture).permit(:name, :description, :course_id)
     end
 end
-
