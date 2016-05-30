@@ -1,0 +1,7 @@
+mv app/assets/stylesheets/application.css app/assets/stylesheets/application.scss
+
+# ADD TO appliation.css.scss
+@import "bootstrap";
+
+# ADD TO application.js after jquery
+//= require bootstrap
