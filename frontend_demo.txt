@@ -83,3 +83,50 @@ mv app/assets/stylesheets/application.css app/assets/stylesheets/application.scs
 rails g controller home index
 # SET ROOT IN ROUTES
 root 'home#index'
+
+
+
+# REPLACE CONTENT IN app/vies/courses/index/html.erb
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Courses</h1>
+
+<div class="container">
+  <div class="row">
+    <% @courses.each do |course| %>
+      <div class="col-md-12">
+        <div class="course">
+          <h1><%= course.name %></h1>
+          <p><%= course.description %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<%= link_to 'New Course', new_course_path %>
+
+
+# ADD BUTTON
+<p><%= link_to 'See More', course, class: "btn btn-primary btn-lg" %></p>
+
+## TURN INTO A JUMBOTRON
+[...]
+<div class="course jumbotron">
+[...]
+
+
+# ADD HEADER CONTAINER
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Listing Courses</h1>
+    </div>
+  </div>
+</div>
+
+# CHANGE NAVIGATION FROM container-fluid TO container
+
+# CHANGE BRAND LINK <%= link_to 'SocialTeach', root_path, class: "navbar-brand" %>
+
+# CHANGE COURSE LINK <%= link_to 'Courses', courses_path %>
