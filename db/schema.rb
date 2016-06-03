@@ -31,9 +31,12 @@ ActiveRecord::Schema.define(version: 20160603183931) do
   create_table "activities", force: :cascade do |t|
     t.string   "name"
     t.integer  "levelpoints"
+    t.integer  "chapter_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "activities", ["chapter_id"], name: "index_activities_on_chapter_id"
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -57,9 +60,12 @@ ActiveRecord::Schema.define(version: 20160603183931) do
     t.string   "name"
     t.string   "shortname"
     t.string   "description"
+    t.integer  "course_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "chapters", ["course_id"], name: "index_chapters_on_course_id"
 
   create_table "course_enrollments", force: :cascade do |t|
     t.boolean  "active"

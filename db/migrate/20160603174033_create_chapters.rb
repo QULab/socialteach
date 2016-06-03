@@ -4,7 +4,7 @@ class CreateChapters < ActiveRecord::Migration
       t.string :name
       t.string :shortname
       t.string :description
-      t.reference :course, index: true
+      t.references :course, index: true
 
       t.timestamps null: false
     end
