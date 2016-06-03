@@ -51,6 +51,7 @@ GEM
       tzinfo (~> 1.1)
     airbrussh (1.0.2)
       sshkit (>= 1.6.1, != 1.7.0)
+    ansi (1.5.0)
     arbre (1.0.3)
       activesupport (>= 3.0.0)
     arel (6.0.3)
@@ -142,6 +143,11 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.0.0)
     minitest (5.9.0)
+    minitest-reporters (1.1.9)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
     multi_json (1.12.1)
     mysql2 (0.3.21)
     mysql2 (0.3.21-x86-mingw32)
@@ -194,6 +200,7 @@ GEM
       json (~> 1.4)
     responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
+    ruby-progressbar (1.8.1)
     sass (3.4.22)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -253,6 +260,8 @@ DEPENDENCIES
   devise (~> 3.2)
   jbuilder (~> 2.0)
   jquery-rails
+  minitest
+  minitest-reporters
   mysql2 (~> 0.3.21)
   puma
   rails (= 4.2.0)

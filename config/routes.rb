@@ -1,12 +1,18 @@
   Rails.application.routes.draw do
 
+  resources :course_enrollments
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  resources :lessons
+  # resources :lessons
 
-  resources :lectures
-
+  #resources :lectures
+      
+  resources :chapters
+        
+  resources :activities
+    
   resources :courses
 
   devise_for :users, :controllers => {:registrations => "registrations"}

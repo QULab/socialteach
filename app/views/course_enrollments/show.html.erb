@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @course_enrollment.active %>
+</p>
+
+<p>
+  <strong>Completed:</strong>
+  <%= @course_enrollment.completed %>
+</p>
+
+<p>
+  <strong>Is visible:</strong>
+  <%= @course_enrollment.is_visible %>
+</p>
+
+<p>
+  <strong>Is visible friends:</strong>
+  <%= @course_enrollment.is_visible_friends %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @course_enrollment.user %>
+</p>
+
+<p>
+  <strong>Course:</strong>
+  <%= @course_enrollment.course %>
+</p>
+
+<%= link_to 'Edit', edit_course_enrollment_path(@course_enrollment) %> |
+<%= link_to 'Back', course_enrollments_path %>

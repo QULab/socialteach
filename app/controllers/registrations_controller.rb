@@ -17,7 +17,7 @@ class RegistrationsController < Devise::RegistrationsController
     
   # redirect page after successful sign up    
   def after_sign_up_path_for(resource)
-      lessons_path # Or :prefix_to_your_route     
+      courses_path # acutally redirect to the user_page 
   end
     
   protected

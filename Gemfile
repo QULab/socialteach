@@ -34,7 +34,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Unicorn as the app server
 # gem 'unicorn'
 
-group :development, :test do
+group :development do
   gem 'byebug'
   gem 'sqlite3'
   gem 'web-console', '~> 2.0'
@@ -44,4 +44,9 @@ group :development, :test do
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
+end
+
+group :test do
+    gem 'minitest-reporters'
+    gem 'minitest'
 end
