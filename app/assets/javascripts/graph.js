@@ -26,11 +26,23 @@ $('#cy').cytoscape({
 				'target-arrow-shape': 'triangle',
 				'line-color': 'data(color)',
 				'target-arrow-color': 'data(color)'
-			}),
+			})
+      .selector(':selected')
+        .css({
+          'border-width': 3,
+          'border-color': '#333'
+  }),
 	elements: JSON.parse(json),
 
 	ready: function(){
 		window.cy = this;
 	}
+
 });
+
+cy.on('click', 'node', function(evt){
+  var node = evt.cyTarget;
+  console.log( 'clicked node ' + node.id() );
+});
+
 });
