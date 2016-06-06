@@ -2,7 +2,7 @@
 
 <%= render 'form' %>
 
-<%= render 'graph' %>
+<%= render partial: 'graph', locals: {type: "courses", data: @course} %>
 
 <%= link_to 'Show', @course %> |
 <%= link_to 'Back', courses_path %>

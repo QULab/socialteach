@@ -1,8 +1,8 @@
 //var json = "{\"nodes\": [{\"data\": {\"id\": \"1\",\"name\": \"Chapter 1\",\"color\": \"#FF0000\",\"faveShape\": \"ellipse\"}}, {\"data\": {\"id\": \"2\",\"name\": \"Chapter 2\",\"color\": \"#FF0000\",\"faveShape\": \"ellipse\"}}, {\"data\": {\"id\": \"3\",\"name\": \"Chapter 3\",\"color\": \"#6FB1FC\",\"faveShape\": \"ellipse\"}}, {\"data\": {\"id\": \"4\",\"name\": \"Chapter 4\",\"color\": \"#FF0000\",\"faveShape\": \"ellipse\"}}, {\"data\": {\"id\": \"5\",\"name\": \"Chapter 5\",\"color\": \"#6FB1FC\",\"faveShape\": \"ellipse\"}}],\"edges\": [{\"data\": {\"source\": \"1\",\"target\": \"2\",\"color\": \"#FF0000\"}}, {\"data\": {\"source\": \"1\",\"target\": \"3\",\"color\": \"#6FB1FC\"}}, {\"data\": {\"source\": \"2\",\"target\": \"4\",\"color\": \"#FF0000\"}}, {\"data\": {\"source\": \"5\",\"target\": \"4\",\"color\": \"#6FB1FC\"}}, {\"data\": {\"source\": \"3\",\"target\": \"5\",\"color\": \"#6FB1FC\"}}]}";
 
-function loadGraph(){
+function loadGraph(type, id){
 $.ajax({
-        url:  "/courses/1",
+        url:  "/" + type + "/" + id,
         dataType: "json",
         success: function(data) {
            json = data;
