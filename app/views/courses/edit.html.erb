@@ -1,8 +1,18 @@
-<h1>Editing Course</h1>
 
-<%= render 'form' %>
-
-<%= render partial: 'graph', locals: {type: "courses", data: @course} %>
-
-<%= link_to 'Show', @course %> |
-<%= link_to 'Back', courses_path %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Editing Course</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <%= render 'form' %>
+      <%= link_to 'Show', @course, class: "btn btn-link"%>
+      <%= link_to 'Back', courses_path, class: "btn btn-link" %>
+    </div>
+    <div class="col-md-9">
+      <%= render partial: 'graph', locals: {type: "courses", data: @course} %>
+    </div>
+  </div>
+</div>
