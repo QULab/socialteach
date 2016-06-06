@@ -1,5 +1,5 @@
 class Chapter < ActiveRecord::Base
-    
-    belongs_to :courses
+
+    belongs_to :course
     has_many :activities
 end
