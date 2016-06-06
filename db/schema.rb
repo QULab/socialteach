@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160603183931) do
+ActiveRecord::Schema.define(version: 20160606212001) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -31,9 +31,9 @@ ActiveRecord::Schema.define(version: 20160603183931) do
   create_table "activities", force: :cascade do |t|
     t.string   "name"
     t.integer  "levelpoints"
-    t.integer  "chapter_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "chapter_id"
   end
 
   add_index "activities", ["chapter_id"], name: "index_activities_on_chapter_id"
@@ -56,13 +56,22 @@ ActiveRecord::Schema.define(version: 20160603183931) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
+  create_table "chapter_edges", id: false, force: :cascade do |t|
+    t.integer "head_id"
+    t.integer "tail_id"
+  end
+
+  add_index "chapter_edges", ["head_id"], name: "index_chapter_edges_on_head_id"
+  add_index "chapter_edges", ["tail_id"], name: "index_chapter_edges_on_tail_id"
+
   create_table "chapters", force: :cascade do |t|
     t.string   "name"
     t.string   "shortname"
     t.string   "description"
-    t.integer  "course_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "course_id"
+    t.integer  "tier"
   end
 
   add_index "chapters", ["course_id"], name: "index_chapters_on_course_id"
@@ -87,6 +96,26 @@ ActiveRecord::Schema.define(version: 20160603183931) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "lectures", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "course_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "lectures", ["course_id"], name: "index_lectures_on_course_id"
+
+  create_table "lessons", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "lecture_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "lessons", ["lecture_id"], name: "index_lessons_on_lecture_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
