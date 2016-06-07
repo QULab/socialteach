@@ -18,7 +18,7 @@ module Merit
       # MeritableModel - Sash -< Scores -< ScorePoints
       sql_query = <<SQL
 SELECT
-  users.username AS user,
+  users.username AS username,
   SUM(num_points) as sum_points
 FROM #{c_enrollment}
   LEFT JOIN merit_scores ON merit_scores.sash_id = #{sash_id_column}
@@ -33,7 +33,7 @@ LIMIT #{options[:limit]}
 SQL
       results = ActiveRecord::Base.connection.execute(sql_query)
       results.map do |h|
-        h.keep_if { |k, v| (k == 'user') || (k == 'sum_points') }
+        h.keep_if { |k, v| (k == 'username') || (k == 'sum_points') }
       end
       results
     end
