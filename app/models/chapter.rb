@@ -16,4 +16,7 @@ class Chapter < ActiveRecord::Base
       foreign_key: :head_id,
       association_foreign_key: :tail_id,
       uniq: true
+
+    validates :name, :shortname, :tier, :course, presence: true
+    validates :tier, numericality: {greater_than_or_equal_to: 0}
 end

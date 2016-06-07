@@ -4,7 +4,7 @@ ActiveAdmin.register Chapter do
     f.inputs "Details" do
       f.input :name
       f.input :description
-      f.input :course_id
+      f.input :course
       f.input :tier
       f.input :shortname
       f.input :predecessors
