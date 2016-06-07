@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+<p><%= @course_enrollments%></p>
+
+<% @course_enrollments.each do |course_enrollment| %>
+  <p> <%= course_enrollment %> </p>
+<% end %>
 
 
-<%= link_to 'Edit', edit_leaderboard_path(@leaderboard) %> |
-<%= link_to 'Back', leaderboards_path %>
+
+<%= link_to 'Back', course_enrollments_path %>

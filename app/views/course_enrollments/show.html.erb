@@ -30,5 +30,10 @@
   <%= @course_enrollment.course %>
 </p>
 
+<p>
+  <strong>Leaderboards:</strong>
+  <%= link_to 'Leaderboard', leaderboard_path(@course_enrollment.course_id) %>
+</p>
+
 <%= link_to 'Edit', edit_course_enrollment_path(@course_enrollment) %> |
 <%= link_to 'Back', course_enrollments_path %>

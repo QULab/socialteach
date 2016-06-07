@@ -1,18 +1,18 @@
 class LeaderboardsController < ApplicationController
-  before_action :set_leaderboard, only: [:show, :edit, :update, :destroy]
+  before_action :set_leaderboard, only: [:show]
 
   # GET /leaderboards
   # GET /leaderboards.json
   def index
-    @leaderboards = Leaderboard.all
+    # @leaderboards = Leaderboard.all
   end
 
   # GET /leaderboards/1
   # GET /leaderboards/1.json
   def show
-    @Leaderboard = CourseEnrollment.where("course_id = ?", @courseenrollment.course_id).where("is_visible=1 and active=1")
   end
 
+=begin
   # GET /leaderboards/new
   def new
     @leaderboard = Leaderboard.new
@@ -61,11 +61,12 @@ class LeaderboardsController < ApplicationController
       format.json { head :no_content }
     end
   end
+=end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_leaderboard
-      @courseenrollment = CourseEnrollment.find(params[:id])
+      @course_enrollments = Merit::Score.top_scored(id: params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
