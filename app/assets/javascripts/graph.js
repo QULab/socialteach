@@ -1,12 +1,17 @@
-//var json = "{\"nodes\": [{\"data\": {\"id\": \"1\",\"name\": \"Chapter 1\",\"color\": \"#FF0000\",\"faveShape\": \"ellipse\"}}, {\"data\": {\"id\": \"2\",\"name\": \"Chapter 2\",\"color\": \"#FF0000\",\"faveShape\": \"ellipse\"}}, {\"data\": {\"id\": \"3\",\"name\": \"Chapter 3\",\"color\": \"#6FB1FC\",\"faveShape\": \"ellipse\"}}, {\"data\": {\"id\": \"4\",\"name\": \"Chapter 4\",\"color\": \"#FF0000\",\"faveShape\": \"ellipse\"}}, {\"data\": {\"id\": \"5\",\"name\": \"Chapter 5\",\"color\": \"#6FB1FC\",\"faveShape\": \"ellipse\"}}],\"edges\": [{\"data\": {\"source\": \"1\",\"target\": \"2\",\"color\": \"#FF0000\"}}, {\"data\": {\"source\": \"1\",\"target\": \"3\",\"color\": \"#6FB1FC\"}}, {\"data\": {\"source\": \"2\",\"target\": \"4\",\"color\": \"#FF0000\"}}, {\"data\": {\"source\": \"5\",\"target\": \"4\",\"color\": \"#6FB1FC\"}}, {\"data\": {\"source\": \"3\",\"target\": \"5\",\"color\": \"#6FB1FC\"}}]}";
+var json_course = "{\"nodes\": [{\"data\": {\"id\": \"1\",\"name\": \"Chapter 1\",\"color\": \"#FF0000\"}}, {\"data\": {\"id\": \"2\",\"name\": \"Chapter 2\",\"color\": \"#FF0000\"}}, {\"data\": {\"id\": \"3\",\"name\": \"Chapter 3\",\"color\": \"#6FB1FC\"}}, {\"data\": {\"id\": \"4\",\"name\": \"Chapter 4\",\"color\": \"#FF0000\"}}, {\"data\": {\"id\": \"5\",\"name\": \"Chapter 5\",\"color\": \"#6FB1FC\"}}],\"edges\": [{\"data\": {\"source\": \"1\",\"target\": \"2\",\"color\": \"#FF0000\"}}, {\"data\": {\"source\": \"1\",\"target\": \"3\",\"color\": \"#6FB1FC\"}}, {\"data\": {\"source\": \"2\",\"target\": \"4\",\"color\": \"#FF0000\"}}, {\"data\": {\"source\": \"5\",\"target\": \"4\",\"color\": \"#6FB1FC\"}}, {\"data\": {\"source\": \"3\",\"target\": \"5\",\"color\": \"#6FB1FC\"}}]}";
+var json_chapter = "{\"nodes\": [{\"data\": {\"id\": \"1\",\"name\": \"Activity 1\",\"color\": \"#FF0000\"}}, {\"data\": {\"id\": \"2\",\"name\": \"Activity 2\",\"color\": \"#FF0000\"}}, {\"data\": {\"id\": \"3\",\"name\": \"Activity 3\",\"color\": \"#6FB1FC\"}}, {\"data\": {\"id\": \"4\",\"name\": \"Activity 4\",\"color\": \"#FF0000\"}}],\"edges\": [{\"data\": {\"source\": \"1\",\"target\": \"2\",\"color\": \"#FF0000\"}}, {\"data\": {\"source\": \"1\",\"target\": \"3\",\"color\": \"#6FB1FC\"}}, {\"data\": {\"source\": \"2\",\"target\": \"4\",\"color\": \"#FF0000\"}}, {\"data\": {\"source\": \"3\",\"target\": \"4\",\"color\": \"#6FB1FC\"}}]}";
+
 
 function loadGraph(type, id){
 $.ajax({
+        // todo: maybe need to change url
         url:  "/" + type + "/" + id,
         dataType: "json",
         success: function(data) {
-           json = data;
-           setupGraph(json);
+          // todo: use data
+          console.log(data)
+          console.log(JSON.parse(json_course))
+          setupGraph(json_course);
         }
     });
 }
@@ -54,6 +59,8 @@ $('#cy').cytoscape({
 cy.on('click', 'node', function(evt){
   var node = evt.cyTarget;
   console.log( 'clicked node ' + node.id() );
+  loadGraph("activities", node.id())
+  setupGraph(json_chapter);
 });
 
 }
