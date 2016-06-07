@@ -19,6 +19,7 @@
 
   namespace :graph do
     get 'courses/:id' => 'courses#show', format: [:json]
+    get 'chapters/:id' => 'chapters#show', format: [:json]
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
