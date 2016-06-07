@@ -12,8 +12,12 @@
   resources :chapters
         
   resources :activities
-    
-  resources :courses
+
+  # non-admin user are only allowed to view courses
+  authenticate :admin_user do
+      resources :courses, only: [:new, :create, :edit, :update, :destroy]
+  end
+  resources :courses, only: [:index, :show]
 
   devise_for :users, :controllers => {:registrations => "registrations"}
                 

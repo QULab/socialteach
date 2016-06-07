@@ -5,4 +5,16 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
     
   has_many :courses
+    
+  validate :username_validation
+
+    def username_validation
+          
+      if !username.present?
+          errors.add :username, "can't be blank!"
+          
+      elsif username.length > 12
+          errors.add :username, "The user name should have more than 5 letters!"
+      end
+  end
 end
