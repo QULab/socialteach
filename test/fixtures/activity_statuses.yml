@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  is_completed: false
+  Status: 1
+  Activity: 
+  Course_enrollment: 
+
+two:
+  is_completed: false
+  Status: 1
+  Activity: 
+  Course_enrollment: 
