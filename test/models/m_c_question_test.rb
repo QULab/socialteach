@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MultipleChoiceQuestionTest < ActiveSupport::TestCase
+class MCQuestionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
