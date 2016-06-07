@@ -2,10 +2,8 @@
 
 one:
   questionnaire_id: 
-  answer_id: 
-  text: MyText
+  user_id: 
 
 two:
   questionnaire_id: 
-  answer_id: 
-  text: MyText
+  user_id: 
