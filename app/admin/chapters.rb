@@ -8,14 +8,13 @@ ActiveAdmin.register Chapter do
       f.input :tier
       f.input :shortname
       f.input :predecessors
-      f.input :successors
     end
     f.actions
   end
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
-permit_params :name, :description, :course_id, :tier, :shortname, predecessors: [], successors: []
+permit_params :name, :description, :course_id, :tier, :shortname, predecessor_ids: []
 #
 # or
 #
