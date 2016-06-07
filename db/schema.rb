@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607090354) do
+ActiveRecord::Schema.define(version: 20160607123545) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 20160607090354) do
   end
 
   add_index "activities", ["chapter_id"], name: "index_activities_on_chapter_id"
+
+  create_table "activity_statuses", force: :cascade do |t|
+    t.boolean  "is_completed"
+    t.integer  "Status"
+    t.integer  "Activity_id"
+    t.integer  "Course_enrollment_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -86,11 +95,6 @@ ActiveRecord::Schema.define(version: 20160607090354) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-  end
-
-  create_table "questionnaires", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
