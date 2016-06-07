@@ -1,5 +1,6 @@
 class MultipleChoiceQuestion < ActiveRecord::Base
   belongs_to :questionnaire
-  has_many :answers, :class_name => 'Answer'
-  has_one :correct_answer, :class_name => 'Answer
+  belongs_to :correct_answer, class: "Answer"
+  has_many :answers # possible answers
+  has_many :completed_multiple_choice_questions
 end
