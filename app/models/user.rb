@@ -5,6 +5,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :courses
-  has_many :completed_multiple_choice_questions
+  has_many :m_c_choice_questions
   has_many :completed_questionnaires
 end

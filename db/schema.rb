@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607090354) do
+ActiveRecord::Schema.define(version: 20160607191404) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -56,6 +56,15 @@ ActiveRecord::Schema.define(version: 20160607090354) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
+  create_table "answers", force: :cascade do |t|
+    t.integer  "mc_question_id"
+    t.text     "text"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "answers", ["mc_question_id"], name: "index_answers_on_mc_question_id"
+
   create_table "chapters", force: :cascade do |t|
     t.string   "name"
     t.string   "shortname"
@@ -66,6 +75,28 @@ ActiveRecord::Schema.define(version: 20160607090354) do
   end
 
   add_index "chapters", ["course_id"], name: "index_chapters_on_course_id"
+
+  create_table "completed_mc_questions", force: :cascade do |t|
+    t.integer  "mc_question_id"
+    t.integer  "answer_id"
+    t.integer  "user_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "completed_mc_questions", ["answer_id"], name: "index_completed_mc_questions_on_answer_id"
+  add_index "completed_mc_questions", ["mc_question_id"], name: "index_completed_mc_questions_on_mc_question_id"
+  add_index "completed_mc_questions", ["user_id"], name: "index_completed_mc_questions_on_user_id"
+
+  create_table "completed_questionnaires", force: :cascade do |t|
+    t.integer  "questionnaire_id"
+    t.integer  "user_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "completed_questionnaires", ["questionnaire_id"], name: "index_completed_questionnaires_on_questionnaire_id"
+  add_index "completed_questionnaires", ["user_id"], name: "index_completed_questionnaires_on_user_id"
 
   create_table "course_enrollments", force: :cascade do |t|
     t.boolean  "active"
@@ -88,9 +119,30 @@ ActiveRecord::Schema.define(version: 20160607090354) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "difficulty_feedbacks", force: :cascade do |t|
+    t.integer  "questionnaire_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "difficulty_feedbacks", ["questionnaire_id"], name: "index_difficulty_feedbacks_on_questionnaire_id"
+
+  create_table "mc_questions", force: :cascade do |t|
+    t.integer  "questionnaire_id"
+    t.integer  "answer_id"
+    t.text     "text"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "mc_questions", ["answer_id"], name: "index_mc_questions_on_answer_id"
+  add_index "mc_questions", ["questionnaire_id"], name: "index_mc_questions_on_questionnaire_id"
+
   create_table "questionnaires", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "qu_container_id"
+    t.string   "qu_container_type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "users", force: :cascade do |t|
