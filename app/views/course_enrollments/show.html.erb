@@ -22,12 +22,12 @@
 
 <p>
   <strong>User:</strong>
-  <%= @course_enrollment.user %>
+    <%= @course_enrollment.user.id %>
 </p>
 
 <p>
   <strong>Course:</strong>
-  <%= @course_enrollment.course %>
+    <%= @course_enrollment.course.id %>
 </p>
 
 <%= link_to 'Edit', edit_course_enrollment_path(@course_enrollment) %> |

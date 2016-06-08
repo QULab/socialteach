@@ -14,7 +14,13 @@
         <div class="course jumbotron">
           <h1><%= course.name %></h1>
           <p><%= course.description %></p>
-          <p><%= link_to 'See More', course, class: "btn btn-primary btn-lg" %></p>
+          <p><%= link_to 'See More', course, class: "btn btn-primary btn-lg" %>
+           
+            <% if user_signed_in? -%>
+              
+              <%= link_to "Take This Course", course_enrollments_path(:course_enrollment => {:user_id => current_user.id, :course_id => course.id , :is_visible => true, :is_visible_friends => true}), :method => :post, data: { confirm: 'Register for this course?' }, class: "btn btn-primary btn-lg" %>
+            <% end -%>   
+          </p>         
         </div>
       </div>
     <% end %>

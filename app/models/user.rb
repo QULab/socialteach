@@ -4,5 +4,15 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
     
-  has_many :courses
+    has_many :courses
+  validate :username_validation
+    def username_validation
+          
+      if !username.present?
+          errors.add :username, "can't be blank!"
+          
+      elsif username.length > 20
+          errors.add :username, "The user name should not have more than 20 letters!"
+      end
+  end
 end

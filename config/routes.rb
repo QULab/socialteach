@@ -5,10 +5,6 @@
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  # resources :lessons
-
-  #resources :lectures
-
   resources :chapters
 
   resources :activities

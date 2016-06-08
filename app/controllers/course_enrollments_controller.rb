@@ -24,8 +24,9 @@ class CourseEnrollmentsController < ApplicationController
   # POST /course_enrollments
   # POST /course_enrollments.json
   def create
+      
     @course_enrollment = CourseEnrollment.new(course_enrollment_params)
-
+            
     respond_to do |format|
       if @course_enrollment.save
         format.html { redirect_to @course_enrollment, notice: 'Course enrollment was successfully created.' }
