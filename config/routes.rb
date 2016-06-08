@@ -4,20 +4,12 @@
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-
-  # resources :lessons
-
-  #resources :lectures
       
   resources :chapters
         
   resources :activities
 
-  # non-admin user are only allowed to view courses
-  authenticate :admin_user do
-      resources :courses, only: [:new, :create, :edit, :update, :destroy]
-  end
-  resources :courses, only: [:index, :show]
+  resources :courses
 
   devise_for :users, :controllers => {:registrations => "registrations"}
                 
