@@ -20,6 +20,6 @@ class Activity < ActiveRecord::Base
 
   # Create a switch statment as soon as sub classes exist!
   def color
-    "#ffffff"
+    "#000000"
   end
 end

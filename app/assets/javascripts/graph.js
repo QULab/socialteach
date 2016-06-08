@@ -1,6 +1,3 @@
-var json_chapter = "{\"nodes\": [{\"data\": {\"id\": \"1\",\"name\": \"Activity 1\",\"color\": \"#FF0000\"}}, {\"data\": {\"id\": \"2\",\"name\": \"Activity 2\",\"color\": \"#FF0000\"}}, {\"data\": {\"id\": \"3\",\"name\": \"Activity 3\",\"color\": \"#6FB1FC\"}}, {\"data\": {\"id\": \"4\",\"name\": \"Activity 4\",\"color\": \"#FF0000\"}}],\"edges\": [{\"data\": {\"source\": \"1\",\"target\": \"2\",\"color\": \"#FF0000\"}}, {\"data\": {\"source\": \"1\",\"target\": \"3\",\"color\": \"#6FB1FC\"}}, {\"data\": {\"source\": \"2\",\"target\": \"4\",\"color\": \"#FF0000\"}}, {\"data\": {\"source\": \"3\",\"target\": \"4\",\"color\": \"#6FB1FC\"}}]}";
-
-
 function loadGraph(type, id){
 $.ajax({
         url:  "/graph/" + type + "/" + id,
@@ -54,7 +51,7 @@ $('#cy').cytoscape({
 cy.on('click', 'node', function(evt){
   var node = evt.cyTarget;
   console.log( 'clicked node ' + node.id() );
-  loadGraph("activities", node.id())
+  loadGraph("chapters", node.id())
   setupGraph(json_chapter);
 });
 
