@@ -1,4 +1,5 @@
 <%= form_for(@course) do |f| %>
+
   <% if @course.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
@@ -11,15 +12,25 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <fieldset>
+    <legend><%= @course.name %></legend>
+    <div class="control-group">
+      <div class="controls">
+        <%= f.label :name, class: "control-label" %>
+        <%= f.text_field :name, class: "form-control"%>
+      </div>
+    </div><p>
+
+    <div class="control-group">
+      <div class="controls">
+        <%= f.label :description, class: "control-label" %>
+        <%= f.text_field :description, class: "form-control" %>
+      </div>
+    </div><p>
+
+    <div class="form-actions">
+      <%= f.submit class: "btn btn-default btn-primary"%>
+    </div>
+  </fieldset>
+
 <% end %>
