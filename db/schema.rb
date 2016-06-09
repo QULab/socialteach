@@ -129,13 +129,13 @@ ActiveRecord::Schema.define(version: 20160607191404) do
 
   create_table "m_questions", force: :cascade do |t|
     t.integer  "questionnaire_id"
-    t.integer  "answer_id"
+    t.integer  "correct_answer_id"
     t.text     "text"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  add_index "m_questions", ["answer_id"], name: "index_m_questions_on_answer_id"
+  add_index "m_questions", ["correct_answer_id"], name: "index_m_questions_on_correct_answer_id"
   add_index "m_questions", ["questionnaire_id"], name: "index_m_questions_on_questionnaire_id"
 
   create_table "questionnaires", force: :cascade do |t|
