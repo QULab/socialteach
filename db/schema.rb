@@ -57,13 +57,13 @@ ActiveRecord::Schema.define(version: 20160607191404) do
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
   create_table "answers", force: :cascade do |t|
-    t.integer  "mc_question_id"
+    t.integer  "m_question_id"
     t.text     "text"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
-  add_index "answers", ["mc_question_id"], name: "index_answers_on_mc_question_id"
+  add_index "answers", ["m_question_id"], name: "index_answers_on_m_question_id"
 
   create_table "chapters", force: :cascade do |t|
     t.string   "name"
@@ -76,17 +76,17 @@ ActiveRecord::Schema.define(version: 20160607191404) do
 
   add_index "chapters", ["course_id"], name: "index_chapters_on_course_id"
 
-  create_table "completed_mc_questions", force: :cascade do |t|
-    t.integer  "mc_question_id"
+  create_table "completed_m_questions", force: :cascade do |t|
+    t.integer  "m_question_id"
     t.integer  "answer_id"
     t.integer  "user_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
-  add_index "completed_mc_questions", ["answer_id"], name: "index_completed_mc_questions_on_answer_id"
-  add_index "completed_mc_questions", ["mc_question_id"], name: "index_completed_mc_questions_on_mc_question_id"
-  add_index "completed_mc_questions", ["user_id"], name: "index_completed_mc_questions_on_user_id"
+  add_index "completed_m_questions", ["answer_id"], name: "index_completed_m_questions_on_answer_id"
+  add_index "completed_m_questions", ["m_question_id"], name: "index_completed_m_questions_on_m_question_id"
+  add_index "completed_m_questions", ["user_id"], name: "index_completed_m_questions_on_user_id"
 
   create_table "completed_questionnaires", force: :cascade do |t|
     t.integer  "questionnaire_id"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20160607191404) do
 
   add_index "difficulty_feedbacks", ["questionnaire_id"], name: "index_difficulty_feedbacks_on_questionnaire_id"
 
-  create_table "mc_questions", force: :cascade do |t|
+  create_table "m_questions", force: :cascade do |t|
     t.integer  "questionnaire_id"
     t.integer  "answer_id"
     t.text     "text"
@@ -135,8 +135,8 @@ ActiveRecord::Schema.define(version: 20160607191404) do
     t.datetime "updated_at",       null: false
   end
 
-  add_index "mc_questions", ["answer_id"], name: "index_mc_questions_on_answer_id"
-  add_index "mc_questions", ["questionnaire_id"], name: "index_mc_questions_on_questionnaire_id"
+  add_index "m_questions", ["answer_id"], name: "index_m_questions_on_answer_id"
+  add_index "m_questions", ["questionnaire_id"], name: "index_m_questions_on_questionnaire_id"
 
   create_table "questionnaires", force: :cascade do |t|
     t.integer  "qu_container_id"

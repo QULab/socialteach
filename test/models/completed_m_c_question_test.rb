@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CompletedMCQuestionTest < ActiveSupport::TestCase
+class CompletedMQuestionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

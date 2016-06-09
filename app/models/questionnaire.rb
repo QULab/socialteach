@@ -1,5 +1,5 @@
 class Questionnaire < ActiveRecord::Base
-  has_many :mc_questions
+  has_many :m_questions
   has_many :completed_questionnaires
 
   # difficulty_feedback, assessment, or excercise
