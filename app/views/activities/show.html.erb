@@ -1,14 +1,35 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>
+        <%= @activity.name %>
+      </h2>
+      <p>
+        <%= @activity.chapter.name %>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1">
+      <%= link_to :back do %>
+        <i class="fa fa-3x fa-arrow-left"></i>
+      <%- end %>
+    </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @activity.name %>
-</p>
+    <div class="col-md-10">
+      <div class="activity-content-container">
+        <%- if true # check what type of activity and render proper view%>
+          <%= render 'activities/lecture' %>
+        <%- end %>
+      </div>
+      <%= render 'activities/feedback' %>
+      <%= render 'shared/comments', commentable: @activity %>
+    </div>
 
-<p>
-  <strong>Levelpoints:</strong>
-  <%= @activity.levelpoints %>
-</p>
-
-<%= link_to 'Edit', edit_activity_path(@activity) %> |
-<%= link_to 'Back', activities_path %>
+    <div class="col-md-1">
+      <%= link_to chapter_path(@activity.chapter) do %>
+        <i class="fa fa-3x fa-arrow-up"></i>
+      <%- end %>
+    </div>
+  </div>
+</div>
