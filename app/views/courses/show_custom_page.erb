@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h1>Listing Courses</h1>
+      <h1>My own courses</h1>
     </div>
   </div>
 </div>
@@ -16,9 +16,7 @@
           <p><%= course.description %></p>
           <p><%= link_to 'See More', course, class: "btn btn-primary btn-lg" %>
            
-            <!-- Show this button only for non-Instructors -->
-            <% if !check_if_user_is_constructor -%>
-              
+            <% if !check_if_user_is_constructor %>
               <%= link_to "Take This Course", course_enrollments_path(:course_enrollment => {:user_id => current_user.id, :course_id => course.id , :is_visible => true, :is_visible_friends => true}), :method => :post, data: { confirm: 'Register for this course?' }, class: "btn btn-primary btn-lg" %>
             <% end -%>   
           </p>         
@@ -28,7 +26,4 @@
   </div>
 </div>
 
-<!-- Only Instructos shall be aple to add new coures --> 
-<% if current_user.is_instructor? %>
-  <%= link_to 'New Course', new_course_path %>
-<% end -%>
+<%= link_to 'New Course', new_course_path %>

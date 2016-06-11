@@ -12,6 +12,10 @@
   resources :courses
 
   devise_for :users, :controllers => {:registrations => "registrations"}
+      
+  get 'course/custom_page' => 'courses#show_custom_page'
+
+  
 
   namespace :graph do
     get 'courses/:id' => 'courses#show', format: [:json]
