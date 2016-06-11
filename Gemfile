@@ -34,6 +34,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+group :development, :test do
+  gem 'rspec-rails', '~> 3.4'
+end
+
 group :development do
   gem 'byebug'
   gem 'sqlite3'

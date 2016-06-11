@@ -12,10 +12,17 @@ class CoursesController < BaseController
   def show
 
   end
+    
+  def show_custom_page
+      
+    @courses = Course.where(creator_id: current_user.id)
+  end
 
   # GET /courses/new
   def new
-    @course = Course.new
+
+    @course = Course.new   
+    
   end
 
   # GET /courses/1/edit
@@ -25,6 +32,7 @@ class CoursesController < BaseController
   # POST /courses
   # POST /courses.json
   def create
+          
     @course = Course.new(course_params)
 
     respond_to do |format|
@@ -36,6 +44,8 @@ class CoursesController < BaseController
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end
+    
+      
   end
 
   # PATCH/PUT /courses/1
@@ -70,6 +80,6 @@ class CoursesController < BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
-      params.require(:course).permit(:name, :description)
+        params.require(:course).permit(:name, :description, :creator_id)
     end
 end

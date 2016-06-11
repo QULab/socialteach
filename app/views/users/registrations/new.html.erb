@@ -30,6 +30,11 @@
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 
+  <div class="form-group">
+      <%= f.label :is_instructor, "Enroll as an Instructor" %>
+      <%= f.check_box :is_instructor %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
