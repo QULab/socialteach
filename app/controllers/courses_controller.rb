@@ -9,8 +9,14 @@ class CoursesController < BaseController
 
   # GET /courses/1
   # GET /courses/1.json
+  # Show different pages for user / instructor / enrolled user
   def show
-
+    if user_signed_in?
+      set_enrollment(current_user)
+      render :show_enrolled
+    else
+    render :show
+    end
   end
 
   # GET /courses/new
@@ -41,8 +47,7 @@ class CoursesController < BaseController
   def curriculum
     authenticate_user!
     @active_chapter = Chapter.find_by_id(params[:chapter]) || @course.chapters.first
-    userId = current_user.id
-    @enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", userId, @course.id).first
+    set_enrollment(current_user)
   end
 
   # PATCH/PUT /courses/1
@@ -78,5 +83,10 @@ class CoursesController < BaseController
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
       params.require(:course).permit(:name, :description)
+    end
+
+    # There should be only one enrollment per user/course combination
+    def set_enrollment(user)
+      @enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", user.id, @course.id).first
     end
 end
