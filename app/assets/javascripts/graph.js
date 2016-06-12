@@ -52,7 +52,6 @@ cy.on('click', 'node', function(evt){
   var node = evt.cyTarget;
   console.log( 'clicked node ' + node.id() );
   loadGraph("chapters", node.id())
-  setupGraph(json_chapter);
 });
 
 }
