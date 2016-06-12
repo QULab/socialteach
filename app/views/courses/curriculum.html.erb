@@ -32,7 +32,7 @@
         <%- @active_chapter.activities.each do |act| %>
           <%= link_to activity_path(act), class: "list-group-item" do %>
             <h4 class="list-group-item-heading">
-              <i class="fa fa-2x fa-book"></i>
+              <i class="fa fa-2x <%= activity_icon(act) %>"></i>
               <%= act.name %>
             </h4>
             <p class="list-group-item-text">

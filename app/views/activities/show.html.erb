@@ -26,7 +26,7 @@
     </div>
 
     <div class="col-md-1">
-      <%= link_to chapter_path(@activity.chapter), title: 'Proceed to Curriculum' do %>
+      <%= link_to curriculum_course_path(@activity.course, chapter: @activity.chapter.id), title: 'Proceed to Curriculum' do %>
         <i class=" arrows fa fa-3x fa-arrow-up"></i>
       <%- end %>
     </div>
