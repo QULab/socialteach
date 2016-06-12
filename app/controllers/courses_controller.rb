@@ -1,5 +1,5 @@
 class CoursesController < BaseController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :curriculum]
 
   # GET /courses
   # GET /courses.json
@@ -36,6 +36,9 @@ class CoursesController < BaseController
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def curriculum
   end
 
   # PATCH/PUT /courses/1

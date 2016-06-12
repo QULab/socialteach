@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row">
+    <div class="page-header">
+      <h1>
+        <%= @course.name %>
+        <small>Started a day ago</small>
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <%- @course.chapters.each do |chapter| %>
+        <div class ="thumbnail">
+          <i class="fa fa-3x fa-check-circle"></i>
+          <div class="caption">
+            <h3>
+              <%= chapter.name %>
+            </h3>
+            <p>
+              <%= chapter.description %>
+            </p>
+          </div>
+        </div>
+      <%- end %>
+    </div>
+
+    <div class="col-md-9">
+      <div class="list-group">
+        <%- @course.chapters.first.activities.each do |act| #FIXME just to display some content %>
+          <a class="list-group-item">
+            <h4 class="list-group-item-heading">
+              <i class="fa fa-2x fa-book"></i>
+              <%= act.name %>
+            </h4>
+            <p class="list-group-item-text">
+              Nur zum Testen, hier sollten Punkte oder sowas auftauchen!
+            </p>
+          </a>
+        <%- end %>
+      </div>
+    </div>
+  </div>
+
+</div>
+

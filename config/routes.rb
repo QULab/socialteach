@@ -13,7 +13,11 @@
     end
   end
 
-  resources :courses
+  resources :courses do
+    member do
+      get 'curriculum'
+    end
+  end
 
   devise_for :users, :controllers => {:registrations => "registrations"}
 
