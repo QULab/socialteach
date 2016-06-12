@@ -12,6 +12,10 @@ gem 'puma'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3'
 gem 'bootstrap_form'
+# icon font
+gem 'font-awesome-rails', '~> 4.6.3.0'
+# Do not log asset requests in rails console
+gem 'quiet_assets', '~> 1.1.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -49,7 +53,7 @@ group :development do
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
-    
+
 end
 
 group :test do

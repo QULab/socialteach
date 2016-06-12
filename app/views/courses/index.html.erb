@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -14,14 +13,13 @@
         <div class="course jumbotron">
           <h1><%= course.name %></h1>
           <p><%= course.description %></p>
-          <p><%= link_to 'See More', course, class: "btn btn-primary btn-lg" %>
-           
+          <p><%= link_to 'See More', course, class: "btn btn-primary btn-lg" %>         
             <!-- Show this button only for non-Instructors -->
             <% if !check_if_user_is_constructor -%>
               
               <%= link_to "Take This Course", course_enrollments_path(:course_enrollment => {:user_id => current_user.id, :course_id => course.id , :is_visible => true, :is_visible_friends => true}), :method => :post, data: { confirm: 'Register for this course?' }, class: "btn btn-primary btn-lg" %>
-            <% end -%>   
-          </p>         
+            <% end -%>
+          </p>
         </div>
       </div>
     <% end %>
