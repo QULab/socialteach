@@ -22,8 +22,17 @@ class Activity < ActiveRecord::Base
   validates :name, :shortname, :tier, :chapter, presence: true
   validates :tier, :levelpoints, numericality: {greater_than_or_equal_to: 0}
 
-  # Create a switch statment as soon as sub classes exist!
+  # Update switch statment as soon as other content classes exist!
   def color
-    "#000000"
+    case content
+      when ActivityLecture
+        "#2234FF" # blue
+      else
+        "#558D99" # greyish blue
+    end
+  end
+
+  def course
+    chapter.course
   end
 end
