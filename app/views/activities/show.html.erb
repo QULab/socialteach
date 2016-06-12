@@ -11,24 +11,23 @@
   </div>
   <div class="row">
     <div class="col-md-1">
-      <%= link_to :back do %>
-        <i class="fa fa-3x fa-arrow-left"></i>
+      <%= link_to :back, title: 'Back to last Page' do %>
+        <i class="arrows fa fa-3x fa-arrow-left"></i>
       <%- end %>
     </div>
 
     <div class="col-md-10">
       <div class="activity-content-container">
         <%- if @activity.content.is_a? ActivityLecture # check what type of activity and render proper view%>
-          <%= render 'activities/lecture', lecture: @activity.content %>
-        <%- end %>
+          <%= render 'activities/lecture', lecture: @activity.content %> <%- end %>
       </div>
       <%= render 'activities/feedback' %>
       <%= render 'shared/comments', commentable: @activity %>
     </div>
 
     <div class="col-md-1">
-      <%= link_to chapter_path(@activity.chapter) do %>
-        <i class="fa fa-3x fa-arrow-up"></i>
+      <%= link_to chapter_path(@activity.chapter), title: 'Proceed to Curriculum' do %>
+        <i class=" arrows fa fa-3x fa-arrow-up"></i>
       <%- end %>
     </div>
   </div>
