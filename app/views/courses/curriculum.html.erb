@@ -3,7 +3,7 @@
     <div class="page-header">
       <h1>
         <%= @course.name %>
-        <small>Started a day ago</small>
+        <small>Started <%= time_ago_in_words(@enrollment.created_at) %> ago</small>
       </h1>
     </div>
   </div>
@@ -11,8 +11,10 @@
   <div class="row">
     <div class="col-md-3">
       <%- @course.chapters.each do |chapter| %>
-        <div class ="thumbnail">
+        <%= link_to curriculum_course_path(@course, chapter: chapter.id), class: ["thumbnail", ("alert-info" if chapter == @active_chapter)] do %>
           <i class="fa fa-3x fa-check-circle"></i>
+          <i class="fa fa-3x fa-question-circle"></i>
+          <i class="fa fa-3x fa-times-circle"></i>
           <div class="caption">
             <h3>
               <%= chapter.name %>
@@ -21,14 +23,14 @@
               <%= chapter.description %>
             </p>
           </div>
-        </div>
+        <%- end %>
       <%- end %>
     </div>
 
     <div class="col-md-9">
       <div class="list-group">
-        <%- @course.chapters.first.activities.each do |act| #FIXME just to display some content %>
-          <a class="list-group-item">
+        <%- @active_chapter.activities.each do |act| %>
+          <%= link_to activity_path(act), class: "list-group-item" do %>
             <h4 class="list-group-item-heading">
               <i class="fa fa-2x fa-book"></i>
               <%= act.name %>
@@ -36,7 +38,7 @@
             <p class="list-group-item-text">
               Nur zum Testen, hier sollten Punkte oder sowas auftauchen!
             </p>
-          </a>
+          <%- end %>
         <%- end %>
       </div>
     </div>

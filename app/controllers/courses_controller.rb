@@ -39,6 +39,10 @@ class CoursesController < BaseController
   end
 
   def curriculum
+    authenticate_user!
+    @active_chapter = Chapter.find_by_id(params[:chapter]) || @course.chapters.first
+    userId = current_user.id
+    @enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", userId, @course.id).first
   end
 
   # PATCH/PUT /courses/1
