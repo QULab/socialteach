@@ -18,8 +18,8 @@
 
     <div class="col-md-10">
       <div class="activity-content-container">
-        <%- if true # check what type of activity and render proper view%>
-          <%= render 'activities/lecture' %>
+        <%- if @activity.content.is_a? ActivityLecture # check what type of activity and render proper view%>
+          <%= render 'activities/lecture', lecture: @activity.content %>
         <%- end %>
       </div>
       <%= render 'activities/feedback' %>
