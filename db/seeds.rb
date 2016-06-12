@@ -30,3 +30,15 @@ chap5.predecessors = [chap4]
 
 #add structure to Activities
 act2.predecessors = [act1]
+
+# Difficulty feedback
+feedback = DifficultyFeedback.create
+
+questionnaire = Questionnaire.create(qu_container_type: feedback.class.to_s, qu_container_id: feedback.id)
+
+question = MQuestion.create(questionnaire_id: questionnaire.id, text: 'How difficult was this unit?')
+questionId = question.id
+
+answer1 = Answer.create(m_question_id: questionId, text: 'Too Hard')
+answer2 = Answer.create(m_question_id: questionId, text: 'Perfect Difficulty')
+answer3 = Answer.create(m_question_id: questionId, text: 'Too Easy')
