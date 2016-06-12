@@ -5,6 +5,10 @@
         <%= @course.name %>
         <small>Started <%= time_ago_in_words(@enrollment.created_at) %> ago</small>
       </h1>
+      <%= link_to course_path, class: "btn btn-primary" do %>
+        <i class="fa fa-star"></i>
+        Show Course Progress
+      <%- end %>
     </div>
   </div>
 
