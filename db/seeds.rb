@@ -39,9 +39,9 @@ chap5.predecessors = [chap4]
 act2.predecessors = [act1]
 
 # Difficulty feedback
-feedback = DifficultyFeedback.create
+feedback = Feedback.create(commentable: act1)
 
-questionnaire = Questionnaire.create(qu_container_type: feedback.class.to_s, qu_container_id: feedback.id)
+questionnaire = Questionnaire.create(qu_container: feedback)
 
 question = MQuestion.create(questionnaire_id: questionnaire.id, text: 'How difficult was this unit?')
 questionId = question.id

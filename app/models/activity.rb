@@ -3,6 +3,8 @@ class Activity < ActiveRecord::Base
 
   belongs_to :content, polymorphic: true
 
+	has_one :feedback, as: :commentable
+
   has_and_belongs_to_many :successors,
     class_name: 'Activity',
     join_table: :activity_edges,

@@ -147,10 +147,14 @@ ActiveRecord::Schema.define(version: 20160611115403) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "difficulty_feedbacks", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "feedbacks", force: :cascade do |t|
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
+
+  add_index "feedbacks", ["commentable_type", "commentable_id"], name: "index_feedbacks_on_commentable_type_and_commentable_id"
 
   create_table "m_questions", force: :cascade do |t|
     t.integer  "questionnaire_id"
@@ -168,6 +172,8 @@ ActiveRecord::Schema.define(version: 20160611115403) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
+
+  add_index "questionnaires", ["qu_container_type", "qu_container_id"], name: "index_questionnaires_on_qu_container_type_and_qu_container_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
