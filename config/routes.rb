@@ -7,7 +7,11 @@
 
   resources :chapters
 
-  resources :activities
+  resources :activities do
+    member do
+      post 'complete'
+    end
+  end
 
   resources :courses
 

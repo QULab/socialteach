@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608132322) do
+ActiveRecord::Schema.define(version: 20160611115403) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -32,13 +32,16 @@ ActiveRecord::Schema.define(version: 20160608132322) do
     t.string   "name"
     t.integer  "levelpoints"
     t.integer  "chapter_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "tier"
     t.text     "shortname"
+    t.integer  "content_id",   null: false
+    t.string   "content_type", null: false
   end
 
   add_index "activities", ["chapter_id"], name: "index_activities_on_chapter_id"
+  add_index "activities", ["content_type", "content_id"], name: "index_activities_on_content_type_and_content_id"
 
   create_table "activity_edges", id: false, force: :cascade do |t|
     t.integer "head_id"
@@ -47,6 +50,12 @@ ActiveRecord::Schema.define(version: 20160608132322) do
 
   add_index "activity_edges", ["head_id"], name: "index_activity_edges_on_head_id"
   add_index "activity_edges", ["tail_id"], name: "index_activity_edges_on_tail_id"
+
+  create_table "activity_lectures", force: :cascade do |t|
+    t.text     "text",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

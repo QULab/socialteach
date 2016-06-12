@@ -1,6 +1,8 @@
 class Activity < ActiveRecord::Base
 	belongs_to :chapter
 
+  belongs_to :content, polymorphic: true
+
   has_and_belongs_to_many :successors,
     class_name: 'Activity',
     join_table: :activity_edges,
