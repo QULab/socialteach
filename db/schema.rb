@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607090354) do
+ActiveRecord::Schema.define(version: 20160608132322) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -83,7 +83,6 @@ ActiveRecord::Schema.define(version: 20160607090354) do
   add_index "chapter_edges", ["head_id"], name: "index_chapter_edges_on_head_id"
   add_index "chapter_edges", ["tail_id"], name: "index_chapter_edges_on_tail_id"
 
-
   create_table "chapters", force: :cascade do |t|
     t.string   "name"
     t.string   "shortname"
@@ -140,12 +139,9 @@ ActiveRecord::Schema.define(version: 20160607090354) do
   end
 
   create_table "difficulty_feedbacks", force: :cascade do |t|
-    t.integer  "questionnaire_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
-
-  add_index "difficulty_feedbacks", ["questionnaire_id"], name: "index_difficulty_feedbacks_on_questionnaire_id"
 
   create_table "m_questions", force: :cascade do |t|
     t.integer  "questionnaire_id"
@@ -155,7 +151,6 @@ ActiveRecord::Schema.define(version: 20160607090354) do
     t.datetime "updated_at",        null: false
   end
 
-  add_index "m_questions", ["correct_answer_id"], name: "index_m_questions_on_correct_answer_id"
   add_index "m_questions", ["questionnaire_id"], name: "index_m_questions_on_questionnaire_id"
 
   create_table "questionnaires", force: :cascade do |t|
