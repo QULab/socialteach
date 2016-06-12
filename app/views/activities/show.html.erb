@@ -22,7 +22,7 @@
           <%= render 'activities/lecture', lecture: @activity.content %>
         <%- end %>
       </div>
-      <%= render 'activities/feedback' %>
+      <%= render 'activities/feedback', feedback: @activity.feedback %>
       <%= render 'shared/comments', commentable: @activity %>
     </div>
 
