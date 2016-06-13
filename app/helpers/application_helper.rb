@@ -1,10 +1,11 @@
 module ApplicationHelper
     
-    def check_if_user_is_constructor
+    def check_course_belongs_to_current_user(course)
        
-        if current_user.is_instructor? and user_signed_in?
-            return true;
-        else 
+        if current_user.id == @course.creator_id
+            return true
+            
+        else
             return false
         end
     end
