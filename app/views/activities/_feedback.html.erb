@@ -3,7 +3,7 @@
    question = feedback.questionnaire.m_questions.first
    fresh = feedback.questionnaire.completed_questionnaires(user_id: current_user.id).empty?
    given_answer = question.completed_m_questions(user_id: current_user.id).first.answer unless fresh
-   icons = ["smile-o", "meh-o", "frown-o"] %>
+   icons = ["meh-o", "smile-o", "frown-o"] %>
 
      <div class="feedback-container">
        <% question.answers.each_with_index do |answer, i| %>

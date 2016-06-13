@@ -46,6 +46,6 @@ questionnaire = Questionnaire.create(qu_container: feedback)
 question = MQuestion.create(questionnaire_id: questionnaire.id, text: 'How difficult was this unit?')
 questionId = question.id
 
-answer1 = Answer.create(m_question_id: questionId, text: 'Too Hard')
+answer1 = Answer.create(m_question_id: questionId, text: 'Too Easy')
 answer2 = Answer.create(m_question_id: questionId, text: 'Perfect Difficulty')
-answer3 = Answer.create(m_question_id: questionId, text: 'Too Easy')
+answer3 = Answer.create(m_question_id: questionId, text: 'Too Hard')
