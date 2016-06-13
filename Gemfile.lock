@@ -112,10 +112,8 @@ GEM
       activesupport (>= 3.0.0)
     factory_girl_rails (4.7.0)
       factory_girl (~> 4.7.0)
-
     font-awesome-rails (4.6.3.0)
       railties (>= 3.2, < 5.1)
-
     formtastic (3.1.4)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.6.0)
@@ -286,11 +284,8 @@ DEPENDENCIES
   capistrano-rbenv
   capistrano3-puma
   devise (~> 3.2)
-<<<<<<< HEAD
   factory_girl_rails
-=======
   font-awesome-rails (~> 4.6.3.0)
->>>>>>> develop
   jbuilder (~> 2.0)
   jquery-rails
   minitest

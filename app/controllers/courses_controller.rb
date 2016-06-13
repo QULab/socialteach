@@ -27,6 +27,9 @@ class CoursesController < BaseController
 
   # GET /courses/1/edit
   def edit
+    
+      @related_chapters = @course.chapters
+      
   end
 
   # POST /courses

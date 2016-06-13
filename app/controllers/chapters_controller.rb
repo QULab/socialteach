@@ -15,10 +15,15 @@ class ChaptersController < ApplicationController
   # GET /chapters/new
   def new
     @chapter = Chapter.new
+      
+    @ordered_chapters = Chapter.order(:name)
+ 
   end
 
   # GET /chapters/1/edit
   def edit
+    @ordered_chapters = Chapter.order(:name)
+
   end
 
   # POST /chapters
@@ -69,6 +74,6 @@ class ChaptersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def chapter_params
-      params.require(:chapter).permit(:name, :shortname, :description, :course)
+        params.require(:chapter).permit(:name, :shortname, :description, :course_id, :tier)
     end
 end
