@@ -13,8 +13,6 @@ RSpec.describe HomeController, type: :controller do
     # Note, rails 3.x scaffolding may add lines like get :index, {}, valid_session
     # the valid_session overrides the devise login. Remove the valid_session from your specs
     get 'index'
-    expect(response).to redirect_to('/course/custom_page')  
+      expect(response).to redirect_to(course_own_courses_path)  
   end
-    
-    
 end

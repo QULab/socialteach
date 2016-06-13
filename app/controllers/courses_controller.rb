@@ -13,7 +13,7 @@ class CoursesController < BaseController
 
   end
     
-  def show_custom_page
+  def show_own_courses
       
     @courses = Course.where(creator_id: current_user.id)
   end
