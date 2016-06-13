@@ -18,6 +18,7 @@
       get 'curriculum'
     end
   end
+  get 'me/courses' => 'courses#index_enrolled', format: [:html]
 
   devise_for :users, :controllers => {:registrations => "registrations"}
 
