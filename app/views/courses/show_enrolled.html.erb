@@ -5,6 +5,11 @@
         <%= @course.name %>
         <small>Started <%= time_ago_in_words(@enrollment.created_at) %> ago</small>
       </h1>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%= @course.description%>
+        </div>
+      </div>
       <%= link_to curriculum_course_path, class: "btn btn-primary" do %>
         <i class="fa fa-tasks"></i>
         Show Curriculum
