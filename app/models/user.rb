@@ -4,7 +4,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
     
-    has_many :courses
+  has_many :courses
+  has_many :completed_m_questions
+  has_many :completed_questionnaires
+
   validate :username_validation
     def username_validation
           

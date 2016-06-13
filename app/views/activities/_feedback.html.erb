@@ -1,0 +1,15 @@
+<!-- Default feedback has three possible answers -->
+<% unless feedback.nil? %>
+  <% answers = feedback.questionnaire.m_questions.first.answers %>
+  <div class="feedback-container">
+    <button type="button" class="btn btn-primary" value="<%= answers[0].id %>">
+      <%= fa_icon "smile-o", text: answers[0].text %>
+    </button>
+    <button type="button" class="btn btn-primary" value="<%= answers[1].id %>">
+      <%= fa_icon "meh-o", text: answers[1].text %>
+    </button>
+    <button type="button" class="btn btn-primary" value="<%= answers[2].id %>">
+      <%= fa_icon "frown-o", text: answers[2].text %>
+    </button>
+  </div>
+<% end %>
