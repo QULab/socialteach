@@ -1,5 +1,6 @@
 class ActivitiesController < ApplicationController
-  before_action :set_activity, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_activity, only: [:show, :edit, :update, :destroy, :complete]
 
   # GET /activities
   # GET /activities.json
@@ -59,6 +60,10 @@ class ActivitiesController < ApplicationController
       format.html { redirect_to activities_url, notice: 'Activity was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def complete
+    redirect_to @activity.chapter, notice: 'Congratulations, you finished this Activity!'
   end
 
   private

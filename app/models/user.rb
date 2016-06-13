@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
     
   has_many :courses
+  has_many :completed_m_questions
+  has_many :completed_questionnaires
+
   validate :username_validation
     
   def username_validation
