@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611115403) do
+
+ActiveRecord::Schema.define(version: 20160609213956) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -146,6 +147,7 @@ ActiveRecord::Schema.define(version: 20160611115403) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "creator_id",  null: false
+
   end
 
   create_table "feedbacks", force: :cascade do |t|
@@ -172,6 +174,7 @@ ActiveRecord::Schema.define(version: 20160611115403) do
     t.string   "qu_container_type"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+
   end
 
   add_index "questionnaires", ["qu_container_type", "qu_container_id"], name: "index_questionnaires_on_qu_container_type_and_qu_container_id"

@@ -13,7 +13,10 @@
         <div class="course jumbotron">
           <h1><%= course.name %></h1>
           <p><%= course.description %></p>
-          <p><%= link_to 'See More', course, class: "btn btn-primary btn-lg" %>         
+
+          <p><%= link_to 'See More', course, class: "btn btn-primary btn-lg" %>
+           
+
             <!-- Show this button only for non-Instructors -->
             <% if !check_if_user_is_constructor -%>
               
