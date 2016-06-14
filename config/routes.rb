@@ -7,6 +7,8 @@
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  resources :leaderboards, only: [:show]
+
   # resources :lessons
 
   #resources :lectures

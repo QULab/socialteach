@@ -22,8 +22,8 @@
         <td><%= course_enrollment.completed %></td>
         <td><%= course_enrollment.is_visible %></td>
         <td><%= course_enrollment.is_visible_friends %></td>
-        <td><%= course_enrollment.user %></td>
-        <td><%= course_enrollment.course %></td>
+        <td><%= course_enrollment.user.id %></td>
+        <td><%= course_enrollment.course.id %></td>
         <td><%= link_to 'Show', course_enrollment %></td>
         <td><%= link_to 'Edit', edit_course_enrollment_path(course_enrollment) %></td>
         <td><%= link_to 'Destroy', course_enrollment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
