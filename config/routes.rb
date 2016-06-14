@@ -1,5 +1,7 @@
   Rails.application.routes.draw do
 
+  resources :levels
+
   resources :activity_statuses
 
   resources :course_enrollments
