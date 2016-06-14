@@ -63,6 +63,17 @@ class ActivitiesController < ApplicationController
   end
 
   def complete
+    if @activity.content.is_a?(ActivityExcercise) || @activity.content.is_a?(ActivityAssessment)
+      questionnaire = @activity.content.questionnaire
+      user_id = current_user.id
+
+      questionnaire.m_questions.each_with_index do |question, i|
+        CompletedMQuestion.create(m_question_id: question.id,
+                                  user_id: user_id,
+                                  answer_id: params[:question][i.to_s.to_sym][:answer_id])
+      end
+      CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user_id)
+    end
     redirect_to @activity.chapter, notice: 'Congratulations, you finished this Activity!'
   end
 
@@ -87,6 +98,6 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:name, :levelpoints, :chapter)
+      params.require(:activity).permit(:name, :levelpoints, :chapter, :question)
     end
 end

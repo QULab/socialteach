@@ -1,19 +1,22 @@
-<%= form_for @activity, url: complete_activity_path(@activity), method: :post do |form| %>
+<%= form_for @activity, url: complete_activity_path(@activity), method: :post do |f| %>
   <div class="panel panel-default">
     <div class="panel-body">
-      <% container.questionnaire.m_questions.each do |question| %>
+      <% container.questionnaire.m_questions.each_with_index do |question, i| %>
+      <%= hidden_field_tag "question[#{i}[question_id]]", question.id %>
         <div class= "row">
           <div class="col-md-12">
             <div class="well">
-            <div class="form-group">
-              <%= question.text %></p>
-              <% question.answers.each do |answer| %>
-                <label class="radio-inline">
-                  <%= radio_button_tag question.id, answer.text %>
-                  <%= answer.text %>
-                </label>
-              <% end %>
-            </div>
+              <div class="row">
+                <%= question.text %>
+              </div>
+              <div class="row">
+                <% question.answers.each do |answer| %>
+                  <label class="radio-inline">
+                    <%= radio_button_tag "question[#{i}[answer_id]]", answer.id %>
+                    <%= answer.text %>
+                  </label>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
@@ -21,5 +24,5 @@
     </div>
   </div>
 
-  <%= form.submit 'Finish this Excercise', class: "btn btn-success" %>
+  <%= f.submit 'Finish this Excercise', class: "btn btn-success" %>
 <% end %>
