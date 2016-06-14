@@ -1,5 +1,5 @@
 class CoursesController < BaseController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :curriculum]
 
   # GET /courses
   # GET /courses.json
@@ -9,8 +9,18 @@ class CoursesController < BaseController
 
   # GET /courses/1
   # GET /courses/1.json
+  # Show different page enrolled user
+  # TODO: add different view for instructor
   def show
-
+    if user_signed_in?
+      set_enrollment(current_user)
+      # the enrollment could be nil, if user is not enrolled
+      unless @enrollment.nil?
+        render :show_enrolled
+      end
+    else
+    render :show
+    end
   end
 
   # GET /courses/new
@@ -36,6 +46,12 @@ class CoursesController < BaseController
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def curriculum
+    authenticate_user!
+    @active_chapter = Chapter.find_by_id(params[:chapter]) || @course.chapters.first
+    set_enrollment(current_user)
   end
 
   # PATCH/PUT /courses/1
@@ -71,5 +87,10 @@ class CoursesController < BaseController
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
       params.require(:course).permit(:name, :description)
+    end
+
+    # There should be only one enrollment per user/course combination
+    def set_enrollment(user)
+      @enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", user.id, @course.id).first
     end
 end
