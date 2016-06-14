@@ -41,6 +41,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #omniauth
 gem 'omniauth-facebook'
 
+#for setting the env variables
+gem 'figaro'
+
 group :development do
   gem 'byebug'
   gem 'sqlite3'
