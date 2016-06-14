@@ -34,7 +34,13 @@
     <div class="col-md-9">
       <div class="list-group">
         <%- @active_chapter.activities.each do |act| %>
-          <%= link_to activity_path(act), class: "list-group-item" do %>
+          <% completed = user_completed_activity?(current_user, act) %>
+          <%= link_to activity_path(act), class: ["list-group-item", ("list-group-item-success" if completed)] do %>
+
+            <% if completed %>
+              <i class="fa fa-3x fa-check" style="float: right"></i>
+            <% end %>
+
             <h4 class="list-group-item-heading">
               <i class="fa fa-2x <%= activity_icon(act) %>"></i>
               <%= act.name %>
