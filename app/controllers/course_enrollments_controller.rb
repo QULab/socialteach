@@ -23,18 +23,23 @@ class CourseEnrollmentsController < ApplicationController
 
   # POST /course_enrollments
   # POST /course_enrollments.json
+  # Create a new enrollment, if the user is not already enrolled in that course
   def create
-      
-    @course_enrollment = CourseEnrollment.new(course_enrollment_params)
-            
-    respond_to do |format|
-      if @course_enrollment.save
-        format.html { redirect_to @course_enrollment, notice: 'Course enrollment was successfully created.' }
-        format.json { render :show, status: :created, location: @course_enrollment }
-      else
-        format.html { render :new }
-        format.json { render json: @course_enrollment.errors, status: :unprocessable_entity }
+    course_id = course_enrollment_params[:course_id]
+    previous_enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", current_user.id, course_id).first
+    if previous_enrollment.nil?
+      @course_enrollment = CourseEnrollment.new(course_enrollment_params)
+      respond_to do |format|
+        if @course_enrollment.save
+          format.html { render course_path(:id => course_id), notice: 'Congratulations, you are now enrolled in this Course' }
+          format.json { render :show, status: :created, location: @course_enrollment }
+        else
+          format.html { render :new }
+          format.json { render json: @course_enrollment.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to course_path(course_id), notice: 'You were already enrolled in this Course. Welcome back!'
     end
   end
 
