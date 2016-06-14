@@ -63,7 +63,10 @@ class ActivitiesController < ApplicationController
   end
 
   def complete
-    redirect_to @activity.chapter, notice: 'Congratulations, you finished this Activity!'
+    enrollment = CourseEnrollment.where("course_id = ? AND user_id = ?", @activity.course.id, current_user.id).first
+    status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
+    status.save
+    redirect_to curriculum_course_path(@activity.course) , notice: 'Congratulations, you finished this Activity!'
   end
 
   private
