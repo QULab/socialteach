@@ -14,13 +14,28 @@
   #resources :lectures
       
   resources :chapters
-        
-  resources :activities
-    
-  resources :courses
+
+  resources :activities do
+    member do
+      post 'complete'
+    end
+  end
+
+  resources :courses do
+    member do
+      get 'curriculum'
+    end
+  end
 
   devise_for :users, :controllers => {:registrations => "registrations"}
-                
+
+  namespace :graph do
+    get 'courses/:id' => 'courses#show', format: [:json]
+    get 'chapters/:id' => 'chapters#show', format: [:json]
+  end
+
+  post 'completed_questionnaires' => 'completed_questionnaires#create', format: [:json]
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

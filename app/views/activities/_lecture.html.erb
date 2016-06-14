@@ -1,0 +1,9 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= lecture.text %>
+  </div>
+</div>
+
+<%= form_for @activity, url: complete_activity_path(@activity), method: :post do |form| %>
+  <%= form.submit 'Finish this Lecture', class: "btn btn-success" %>
+<% end %>

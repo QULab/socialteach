@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Active:</strong>
   <%= @course_enrollment.active %>
@@ -22,12 +20,12 @@
 
 <p>
   <strong>User:</strong>
-  <%= @course_enrollment.user %>
+    <%= @course_enrollment.user.id %>
 </p>
 
 <p>
   <strong>Course:</strong>
-  <%= @course_enrollment.course %>
+    <%= @course_enrollment.course.id %>
 </p>
 
 <p>

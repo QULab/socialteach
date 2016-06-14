@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160607130146) do
+ActiveRecord::Schema.define(version: 20160611115403) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -32,11 +32,30 @@ ActiveRecord::Schema.define(version: 20160607130146) do
     t.string   "name"
     t.integer  "levelpoints"
     t.integer  "chapter_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "tier"
+    t.text     "shortname"
+    t.integer  "content_id",   null: false
+    t.string   "content_type", null: false
   end
 
   add_index "activities", ["chapter_id"], name: "index_activities_on_chapter_id"
+  add_index "activities", ["content_type", "content_id"], name: "index_activities_on_content_type_and_content_id"
+
+  create_table "activity_edges", id: false, force: :cascade do |t|
+    t.integer "head_id"
+    t.integer "tail_id"
+  end
+
+  add_index "activity_edges", ["head_id"], name: "index_activity_edges_on_head_id"
+  add_index "activity_edges", ["tail_id"], name: "index_activity_edges_on_tail_id"
+
+  create_table "activity_lectures", force: :cascade do |t|
+    t.text     "text",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "activity_statuses", force: :cascade do |t|
     t.boolean  "is_completed"
@@ -83,6 +102,23 @@ ActiveRecord::Schema.define(version: 20160607130146) do
   add_index "badges_sashes", ["badge_id"], name: "index_badges_sashes_on_badge_id"
   add_index "badges_sashes", ["sash_id"], name: "index_badges_sashes_on_sash_id"
 
+  create_table "answers", force: :cascade do |t|
+    t.integer  "m_question_id"
+    t.text     "text"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "answers", ["m_question_id"], name: "index_answers_on_m_question_id"
+
+  create_table "chapter_edges", id: false, force: :cascade do |t|
+    t.integer "head_id"
+    t.integer "tail_id"
+  end
+
+  add_index "chapter_edges", ["head_id"], name: "index_chapter_edges_on_head_id"
+  add_index "chapter_edges", ["tail_id"], name: "index_chapter_edges_on_tail_id"
+
   create_table "chapters", force: :cascade do |t|
     t.string   "name"
     t.string   "shortname"
@@ -90,13 +126,36 @@ ActiveRecord::Schema.define(version: 20160607130146) do
     t.integer  "course_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "tier"
   end
 
   add_index "chapters", ["course_id"], name: "index_chapters_on_course_id"
 
+  create_table "completed_m_questions", force: :cascade do |t|
+    t.integer  "m_question_id"
+    t.integer  "answer_id"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "completed_m_questions", ["answer_id"], name: "index_completed_m_questions_on_answer_id"
+  add_index "completed_m_questions", ["m_question_id"], name: "index_completed_m_questions_on_m_question_id"
+  add_index "completed_m_questions", ["user_id"], name: "index_completed_m_questions_on_user_id"
+
+  create_table "completed_questionnaires", force: :cascade do |t|
+    t.integer  "questionnaire_id"
+    t.integer  "user_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "completed_questionnaires", ["questionnaire_id"], name: "index_completed_questionnaires_on_questionnaire_id"
+  add_index "completed_questionnaires", ["user_id"], name: "index_completed_questionnaires_on_user_id"
+
   create_table "course_enrollments", force: :cascade do |t|
-    t.boolean  "active"
-    t.boolean  "completed"
+    t.boolean  "active",             default: true
+    t.boolean  "completed",          default: false
     t.boolean  "is_visible"
     t.boolean  "is_visible_friends"
     t.integer  "user_id"
@@ -105,6 +164,8 @@ ActiveRecord::Schema.define(version: 20160607130146) do
     t.datetime "updated_at",                     null: false
     t.integer  "sash_id"
     t.integer  "level",              default: 0
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
   end
 
   add_index "course_enrollments", ["course_id"], name: "index_course_enrollments_on_course_id"
@@ -117,6 +178,30 @@ ActiveRecord::Schema.define(version: 20160607130146) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "feedbacks", force: :cascade do |t|
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "feedbacks", ["commentable_type", "commentable_id"], name: "index_feedbacks_on_commentable_type_and_commentable_id"
+
+  create_table "m_questions", force: :cascade do |t|
+    t.integer  "questionnaire_id"
+    t.integer  "correct_answer_id"
+    t.text     "text"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "m_questions", ["questionnaire_id"], name: "index_m_questions_on_questionnaire_id"
+
+  create_table "questionnaires", force: :cascade do |t|
+    t.integer  "qu_container_id"
+    t.string   "qu_container_type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   create_table "merit_actions", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "action_method"
@@ -155,6 +240,8 @@ ActiveRecord::Schema.define(version: 20160607130146) do
     t.datetime "updated_at"
   end
 
+  add_index "questionnaires", ["qu_container_type", "qu_container_id"], name: "index_questionnaires_on_qu_container_type_and_qu_container_id"
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -175,5 +262,6 @@ ActiveRecord::Schema.define(version: 20160607130146) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["username"], name: "index_users_on_username", unique: true
 
 end

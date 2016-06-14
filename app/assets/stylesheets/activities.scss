@@ -1,3 +1,16 @@
-// Place all the styles related to the Activities controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.activity-content-container {
+  min-height: 200px;
+  background-color: lightgray;
+  padding: 10px;
+}
+
+.feedback-container {
+  float: right;
+  margin-top: 5px;
+}
+
+.arrows {
+  position: absolute;
+  margin-top: 30px;
+  padding: 0 20px;
+}
