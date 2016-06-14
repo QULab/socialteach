@@ -26,10 +26,12 @@ chap3 =Chapter.create(name: 'The most important chapter: Food', shortname: 'Food
 chap4 =Chapter.create(name: 'Becoming a professional Tourist', shortname: 'Tourism', description: 'How to get the most out of a visit to Italy by asking the right questions', tier: 3, course_id: courseId)
 chap5 =Chapter.create(name: 'Shopping by the Numbers', shortname: 'Shopping', description: 'All about shopping and of course the most important thing to know about: Numbers!', tier: 4, course_id: courseId)
 
-act1 = Activity.create!(name: 'Hello World to You', levelpoints: '2', tier: '1', shortname: 'Hello', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example"))
-act2 = Activity.create!(name: 'Now you!', levelpoints: '2', tier: '2', shortname: 'You', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example 2"))
+act1 = Activity.create!(name: 'Hello World to You', levelpoints: '2', tier: '2', shortname: 'Hello', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example"))
+act2 = Activity.create!(name: 'Now you!', levelpoints: '2', tier: '3', shortname: 'You', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example 2"))
 excercise = ActivityExcercise.create
-act3 = Activity.create!(name: 'Test yourself with a Questionnaire', levelpoints: '2', tier: '3', shortname: 'Test', chapter_id: chap1Id, content: excercise)
+act3 = Activity.create!(name: 'Test yourself with a Questionnaire', levelpoints: '3', tier: '3', shortname: 'Test', chapter_id: chap1Id, content: excercise)
+assessment = ActivityAssessment.create
+act4 = Activity.create!(name: 'Knowledge Assessment', levelpoints: '2', tier: '1', shortname: 'Test', chapter_id: chap1Id, content: assessment)
 
 # add structure for Chapters
 chap2.predecessors = [chap1]
@@ -38,8 +40,9 @@ chap4.predecessors = [chap2, chap3]
 chap5.predecessors = [chap4]
 
 #add structure to Activities
+act1.predecessors = [act4]
 act2.predecessors = [act1]
-act3.predecessors = [act2]
+act3.predecessors = [act1]
 
 # Add questionnaire to act3
 questionnaire = Questionnaire.create(qu_container: excercise)
@@ -55,6 +58,22 @@ question2 = MQuestion.create(questionnaire_id: questionnaire.id, text: 'What was
 question2Id = question2.id
 answer1 = Answer.create(m_question_id: question2Id, text: 'Now you!')
 answer2 = Answer.create(m_question_id: question2Id, text: 'Shopping by Numbers')
+question2.update(correct_answer_id: answer1.id)
+
+# Add questionnaire to act4
+questionnaire = Questionnaire.create(qu_container: assessment)
+question1 = MQuestion.create(questionnaire_id: questionnaire.id, text: "What is 'language' in Italian")
+question1Id = question1.id
+answer1 = Answer.create(m_question_id: question1Id, text: 'cane')
+answer2 = Answer.create(m_question_id: question1Id, text: 'otto volante')
+answer3 = Answer.create(m_question_id: question1Id, text: 'lingua')
+answer4 = Answer.create(m_question_id: question1Id, text: 'patata')
+question1.update(correct_answer_id: answer3.id)
+
+question2 = MQuestion.create(questionnaire_id: questionnaire.id, text: 'Italy looks like a...?')
+question2Id = question2.id
+answer1 = Answer.create(m_question_id: question2Id, text: 'Boot')
+answer2 = Answer.create(m_question_id: question2Id, text: 'Cat')
 question2.update(correct_answer_id: answer1.id)
 
 # Difficulty feedback for act1

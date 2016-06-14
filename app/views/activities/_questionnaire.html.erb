@@ -1,7 +1,7 @@
 <%= form_for @activity, url: complete_activity_path(@activity), method: :post do |form| %>
   <div class="panel panel-default">
     <div class="panel-body">
-      <% excercise.questionnaire.m_questions.each do |question| %>
+      <% container.questionnaire.m_questions.each do |question| %>
         <div class= "row">
           <div class="col-md-12">
             <div class="well">
