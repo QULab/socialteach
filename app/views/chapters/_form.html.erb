@@ -31,7 +31,7 @@
 
   <div class="field">
       <%= f.label :Predecessor %><br> 
-      <%= collection_select(:course, :chapter_id, @ordered_chapters, :id, :name, prompt: true) %>
+      <%= collection_select(:course, :course_id, @ordered_chapters, :id, :name, prompt: true) %>
   </div>
 
   <div class="actions">

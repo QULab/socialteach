@@ -16,7 +16,7 @@ user = User.create!({
 })
 
 # Course with Chapters and Activities
-course = Course.create!(name: 'Italian for Beginners', description: 'A course for people with no prior knowledge of the Italian language')
+course = Course.create!(name: 'Italian for Beginners', description: 'A course for people with no prior knowledge of the Italian language', creator_id: 1)
 courseId = course.id
 
 chap1 = Chapter.create(name: 'Hello World in Italian', shortname: 'Hello', description: 'Our first Sentence!', tier: 1, course_id: courseId)

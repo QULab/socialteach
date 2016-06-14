@@ -17,7 +17,7 @@
 
   devise_for :users, :controllers => {:registrations => "registrations"}
       
-  get 'course/own_courses' => 'courses#show_own_courses'
+  get 'course/own_courses' => 'courses#own_courses'
 
   namespace :graph do
     get 'courses/:id' => 'courses#show', format: [:json]

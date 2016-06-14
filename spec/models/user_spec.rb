@@ -7,6 +7,7 @@ RSpec.describe User, type: :model do
 
       expect(user.username).to eq("Andy")
       expect(user.is_instructor).to eq(true)
+      expect(user.id).to eq(1)
       
   end
 end

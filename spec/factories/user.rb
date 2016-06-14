@@ -4,5 +4,6 @@ FactoryGirl.define do
       email 'andreas@gmail.com'
       password '123456'
       is_instructor true
+      id '1'
   end
 end
