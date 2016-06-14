@@ -24,7 +24,7 @@ FROM #{c_enrollment}
   LEFT JOIN merit_scores ON merit_scores.sash_id = #{sash_id_column}
   LEFT JOIN merit_score_points ON merit_score_points.score_id = merit_scores.id
   INNER JOIN users ON #{c_enrollment}.user_id = users.id
-WHERE merit_score_points.created_at > #{options[:since_date]}
+WHERE merit_score_points.created_at > '#{options[:since_date]}'
   AND is_visible = 't' AND active = 't' AND course_id = #{options[:id]}
   AND category = '#{options[:category]}'
 GROUP BY #{c_enrollment}.id, merit_scores.sash_id
@@ -32,6 +32,7 @@ ORDER BY sum_points DESC
 LIMIT #{options[:limit]}
 SQL
       results = ActiveRecord::Base.connection.execute(sql_query)
+      puts(results)
       results.map do |h|
         h.keep_if { |k, v| (k == 'username') || (k == 'sum_points') }
       end
