@@ -3,7 +3,7 @@
 <p><%= @leaderboard%></p>
 
 <% @leaderboard.each do |user| %>
-  <p> <%= user %> </p>
+  <p> <%= user["username"] %> <%= user["sum_points"] %> </p>
 <% end %>
 
 

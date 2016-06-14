@@ -32,8 +32,9 @@ ORDER BY sum_points DESC
 LIMIT #{options[:limit]}
 SQL
       results = ActiveRecord::Base.connection.execute(sql_query)
+      puts(results)
       results.map do |h|
-        h.keep_if { |k, v| (k == 'user') || (k == 'sum_points') }
+        h.keep_if { |k, v| (k == 'username') || (k == 'sum_points') }
       end
       results
     end

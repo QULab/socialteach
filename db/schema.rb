@@ -40,15 +40,19 @@ ActiveRecord::Schema.define(version: 20160607130146) do
 
   create_table "activity_statuses", force: :cascade do |t|
     t.boolean  "is_completed"
-    t.integer  "status"
+    t.integer  "Status"
     t.integer  "activity_id"
     t.integer  "course_enrollment_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "merit_levelpoints_id"
+    t.integer  "merit_learningpoints_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "activity_statuses", ["activity_id"], name: "index_activity_statuses_on_activity_id"
   add_index "activity_statuses", ["course_enrollment_id"], name: "index_activity_statuses_on_course_enrollment_id"
+  add_index "activity_statuses", ["merit_learningpoints_id"], name: "index_activity_statuses_on_merit_learningpoints_id"
+  add_index "activity_statuses", ["merit_levelpoints_id"], name: "index_activity_statuses_on_merit_levelpoints_id"
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
