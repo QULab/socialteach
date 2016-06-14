@@ -21,7 +21,7 @@
         <%- if @activity.content.is_a? ActivityLecture # check what type of activity and render proper view%>
           <%= render 'activities/lecture', lecture: @activity.content %> <%- end %>
       </div>
-      <%= render 'activities/feedback', feedback: @activity.feedback %>
+      <%= render 'shared/feedback', commentable: @activity %>
       <%= render 'shared/comments', commentable: @activity %>
     </div>
 
