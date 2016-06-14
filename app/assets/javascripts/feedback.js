@@ -4,7 +4,7 @@ $('.feedback-container button').click(function(event){
   var data = JSON.stringify({answer: event.target.value});
   console.log(data)
   $.ajax({
-          url:  "/completed_questionnaires",
+          url:  window.location.href + "/feedback",
           method: "POST",
           data: {answer: event.target.value},
           dataType: "json",
