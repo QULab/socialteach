@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611115403) do
+ActiveRecord::Schema.define(version: 20160614201517) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -180,6 +180,13 @@ ActiveRecord::Schema.define(version: 20160611115403) do
   end
 
   add_index "feedbacks", ["commentable_type", "commentable_id"], name: "index_feedbacks_on_commentable_type_and_commentable_id"
+
+  create_table "levels", force: :cascade do |t|
+    t.integer  "level"
+    t.integer  "level_pass"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "m_questions", force: :cascade do |t|
     t.integer  "questionnaire_id"
