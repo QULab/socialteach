@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611115403) do
+ActiveRecord::Schema.define(version: 20160614102619) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -50,6 +50,11 @@ ActiveRecord::Schema.define(version: 20160611115403) do
 
   add_index "activity_edges", ["head_id"], name: "index_activity_edges_on_head_id"
   add_index "activity_edges", ["tail_id"], name: "index_activity_edges_on_tail_id"
+
+  create_table "activity_excercises", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "activity_lectures", force: :cascade do |t|
     t.text     "text",       null: false

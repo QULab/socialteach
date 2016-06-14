@@ -19,7 +19,10 @@
     <div class="col-md-10">
       <div class="activity-content-container">
         <%- if @activity.content.is_a? ActivityLecture # check what type of activity and render proper view%>
-          <%= render 'activities/lecture', lecture: @activity.content %> <%- end %>
+          <%= render 'activities/lecture', lecture: @activity.content %>
+        <% elsif @activity.content.is_a? ActivityExcercise %>
+          <%= render 'activities/excercise', excercise: @activity.content %>
+        <%- end %>
       </div>
       <%= render 'shared/feedback', commentable: @activity %>
       <%= render 'shared/comments', commentable: @activity %>
