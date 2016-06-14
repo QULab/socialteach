@@ -1,4 +1,7 @@
 class ActivitiesController < ApplicationController
+  include ActivitiesHelper
+  include CourseEnrollmentsHelper
+
   before_action :authenticate_user!
   before_action :set_activity, only: [:show, :edit, :update, :destroy, :complete]
 
@@ -63,10 +66,14 @@ class ActivitiesController < ApplicationController
   end
 
   def complete
-    enrollment = CourseEnrollment.where("course_id = ? AND user_id = ?", @activity.course.id, current_user.id).first
-    status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
-    status.save
-    redirect_to curriculum_course_path(@activity.course) , notice: 'Congratulations, you finished this Activity!'
+    unless user_completed_activity?(current_user, @activity)
+      enrollment = user_enrollment(@activity.course, current_user)
+      status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
+      status.save
+      redirect_to curriculum_course_path(@activity.course) , notice: 'Congratulations, you finished this Activity!'
+    else
+      redirect_to curriculum_course_path(@activity.course) , notice: 'You already finished this activity before!'
+    end
   end
 
   private
