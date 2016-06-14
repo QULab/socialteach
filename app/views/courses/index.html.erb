@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <h1>Listing Courses</h1>
         <!-- Only Instructos shall be aple to add new coures --> 
-        <% if !current_user.is_instructor? %>
+        <% if current_user.is_instructor? %>
             <%= link_to 'New Course', new_course_path, class: "btn btn-primary btn-lg" %>
         <% end -%>   
     </div>
@@ -21,7 +21,7 @@
           <p><%= link_to 'See More', course, class: "btn btn-primary btn-lg" %>
            
             <!-- Show this button only for non-Instructors -->
-            <% if current_user.is_instructor? and user_signed_in? -%>
+            <% if !current_user.is_instructor? and user_signed_in? -%>
               
               <%= link_to "Take This Course", course_enrollments_path(:course_enrollment => {:user_id => current_user.id, :course_id => course.id , :is_visible => true, :is_visible_friends => true}), :method => :post, data: { confirm: 'Register for this course?' }, class: "btn btn-primary btn-lg" %>
             <% end -%>

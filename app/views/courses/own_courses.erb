@@ -16,7 +16,7 @@
           <p><%= course.description %></p>
           <p><%= link_to 'See More', course, class: "btn btn-primary btn-lg" %>
 
-              <% if current_user.is_instructor? and user_signed_in? %>
+              <% if !current_user.is_instructor? and user_signed_in? %>
               <%= link_to "Take This Course", course_enrollments_path(:course_enrollment => {:user_id => current_user.id, :course_id => course.id , :is_visible => true, :is_visible_friends => true}), :method => :post, data: { confirm: 'Register for this course?' }, class: "btn btn-primary btn-lg" %>
             <% end -%>   
           </p>         
@@ -26,4 +26,8 @@
   </div>
 </div>
 
-<%= link_to 'New Course', new_course_path %>
+<% if current_user.is_instructor? and user_signed_in? %>
+
+   <%= link_to 'New Course', new_course_path %>
+
+<% end -%>
