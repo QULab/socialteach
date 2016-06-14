@@ -59,19 +59,15 @@ ActiveRecord::Schema.define(version: 20160611115403) do
 
   create_table "activity_statuses", force: :cascade do |t|
     t.boolean  "is_completed"
-    t.integer  "Status"
+    t.integer  "status"
     t.integer  "activity_id"
     t.integer  "course_enrollment_id"
-    t.integer  "merit_levelpoints_id"
-    t.integer  "merit_learningpoints_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   add_index "activity_statuses", ["activity_id"], name: "index_activity_statuses_on_activity_id"
   add_index "activity_statuses", ["course_enrollment_id"], name: "index_activity_statuses_on_course_enrollment_id"
-  add_index "activity_statuses", ["merit_learningpoints_id"], name: "index_activity_statuses_on_merit_learningpoints_id"
-  add_index "activity_statuses", ["merit_levelpoints_id"], name: "index_activity_statuses_on_merit_levelpoints_id"
 
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -91,6 +87,15 @@ ActiveRecord::Schema.define(version: 20160611115403) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
+  create_table "answers", force: :cascade do |t|
+    t.integer  "m_question_id"
+    t.text     "text"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "answers", ["m_question_id"], name: "index_answers_on_m_question_id"
+
   create_table "badges_sashes", force: :cascade do |t|
     t.integer  "badge_id"
     t.integer  "sash_id"
@@ -101,15 +106,6 @@ ActiveRecord::Schema.define(version: 20160611115403) do
   add_index "badges_sashes", ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id"
   add_index "badges_sashes", ["badge_id"], name: "index_badges_sashes_on_badge_id"
   add_index "badges_sashes", ["sash_id"], name: "index_badges_sashes_on_sash_id"
-
-  create_table "answers", force: :cascade do |t|
-    t.integer  "m_question_id"
-    t.text     "text"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "answers", ["m_question_id"], name: "index_answers_on_m_question_id"
 
   create_table "chapter_edges", id: false, force: :cascade do |t|
     t.integer "head_id"
@@ -160,12 +156,10 @@ ActiveRecord::Schema.define(version: 20160611115403) do
     t.boolean  "is_visible_friends"
     t.integer  "user_id"
     t.integer  "course_id"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.integer  "sash_id"
-    t.integer  "level",              default: 0
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
+    t.integer  "sash_id"
+    t.integer  "level",              default: 0
   end
 
   add_index "course_enrollments", ["course_id"], name: "index_course_enrollments_on_course_id"
@@ -197,11 +191,6 @@ ActiveRecord::Schema.define(version: 20160611115403) do
 
   add_index "m_questions", ["questionnaire_id"], name: "index_m_questions_on_questionnaire_id"
 
-  create_table "questionnaires", force: :cascade do |t|
-    t.integer  "qu_container_id"
-    t.string   "qu_container_type"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
   create_table "merit_actions", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "action_method"
@@ -235,12 +224,19 @@ ActiveRecord::Schema.define(version: 20160611115403) do
     t.string  "category", default: "default"
   end
 
+  create_table "questionnaires", force: :cascade do |t|
+    t.integer  "qu_container_id"
+    t.string   "qu_container_type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "questionnaires", ["qu_container_type", "qu_container_id"], name: "index_questionnaires_on_qu_container_type_and_qu_container_id"
+
   create_table "sashes", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "questionnaires", ["qu_container_type", "qu_container_id"], name: "index_questionnaires_on_qu_container_type_and_qu_container_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
