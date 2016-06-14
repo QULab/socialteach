@@ -15,7 +15,7 @@
 
   resources :courses
 
-  devise_for :users, :controllers => {:registrations => "registrations"}
+  devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}
 
   namespace :graph do
     get 'courses/:id' => 'courses#show', format: [:json]
