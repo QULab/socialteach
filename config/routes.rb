@@ -1,10 +1,18 @@
   Rails.application.routes.draw do
 
+  resources :activity_statuses
+
   resources :course_enrollments
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  resources :leaderboards, only: [:show]
+
+  # resources :lessons
+
+  #resources :lectures
+      
   resources :chapters
 
   resources :activities do

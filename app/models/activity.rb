@@ -1,5 +1,6 @@
 class Activity < ActiveRecord::Base
 	belongs_to :chapter
+	has_many :activity_statuses
 
   belongs_to :content, polymorphic: true
 

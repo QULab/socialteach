@@ -1,15 +1,17 @@
 <!-- Default feedback has three possible answers -->
-<% unless feedback.nil? %>
-  <% answers = feedback.questionnaire.m_questions.first.answers %>
-  <div class="feedback-container">
-    <button type="button" class="btn btn-primary" value="<%= answers[0].id %>">
-      <%= fa_icon "smile-o", text: answers[0].text %>
-    </button>
-    <button type="button" class="btn btn-primary" value="<%= answers[1].id %>">
-      <%= fa_icon "meh-o", text: answers[1].text %>
-    </button>
-    <button type="button" class="btn btn-primary" value="<%= answers[2].id %>">
-      <%= fa_icon "frown-o", text: answers[2].text %>
-    </button>
-  </div>
+<% unless feedback.nil?
+   question = feedback.questionnaire.m_questions.first
+   fresh = feedback.questionnaire.completed_questionnaires(user_id: current_user.id).empty?
+   given_answer = question.completed_m_questions(user_id: current_user.id).first.answer unless fresh
+   icons = ["meh-o", "smile-o", "frown-o"] %>
+
+     <div class="feedback-container">
+       <% question.answers.each_with_index do |answer, i| %>
+         <button type="button" <%= 'disabled' unless fresh %>
+                 class="btn btn-primary <%='btn-success' if (given_answer == answer) %>"
+                 value="<%= answer.id %>">
+            <%= fa_icon icons[i], text: answer.text %>
+          </button>
+        <% end %>
+     </div>
 <% end %>
