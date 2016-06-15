@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611115403) do
+ActiveRecord::Schema.define(version: 20160614203953) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -38,10 +38,12 @@ ActiveRecord::Schema.define(version: 20160611115403) do
     t.text     "shortname"
     t.integer  "content_id",   null: false
     t.string   "content_type", null: false
+    t.integer  "level_id"
   end
 
   add_index "activities", ["chapter_id"], name: "index_activities_on_chapter_id"
   add_index "activities", ["content_type", "content_id"], name: "index_activities_on_content_type_and_content_id"
+  add_index "activities", ["level_id"], name: "index_activities_on_level_id"
 
   create_table "activity_edges", id: false, force: :cascade do |t|
     t.integer "head_id"
@@ -160,9 +162,11 @@ ActiveRecord::Schema.define(version: 20160611115403) do
     t.datetime "updated_at",                         null: false
     t.integer  "sash_id"
     t.integer  "level",              default: 0
+    t.integer  "level_id"
   end
 
   add_index "course_enrollments", ["course_id"], name: "index_course_enrollments_on_course_id"
+  add_index "course_enrollments", ["level_id"], name: "index_course_enrollments_on_level_id"
   add_index "course_enrollments", ["user_id"], name: "index_course_enrollments_on_user_id"
 
   create_table "courses", force: :cascade do |t|
@@ -180,6 +184,13 @@ ActiveRecord::Schema.define(version: 20160611115403) do
   end
 
   add_index "feedbacks", ["commentable_type", "commentable_id"], name: "index_feedbacks_on_commentable_type_and_commentable_id"
+
+  create_table "levels", force: :cascade do |t|
+    t.integer  "level"
+    t.integer  "level_pass"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "m_questions", force: :cascade do |t|
     t.integer  "questionnaire_id"
