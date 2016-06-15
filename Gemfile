@@ -38,6 +38,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+# using chartkick for point charts and some helper gems
+gem 'chartkick', '~> 1.2.4'
+gem 'dateslices', '~> 0.0.3'
+gem 'active_median', '~> 0.1.0'
+
 group :development do
   gem 'byebug'
   gem 'sqlite3'

@@ -1,5 +1,7 @@
   Rails.application.routes.draw do
 
+  get 'statistics/show'
+
   resources :course_enrollments
 
   devise_for :admin_users, ActiveAdmin::Devise.config

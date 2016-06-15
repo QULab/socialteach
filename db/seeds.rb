@@ -23,7 +23,7 @@ chap1 = Chapter.create(name: 'Hello World in Italian', shortname: 'Hello', descr
 chap1Id = chap1.id
 chap2 = Chapter.create(name: 'Tell me who you are', shortname: 'You', description: 'How to introduce yourself', tier: 2, course_id: courseId)
 chap3 =Chapter.create(name: 'The most important chapter: Food', shortname: 'Food', description: 'How to order delicious Italian food', tier: 2, course_id: courseId)
-chap4 =Chapter.create(name: 'Becoming a professional Tourist', shortname: 'Tourism', description: 'How to get the most out of a visit to Italy by asking the right questions', tier: 3, course_id: courseId)
+chap4 =Chapter.create(name: 'Becoming a professional Tourist', shortname: 'Tourism', description: 'How to get the most out of a Merit to Italy by asking the right questions', tier: 3, course_id: courseId)
 chap5 =Chapter.create(name: 'Shopping by the Numbers', shortname: 'Shopping', description: 'All about shopping and of course the most important thing to know about: Numbers!', tier: 4, course_id: courseId)
 
 act1 = Activity.create!(name: 'Hello World to You', levelpoints: '2', tier: '1', shortname: 'Hello', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example"))
@@ -49,3 +49,36 @@ questionId = question.id
 answer1 = Answer.create(m_question_id: questionId, text: 'Too Easy')
 answer2 = Answer.create(m_question_id: questionId, text: 'Perfect Difficulty')
 answer3 = Answer.create(m_question_id: questionId, text: 'Too Hard')
+
+
+Merit.delete_all
+Merit.create  course: 'United States', earned_at: DateTime.now, points: 350
+Merit.create  course: 'United States', earned_at: DateTime.now, points: 150
+Merit.create  course: 'United States', earned_at: DateTime.now, points: 100
+Merit.create  course: 'United States', earned_at: DateTime.now - 1.day, points: 405
+Merit.create  course: 'United States', earned_at: DateTime.now - 1.day, points: 400
+Merit.create  course: 'United States', earned_at: DateTime.now - 2.days, points: 300
+Merit.create  course: 'United States', earned_at: DateTime.now - 2.days, points: 100
+Merit.create  course: 'United States', earned_at: DateTime.now - 2.days, points: 305
+Merit.create  course: 'United States', earned_at: DateTime.now - 3.days, points: 450
+Merit.create  course: 'United States', earned_at: DateTime.now - 3.days, points: 300
+Merit.create  course: 'Germany', earned_at: DateTime.now, points: 100
+Merit.create  course: 'Germany', earned_at: DateTime.now, points: 200
+Merit.create  course: 'Germany', earned_at: DateTime.now, points: 100
+Merit.create  course: 'Germany', earned_at: DateTime.now, points: 300
+Merit.create  course: 'Germany', earned_at: DateTime.now - 1.day, points: 400
+Merit.create  course: 'Germany', earned_at: DateTime.now - 2.days, points: 200
+Merit.create  course: 'Germany', earned_at: DateTime.now - 2.days, points: 100
+Merit.create  course: 'Germany', earned_at: DateTime.now - 2.days, points: 300
+Merit.create  course: 'Germany', earned_at: DateTime.now - 3.days, points: 305
+Merit.create  course: 'South Korea', earned_at: DateTime.now, points: 200
+Merit.create  course: 'South Korea', earned_at: DateTime.now, points: 250
+Merit.create  course: 'South Korea', earned_at: DateTime.now, points: 100
+Merit.create  course: 'South Korea', earned_at: DateTime.now, points: 150
+Merit.create  course: 'South Korea', earned_at: DateTime.now - 1.day, points: 205
+Merit.create  course: 'South Korea', earned_at: DateTime.now - 1.day, points: 400
+Merit.create  course: 'South Korea', earned_at: DateTime.now - 1.day, points: 300
+Merit.create  course: 'South Korea', earned_at: DateTime.now - 2.days, points: 100
+Merit.create  course: 'South Korea', earned_at: DateTime.now - 3.days, points: 500
+Merit.create  course: 'South Korea', earned_at: DateTime.now - 3.days, points: 400
+Merit.create  course: 'South Korea', earned_at: DateTime.now - 3.days, points: 500
