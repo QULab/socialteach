@@ -44,6 +44,11 @@ gem 'redcarpet', '~>3.3.4'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+#omniauth
+gem 'omniauth-facebook'
+
+#for setting the env variables
+gem 'figaro'
 
 group :development do
   gem 'byebug'
