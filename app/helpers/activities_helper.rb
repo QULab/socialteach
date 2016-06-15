@@ -11,4 +11,11 @@ module ActivitiesHelper
     enrollment = user_enrollment(user, activity.course)
     return ActivityStatus.where("activity_id = ? AND course_enrollment_id = ?", activity.id, enrollment.id).exists?
   end
+
+  # parses mardown and outputs html
+  def render_markdown(text)
+    renderer = Redcarpet::Render::HTML.new(escape_html: true, safe_links_only: true)
+    markdown = Redcarpet::Markdown.new(renderer, no_intra_emphasis: true, autolink: true, fenced_code_blocks: true)
+    return markdown.render(text).html_safe
+  end
 end
