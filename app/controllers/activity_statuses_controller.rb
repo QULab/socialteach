@@ -28,6 +28,7 @@ class ActivityStatusesController < ApplicationController
 
     respond_to do |format|
       if @activity_status.save
+        check_to_add_points
         format.html { redirect_to @activity_status, notice: 'Activity status was successfully created.' }
         format.json { render :show, status: :created, location: @activity_status }
       else
@@ -42,6 +43,7 @@ class ActivityStatusesController < ApplicationController
   def update
     respond_to do |format|
       if @activity_status.update(activity_status_params)
+        check_to_add_points
         format.html { redirect_to @activity_status, notice: 'Activity status was successfully updated.' }
         format.json { render :show, status: :ok, location: @activity_status }
       else
@@ -69,6 +71,19 @@ class ActivityStatusesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_status_params
-      params.require(:activity_status).permit(:is_completed, :Status, :Activity, :Course_enrollment)
+      params.require(:activity_status).permit(:is_completed, :status, :activity_id, :course_enrollment_id)
+    end
+
+    # Check if points to add and if correct
+    def check_to_add_points
+      if @activity_status.is_completed
+        if @activity_status.status == 1
+          level_user = @activity_status.course_enrollment.level.level
+          level_activity = @activity_status.activity.level.level
+          levelpoints_activity = @activity_status.activity.levelpoints
+          levelpoints = @activity_status.course_enrollment.add_points((levelpoints_activity/level_user)*levelpoints_activity, category: "Levelpoints")
+        end
+        learningpoints = @activity_status.course_enrollment.user.add_points(1,category: "Learningpoints")
+      end
     end
 end
