@@ -62,7 +62,7 @@
           <i class="fa fa-1x fa-bar-chart"></i>
           Statistics
         </h1>
-        <%= line_chart Merit.group_by_day(:earned_at).count %>
+         <%= render 'statistics/coursegraph' %>
       </div>
     </div>
     <div class="col-md-4">

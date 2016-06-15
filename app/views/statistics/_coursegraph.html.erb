@@ -1,0 +1,1 @@
+<%= line_chart Merit.where(course: 'United States').group(:earned_at).sum(:points) %>
