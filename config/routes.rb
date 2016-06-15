@@ -14,7 +14,7 @@
   # resources :lessons
 
   #resources :lectures
-      
+
   resources :chapters
 
   resources :activities do
@@ -28,7 +28,7 @@
       get 'curriculum'
     end
   end
-  get 'me/courses' => 'courses#index_enrolled', format: [:html]
+  get 'my_courses' => 'courses#index_enrolled', format: [:html]
 
   devise_for :users, :controllers => {:registrations => "registrations"}
 
