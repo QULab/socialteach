@@ -13,6 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20160614114515) do
 
+
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
     t.text     "body"
@@ -264,6 +265,8 @@ ActiveRecord::Schema.define(version: 20160614114515) do
     t.string   "username"
     t.integer  "sash_id"
     t.integer  "level",                  default: 0
+    t.string   "provider"
+    t.string   "userid"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
