@@ -3,6 +3,7 @@ module ActivitiesHelper
     return "fa-book" if activity.content.is_a?(ActivityLecture)
     # return "fa-graduation-cap" if activity.content.is_a?(ActivityAssessment)
     # return "fa-check-square-o" if activity.content.is_a?(ActivityExercise)
+    # return "fa-users" if activity.content.is_a?(ActivityChallenge)
     return "fa-question"
   end
 

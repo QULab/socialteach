@@ -31,7 +31,7 @@ class CourseEnrollmentsController < ApplicationController
       @course_enrollment = CourseEnrollment.new(course_enrollment_params)
       respond_to do |format|
         if @course_enrollment.save
-          format.html { render course_path(:id => course_id), notice: 'Congratulations, you are now enrolled in this Course' }
+          format.html { redirect_to course_path(course_id), notice: 'Congratulations, you are now enrolled in this Course' }
           format.json { render :show, status: :created, location: @course_enrollment }
         else
           format.html { render :new }
