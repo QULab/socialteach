@@ -1,5 +1,5 @@
 class CoursesController < BaseController
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :curriculum]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :curriculum, :feedback]
 
   # GET /courses
   # GET /courses.json
@@ -79,6 +79,20 @@ class CoursesController < BaseController
       format.json { head :no_content }
     end
   end
+
+  # POST /activities/1/feedback
+  def feedback
+    questionnaire = @course.feedback.questionnaire
+    user_id = current_user.id
+    CompletedMQuestion.create(m_question_id: questionnaire.m_questions.first.id,
+                              user_id: user_id,
+                              answer_id: params[:answer])
+
+    CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
+                                  user_id: user_id)
+    head :no_content
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

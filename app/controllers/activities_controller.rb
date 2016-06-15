@@ -3,7 +3,7 @@ class ActivitiesController < ApplicationController
   include CourseEnrollmentsHelper
 
   before_action :authenticate_user!
-  before_action :set_activity, only: [:show, :edit, :update, :destroy, :complete]
+  before_action :set_activity, only: [:show, :edit, :update, :destroy, :complete, :feedback]
 
   # GET /activities
   # GET /activities.json
@@ -67,6 +67,17 @@ class ActivitiesController < ApplicationController
 
   def complete
     unless user_completed_activity?(current_user, @activity)
+      if @activity.content.is_a?(ActivityExcercise) || @activity.content.is_a?(ActivityAssessment)
+        questionnaire = @activity.content.questionnaire
+        user_id = current_user.id
+
+        questionnaire.m_questions.each_with_index do |question, i|
+          CompletedMQuestion.create(m_question_id: question.id,
+                                    user_id: user_id,
+                                    answer_id: params[:question][i.to_s.to_sym][:answer_id])
+        end
+        CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user_id)
+      end
       enrollment = user_enrollment(current_user, @activity.course)
       status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
       status.save
@@ -74,6 +85,19 @@ class ActivitiesController < ApplicationController
     else
       redirect_to curriculum_course_path(@activity.course) , notice: 'You already finished this activity before!'
     end
+  end
+
+  # POST /activities/1/feedback
+  def feedback
+    questionnaire = @activity.feedback.questionnaire
+    user_id = current_user.id
+    CompletedMQuestion.create(m_question_id: questionnaire.m_questions.first.id,
+                              user_id: user_id,
+                              answer_id: params[:answer])
+
+    CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
+                                  user_id: user_id)
+    head :no_content
   end
 
   private
@@ -84,6 +108,6 @@ class ActivitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:name, :levelpoints, :chapter)
+      params.require(:activity).permit(:name, :levelpoints, :chapter, :question)
     end
 end
