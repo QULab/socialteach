@@ -23,6 +23,17 @@ class CoursesController < BaseController
     end
   end
 
+  def index_enrolled
+    authenticate_user!
+    set_enrollments(current_user)
+
+    unless @enrollments.empty?
+      render :index_enrolled
+    else
+    render :index
+    end
+  end
+
   # GET /courses/new
   def new
     @course = Course.new
@@ -92,5 +103,10 @@ class CoursesController < BaseController
     # There should be only one enrollment per user/course combination
     def set_enrollment(user)
       @enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", user.id, @course.id).first
+    end
+
+    # Get an array of all enrollments of the given user
+    def set_enrollments(user)
+      @enrollments = CourseEnrollment.where("user_id = ?", user.id).to_a
     end
 end
