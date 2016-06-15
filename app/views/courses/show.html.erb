@@ -1,12 +1,18 @@
-<p>
-  <strong>Name:</strong>
-  <%= @course.name %>
-</p>
+<% #This part is for people not enrolled in the course %>
+<% if (not user_signed_in?) or (not user_enrolled?(current_user, @course)) %>
+  <p>
+    <strong>Name:</strong>
+    <%= @course.name %>
+  </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @course.description %>
-</p>
+  <p>
+    <strong>Description:</strong>
+    <%= @course.description %>
+  </p>
 
-<%= link_to 'Edit', edit_course_path(@course) %> |
-<%= link_to 'Back', courses_path %>
+  <%= link_to 'Edit', edit_course_path(@course) %> |
+  <%= link_to 'Back', courses_path %>
+<% else %>
+  <% # this part is for enrolled user %>
+  <%= render 'courses/show_enrolled', course: @course %>
+<% end %>

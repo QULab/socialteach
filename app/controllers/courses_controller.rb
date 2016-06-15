@@ -10,17 +10,8 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.json
   # Show different page enrolled user
-  # TODO: add different view for instructor
   def show
-    if user_signed_in?
-      set_enrollment(current_user)
-      # the enrollment could be nil, if user is not enrolled
-      unless @enrollment.nil?
-        render :show_enrolled
-      end
-    else
     render :show
-    end
   end
 
   def index_enrolled
