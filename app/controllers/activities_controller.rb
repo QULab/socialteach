@@ -67,7 +67,7 @@ class ActivitiesController < ApplicationController
 
   def complete
     unless user_completed_activity?(current_user, @activity)
-      enrollment = user_enrollment(@activity.course, current_user)
+      enrollment = user_enrollment(current_user, @activity.course)
       status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
       status.save
       redirect_to curriculum_course_path(@activity.course) , notice: 'Congratulations, you finished this Activity!'
