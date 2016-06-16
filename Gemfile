@@ -32,16 +32,21 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# Merit as Pointsystem
+gem 'merit', '~> 2.3.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.4'
   gem "factory_girl_rails"
 end
+
 
 group :development do
   gem 'byebug'

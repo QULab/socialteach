@@ -1,10 +1,20 @@
   Rails.application.routes.draw do
 
+  resources :levels
+
+  resources :activity_statuses
+
   resources :course_enrollments
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
+  resources :leaderboards, only: [:show]
+
+  # resources :lessons
+
+  #resources :lectures
+      
   resources :chapters
 
   resources :activities do
@@ -13,7 +23,12 @@
     end
   end
 
-  resources :courses
+  resources :courses do
+    member do
+      get 'curriculum'
+    end
+  end
+  get 'me/courses' => 'courses#index_enrolled', format: [:html]
 
   devise_for :users, :controllers => {:registrations => "registrations"}
       
