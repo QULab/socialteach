@@ -27,8 +27,18 @@
         </li>
 
         <% if current_user.is_instructor %>
-        <% # TODO: fix path as soon as instructor routes are done %>
-          <li><%= link_to 'Manage Courses', courses_path %></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Courses <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <% current_user.get_created_courses.each do |course|  %>
+              <% # TODO: fix path as soon as instructor routes are done %>
+              <li>
+                <%= link_to course.name, edit_course_path(course)%>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+
         <% end %>
       </ul>
 

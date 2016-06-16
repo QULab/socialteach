@@ -75,4 +75,12 @@ class User < ActiveRecord::Base
     return ActivityStatus.where("activity_id = ? AND course_enrollment_id = ?", activity.id, enrollment.id).exists?
   end
 
+  def get_created_courses
+    unless self.is_instructor
+      return nil
+    else
+      return Course.where("creator_id = ?", self.id).to_a
+    end
+  end
+
 end
