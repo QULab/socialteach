@@ -5,17 +5,17 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
-    
+
   has_many :courses
   has_many :completed_m_questions
   has_many :completed_questionnaires
 
   validate :username_validation
     def username_validation
-          
+
       if !username.present?
           errors.add :username, "can't be blank!"
-          
+
       elsif username.length > 20
           errors.add :username, "The user name should not have more than 20 letters!"
       end
@@ -51,6 +51,30 @@ class User < ActiveRecord::Base
     else
       super
     end
+  end
+
+  # this method accepts either a course object or a course_id
+  def is_enrolled?(course)
+    if course.is_a?(Course)
+      return CourseEnrollment.where("user_id = ? AND course_id = ?", self.id, course.id).exists?
+    else
+      return CourseEnrollment.where("user_id = ? AND course_id = ?", self.id, course).exists?
+    end
+  end
+
+  # this method accepts either a course object or a course_id
+  def get_enrollment(course)
+    if course.is_a?(Course)
+      enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", self.id, course.id).first
+    else
+      enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", self.id, course).first
+    end
+    return enrollment
+  end
+
+  def completed?(activity)
+    enrollment = self.get_enrollment(activity.course)
+    return ActivityStatus.where("activity_id = ? AND course_enrollment_id = ?", activity.id, enrollment.id).exists?
   end
 
 end

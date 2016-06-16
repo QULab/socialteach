@@ -26,8 +26,7 @@ class CourseEnrollmentsController < ApplicationController
   # Create a new enrollment, if the user is not already enrolled in that course
   def create
     course_id = course_enrollment_params[:course_id]
-    previous_enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", current_user.id, course_id).first
-    if previous_enrollment.nil?
+    unless current_user.is_enrolled?(course_id)
       @course_enrollment = CourseEnrollment.new(course_enrollment_params)
       respond_to do |format|
         if @course_enrollment.save

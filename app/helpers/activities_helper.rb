@@ -7,11 +7,6 @@ module ActivitiesHelper
     return "fa-question"
   end
 
-  def user_completed_activity?(user, activity)
-    enrollment = user_enrollment(user, activity.course)
-    return ActivityStatus.where("activity_id = ? AND course_enrollment_id = ?", activity.id, enrollment.id).exists?
-  end
-
   # parses mardown and outputs html
   def render_markdown(text)
     renderer = Redcarpet::Render::HTML.new(escape_html: true, safe_links_only: true)

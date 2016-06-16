@@ -1,6 +1,4 @@
 class ActivitiesController < ApplicationController
-  include ActivitiesHelper
-  include CourseEnrollmentsHelper
 
   before_action :authenticate_user!
   before_action :set_activity, only: [:show, :edit, :update, :destroy, :complete, :feedback]
@@ -66,7 +64,7 @@ class ActivitiesController < ApplicationController
   end
 
   def complete
-    unless user_completed_activity?(current_user, @activity)
+    unless current_user.completed?(@activity)
       if @activity.content.is_a?(ActivityExcercise) || @activity.content.is_a?(ActivityAssessment)
         questionnaire = @activity.content.questionnaire
         user_id = current_user.id
@@ -78,7 +76,7 @@ class ActivitiesController < ApplicationController
         end
         CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user_id)
       end
-      enrollment = user_enrollment(current_user, @activity.course)
+      enrollment = current_user.get_enrollment(@activity.course)
       status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
       status.save
       redirect_to curriculum_course_path(@activity.course) , notice: 'Congratulations, you finished this Activity!'

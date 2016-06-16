@@ -3,7 +3,7 @@
     <div class="page-header">
       <h1>
         <%= course.name %>
-        <% enrollment = user_enrollment(current_user, course)%>
+        <% enrollment = current_user.get_enrollment(course)%>
         <small>Started <%= time_ago_in_words(enrollment.created_at) %> ago</small>
       </h1>
       <div class="panel panel-default">

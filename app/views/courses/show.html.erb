@@ -1,5 +1,5 @@
 <% #This part is for people not enrolled in the course %>
-<% if (not user_signed_in?) or (not user_enrolled?(current_user, @course)) %>
+<% if (not user_signed_in?) or (not current_user.is_enrolled?(@course)) %>
   <p>
     <strong>Name:</strong>
     <%= @course.name %>
