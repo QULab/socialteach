@@ -25,9 +25,6 @@
     end
   end
   get 'my_courses' => 'courses#index_enrolled', format: [:html]
-
-
-  devise_for :users, :controllers => {:registrations => "registrations"}
       
   get 'course/own_courses' => 'courses#own_courses'
 
