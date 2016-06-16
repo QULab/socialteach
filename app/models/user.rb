@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
-    
+
   has_many :courses
   has_many :completed_m_questions
   has_many :completed_questionnaires
@@ -19,5 +19,63 @@ class User < ActiveRecord::Base
     elsif username.length > 20
       errors.add :username, "The user name should not have more than 20 letters!"
     end
+
   end
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, userid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.provider = auth.provider
+      user.userid = auth.uid
+      user.username = auth.info.name
+    end
+  end
+
+  def self.new_with_session(params, session)
+    if session["devise.user_attributes"]
+      new(session["devise.user_attribbutes"], without_protection: true) do |user|
+        user.attributes = params
+        user.valid?
+      end
+    else
+      super
+    end
+  end
+
+  def password_required?
+    super && provider.blank?
+  end
+
+  def update_with_password(params, *options)
+    if encrypted_password.blank?
+      update_attributes(params, *options)
+    else
+      super
+    end
+  end
+
+  # this method accepts either a course object or a course_id
+  def is_enrolled?(course)
+    if course.is_a?(Course)
+      return CourseEnrollment.where("user_id = ? AND course_id = ?", self.id, course.id).exists?
+    else
+      return CourseEnrollment.where("user_id = ? AND course_id = ?", self.id, course).exists?
+    end
+  end
+
+  # this method accepts either a course object or a course_id
+  def get_enrollment(course)
+    if course.is_a?(Course)
+      enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", self.id, course.id).first
+    else
+      enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", self.id, course).first
+    end
+    return enrollment
+  end
+
+  def completed?(activity)
+    enrollment = self.get_enrollment(activity.course)
+    return ActivityStatus.where("activity_id = ? AND course_enrollment_id = ?", activity.id, enrollment.id).exists?
+  end
+
 end

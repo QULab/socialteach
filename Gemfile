@@ -35,12 +35,20 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Merit as Pointsystem
 gem 'merit', '~> 2.3.0'
 
+# Markdown parser (for better formatting and display of a lecture text)
+gem 'redcarpet', '~>3.3.4'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+#omniauth
+gem 'omniauth-facebook'
+
+#for setting the env variables
+gem 'figaro'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.4'
