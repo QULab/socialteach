@@ -21,33 +21,28 @@ class CoursesController < BaseController
     unless @enrollments.empty?
       render :index_enrolled
     else
-    render :index
+      @courses = Course.all
+      redirect_to courses_path, notice: 'You are not yet enrolled in any Courses. Choose a course to start learning!'
     end
   end
-    
+
   def own_courses
-      
     @courses = Course.where(creator_id: current_user.id)
   end
 
   # GET /courses/new
   def new
-
-    @course = Course.new   
-    
+    @course = Course.new
   end
 
   # GET /courses/1/edit
   def edit
-    
-      @related_chapters = @course.chapters
-      
+    @related_chapters = @course.chapters
   end
 
   # POST /courses
   # POST /courses.json
   def create
-          
     @course = Course.new(course_params)
 
     respond_to do |format|
@@ -59,8 +54,6 @@ class CoursesController < BaseController
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end
-    
-      
   end
 
   def curriculum
