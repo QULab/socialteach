@@ -30,8 +30,10 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Courses <span class="caret"></span></a>
           <ul class="dropdown-menu">
+            <li>
+              <%= link_to 'All Courses', course_own_courses_path %>
+            </li>
             <% current_user.get_created_courses.each do |course|  %>
-              <% # TODO: fix path as soon as instructor routes are done %>
               <li>
                 <%= link_to course.name, edit_course_path(course)%>
               </li>
