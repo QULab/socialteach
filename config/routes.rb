@@ -27,7 +27,8 @@
   get 'my_courses' => 'courses#index_enrolled', format: [:html]
 
   # TODO: change this route, maybe using an instructor namespace
-  get 'course/own_courses' => 'courses#own_courses'
+  get 'own_courses' => 'courses#own_courses', format: [:html]
+
 
   devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}
 
