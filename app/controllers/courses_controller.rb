@@ -9,7 +9,6 @@ class CoursesController < BaseController
 
   # GET /courses/1
   # GET /courses/1.json
-  # Show different page enrolled user
   def show
     render :show
   end
