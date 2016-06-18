@@ -9,20 +9,20 @@
         <%= chapter.name %>
       </h4>
       <p class="list-group-item-text">
-      <%= chapter.description %>
+      <%= truncate(chapter.description, length: 80) %>
       </p>
     </div>
     <div class="row" style="margin: 5px">
-      <button type="button" class="btn btn-link pull-right">
+      <button type="button" class="btn btn-link pull-right" data-toggle="tooltip" title="Delete Chapter">
       <i class="fa fa-x fa-trash"></i>
       </button>
-      <button type="button" class="btn btn-link pull-right">
+      <button type="button" class="btn btn-link pull-right" data-toggle="tooltip" title="Edit Chapter">
       <i class="fa fa-x fa-pencil"></i>
       </button>
-      <button type="button" class="btn btn-link pull-right">
+      <button type="button" class="btn btn-link pull-right" data-toggle="tooltip" title="Edit Successors">
       <i class="fa fa-x fa-chevron-right"></i>
       </button>
-      <button type="button" class="btn btn-link pull-right">
+      <button type="button" class="btn btn-link pull-right" data-toggle="tooltip" title="Edit Predecessors">
       <i class="fa fa-x fa-chevron-left"></i>
       </button>
     </div>
