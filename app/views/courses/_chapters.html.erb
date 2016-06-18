@@ -1,0 +1,35 @@
+<div class="list-group">
+  <% chapters.each do |chapter| %>
+    <a href="#" class="list-group-item chapter">
+      <div class="row" style="margin: 5px">
+      <h4 class="list-group-item-heading">
+        <span class="label label-default label-pill pull-right">
+          <%= chapter.shortname %>
+        </span>
+        <%= chapter.name %>
+      </h4>
+      <p class="list-group-item-text">
+      <%= chapter.description %>
+      </p>
+    </div>
+    <div class="row" style="margin: 5px">
+      <button type="button" class="btn btn-link pull-right">
+      <i class="fa fa-x fa-trash"></i>
+      </button>
+      <button type="button" class="btn btn-link pull-right">
+      <i class="fa fa-x fa-pencil"></i>
+      </button>
+      <button type="button" class="btn btn-link pull-right">
+      <i class="fa fa-x fa-chevron-right"></i>
+      </button>
+      <button type="button" class="btn btn-link pull-right">
+      <i class="fa fa-x fa-chevron-left"></i>
+      </button>
+    </div>
+    </a>
+  <% end %>
+  <p></p>
+  <button type="button" class="btn btn-primary btn-block">
+    <i class="fa fa-x fa-plus"></i>
+  </button>
+</div>

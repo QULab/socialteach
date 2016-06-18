@@ -2,17 +2,31 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h1>Editing Course</h1>
+      <div class="page-header">
+        <h1>
+          Editing Course
+          <small><%= @course.name %></small>
+        </h1>
+      </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
+      <legend>Course Attributes</legend>
       <%= render 'form' %>
+      <legend>Course Chapters</legend>
+      <%= render partial: 'chapters', locals: {chapters: @course.chapters} %>
       <%= link_to 'Back', courses_path, class: "btn btn-link" %>
-      <%= link_to 'Add Chapter', new_chapter_path(:course_id => @course.id) , class: "btn btn-link" %>
     </div>
-    <div class="col-md-9">
-      <%= render partial: 'graph', locals: {type: "courses", data: @course} %>
+    <div class="col-md-8">
+      <div class="row">
+        <legend>Course Structrue</legend>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <%= render partial: 'graph', locals: {type: "courses", data: @course} %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
