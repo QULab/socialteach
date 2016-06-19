@@ -19,7 +19,7 @@
     end
   end
 
-  resources :courses do
+  resources :courses, only: [:show, :index] do
     member do
       get 'curriculum'
     end

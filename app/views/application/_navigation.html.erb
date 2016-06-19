@@ -35,7 +35,7 @@
             </li>
             <% current_user.get_created_courses.each do |course|  %>
               <li>
-                <%= link_to course.name, edit_course_path(course)%>
+                <%= link_to course.name, edit_instructor_course_path(course)%>
               </li>
             <% end %>
           </ul>
