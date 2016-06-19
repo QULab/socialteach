@@ -8,6 +8,9 @@ class Instructor::CoursesController < Instructor::BaseController
   def show
   end
 
+  def edit
+  end
+
   def create
     @course = Course.new(course_params)
 

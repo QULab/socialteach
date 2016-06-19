@@ -30,7 +30,7 @@
   # Routes that are only for instructors
   namespace :instructor do
     # index shows all courses the current user can modify
-    resources :courses, only: [:destroy, :update, :new, :create, :show, :index], format: [:html]
+    resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html]
   end
 
   devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}

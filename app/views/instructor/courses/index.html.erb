@@ -8,7 +8,7 @@
   <div class="row">
     <div class="list-group">
       <% @courses.each do |course| %>
-        <%= link_to course_path(course), class: "list-group-item" do %>
+        <%= link_to instructor_course_path(course), class: "list-group-item" do %>
           <i class="fa fa-3x fa-check-circle" style="float: right"></i>
           <h4 class="list-group-item-heading">
             <%= course.name %>
@@ -24,5 +24,5 @@
       <%- end %>
     </div>
   </div>
-   <%= link_to 'New Course', new_course_path %>
+   <%= link_to 'New Course', new_course_path, class: "btn btn-primary" %>
 </div>
