@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="center jumbotron">
+        <h1>Hello <%= @user.username %>! Welcome to your Profile!</h1>
+            </div>
+            
+       <p> <%= avatar_for(@user) %></p> 
+       <p> My Birthday : <%= @user.birthday   %></p> 
+       <p> About me : <%= @user.aboutme %></p> 
+
+
+       <p> <%= link_to "Edit Profile", users_edit_profile_path(@user) %></p>
+
+</div>
+
