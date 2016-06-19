@@ -26,9 +26,12 @@
   end
   get 'my_courses' => 'courses#index_enrolled', format: [:html]
 
-  # TODO: change this route, maybe using an instructor namespace
-  get 'own_courses' => 'courses#own_courses', format: [:html]
 
+  # Routes that are only for instructors
+  namespace :instructor do
+    # index shows all courses the current user can modify
+    resources :courses, only: [:destroy, :update, :new, :create, :show, :index], format: [:html]
+  end
 
   devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}
 
