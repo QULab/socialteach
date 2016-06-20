@@ -1,4 +1,23 @@
-<div class="field">
-  <%= f.label :text %><br>
-  <%= f.text_area :text %>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <%= f.label :text %><br>
+      <%= f.text_area :text, class: "form-control", rows: 9 %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Markdown Cheat Sheet
+      </div>
+      <div class="panel-body">
+        *bold* <br>
+        # Heading 1 <br>
+        ## Heading 2
+
+        * list item
+        * list item
+      </div>
+    </div>
+  </div>
 </div>
