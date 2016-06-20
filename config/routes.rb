@@ -2,10 +2,16 @@
 
   get 'statistics/show'
 
+  resources :levels
+
+  resources :activity_statuses
+
   resources :course_enrollments
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
+  resources :leaderboards, only: [:show]
 
   resources :chapters
 
@@ -20,15 +26,23 @@
       get 'curriculum'
     end
   end
+  get 'my_courses' => 'courses#index_enrolled', format: [:html]
 
-  devise_for :users, :controllers => {:registrations => "registrations"}
+  # TODO: change this route, maybe using an instructor namespace
+  get 'own_courses' => 'courses#own_courses', format: [:html]
+
+
+  devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}
+
 
   namespace :graph do
     get 'courses/:id' => 'courses#show', format: [:json]
     get 'chapters/:id' => 'chapters#show', format: [:json]
   end
 
-  post 'completed_questionnaires' => 'completed_questionnaires#create', format: [:json]
+  post 'activities/:id/feedback' => 'activities#feedback', format: [:json]
+  post 'courses/:id/feedback' => 'courses#feedback', format: [:json]
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

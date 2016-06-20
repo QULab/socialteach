@@ -1,0 +1,29 @@
+<% feedback = commentable.feedback
+unless feedback.nil?
+  # Default feedback has only one question
+  question = feedback.questionnaire.m_questions.first
+  feedbacks = feedback.questionnaire.completed_questionnaires
+  icons = ["meh-o", "smile-o", "frown-o"]
+  progress = ["warning", "success", "danger"]
+  count_all = question.completed_m_questions.count %>
+
+    <h4>Total number of users who gave feedback: <%= count_all %></h4>
+      <% question.answers.each_with_index do |answer, i| %>
+        <% count = question.completed_m_questions.where(answer_id: answer.id).count
+        percentage = count * 100 / count_all%>
+        <div class="row">
+          <div class="col-md-12">
+            <%= fa_icon icons[i], text: answer.text %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="progress">
+              <div class="progress-bar progress-bar-<%= progress[i] %>" role="progressbar" aria-valuenow="<%= percentage %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= percentage %>%">
+                <%= fa_icon icons[i], text: "#{count} user(s)" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+<% end %>

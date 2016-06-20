@@ -32,6 +32,12 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# Merit as Pointsystem
+gem 'merit', '~> 2.3.0'
+
+# Markdown parser (for better formatting and display of a lecture text)
+gem 'redcarpet', '~>3.3.4'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -42,6 +48,17 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'chartkick', '~> 1.2.4'
 gem 'dateslices', '~> 0.0.3'
 gem 'active_median', '~> 0.1.0'
+
+#omniauth
+gem 'omniauth-facebook'
+
+#for setting the env variables
+gem 'figaro'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.4'
+  gem "factory_girl_rails"
+end
 
 group :development do
   gem 'byebug'

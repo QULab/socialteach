@@ -1,0 +1,33 @@
+<%= form_for(@activity_status) do |f| %>
+  <% if @activity_status.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@activity_status.errors.count, "error") %> prohibited this activity_status from being saved:</h2>
+
+      <ul>
+      <% @activity_status.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :is_completed %><br>
+    <%= f.check_box :is_completed %>
+  </div>
+  <div class="field">
+    <%= f.label :Status %><br>
+    <%= f.number_field :Status %>
+  </div>
+  <div class="field">
+    <%= f.label :activity %><br>
+    <%= f.text_field :activity %>
+  </div>
+  <div class="field">
+    <%= f.label :course_enrollment %><br>
+    <%= f.text_field :course_enrollment %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

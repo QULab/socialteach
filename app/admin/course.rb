@@ -6,7 +6,7 @@ ActiveAdmin.register Course do
 permit_params :name, :description
 #
 # or
-#
+# |
 # permit_params do
 #   permitted = [:permitted, :attributes]
 #   permitted << :other if resource.something?

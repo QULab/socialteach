@@ -2,12 +2,13 @@
   <div class="row">
     <div class="page-header">
       <h1>
-        <%= @course.name %>
-        <small>Started <%= time_ago_in_words(@enrollment.created_at) %> ago</small>
+        <%= course.name %>
+        <% enrollment = current_user.get_enrollment(course)%>
+        <small>Started <%= time_ago_in_words(enrollment.created_at) %> ago</small>
       </h1>
       <div class="panel panel-default">
         <div class="panel-body">
-          <%= @course.description%>
+          <%= course.description%>
         </div>
       </div>
       <%= link_to curriculum_course_path, class: "btn btn-primary" do %>
@@ -31,7 +32,7 @@
     </h4>
     <div class="list-group">
       <%- #TODO use a real function to get recommended activities %>
-      <%- @course.chapters.first.activities.each do |act| %>
+      <%- course.chapters.first.activities.each do |act| %>
         <%= link_to activity_path(act), class: "list-group-item" do %>
           <h4 class="list-group-item-heading">
             <i class="fa <%= activity_icon(act) =%>"></i>
@@ -76,6 +77,7 @@
   </div>
 
   <div class="row">
-    <%= render 'shared/comments', commentable: @course %>
+    <%= render 'shared/comments', commentable: course %>
+    <%= render 'shared/feedback', commentable: course %>
   </div>
 </div>

@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Your Courses</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="list-group">
+      <% @enrollments.each do |enrollment| %>
+        <%- course = enrollment.course %>
+        <%= link_to course_path(course), class: "list-group-item" do %>
+          <i class="fa fa-3x fa-check-circle" style="float: right"></i>
+          <h4 class="list-group-item-heading">
+            <%= course.name %>
+          </h4>
+          <h6 class="list-group-item-heading">
+            Started <%= time_ago_in_words(enrollment.created_at) %> ago
+          </h6>
+          <p class="list-group-item-text">
+            <%= course.description %>
+          </p>
+        <%- end %>
+      <%- end %>
+    </div>
+  </div>
+</div>
