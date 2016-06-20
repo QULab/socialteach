@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Active:</strong>
   <%= @course_enrollment.active %>
@@ -22,12 +20,17 @@
 
 <p>
   <strong>User:</strong>
-  <%= @course_enrollment.user %>
+    <%= @course_enrollment.user.id %>
 </p>
 
 <p>
   <strong>Course:</strong>
-  <%= @course_enrollment.course %>
+    <%= @course_enrollment.course.id %>
+</p>
+
+<p>
+  <strong>Leaderboards:</strong>
+  <%= link_to 'Leaderboard', leaderboard_path(@course_enrollment.course_id) %>
 </p>
 
 <%= link_to 'Edit', edit_course_enrollment_path(@course_enrollment) %> |

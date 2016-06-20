@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<p><%= @leaderboard%></p>
+
+<% @leaderboard.each do |user| %>
+  <p> <%= user["username"] %> <%= user["sum_points"] %> </p>
+<% end %>
+
+
+
+<%= link_to 'Back', course_enrollments_path %>

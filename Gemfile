@@ -12,6 +12,10 @@ gem 'puma'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3'
 gem 'bootstrap_form'
+# icon font
+gem 'font-awesome-rails', '~> 4.6.3.0'
+# Do not log asset requests in rails console
+gem 'quiet_assets', '~> 1.1.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -28,11 +32,29 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# Merit as Pointsystem
+gem 'merit', '~> 2.3.0'
+
+# Markdown parser (for better formatting and display of a lecture text)
+gem 'redcarpet', '~>3.3.4'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
+
+#omniauth
+gem 'omniauth-facebook'
+
+#for setting the env variables
+gem 'figaro'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.4'
+  gem "factory_girl_rails"
+end
+
 
 group :development do
   gem 'byebug'
@@ -44,7 +66,7 @@ group :development do
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
-    
+
 end
 
 group :test do

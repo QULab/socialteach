@@ -1,1 +1,11 @@
+<% if user_signed_in? %>
 <%= render 'navigation' %>
+<% end %>
+
+<%- if notice.present? %>
+  <div class="container">
+    <div class="alert alert-success" role="alert">
+      <p id="notice"><%= notice %></p>
+    </div>
+  </div>
+<%- end %>
