@@ -1,14 +1,26 @@
 <div class="container">
-    <div class="center jumbotron">
-        <h1>Hello <%= @user.username %>! Welcome to your Profile!</h1>
-            </div>
-            
-       <p> <%= avatar_for(@user) %></p> 
-       <p> My Birthday : <%= @user.birthday   %></p> 
-       <p> About me : <%= @user.aboutme %></p> 
+    <div class="page-header">
+  <h1><%= @user.username %>'s Profile</h1>
+	</div>
 
+	<div class="row">
+  <div class="col-xs-6 col-md-4">
+  	<p> <%= avatar_for(@user) %></p> 
+    <p> My Birthday : <%= @user.birthday.strftime("%d.%m.%Y")   %></p> 
+    <p> My Badges : </p>
+    <p> My Points : </p>
+    <p> My Level : </p>
+</div>
+  <div class="col-xs-6 col-md-4">    
+  	<h1>About me :</h1>
+  	<p><%= @user.aboutme %></p>
+</div>
 
-       <p> <%= link_to "Edit Profile", users_edit_profile_path(@user) %></p>
+</div>
 
+<div class="div2"
+
+       <p> <%= link_to "Edit Profile", users_edit_profile_path() %></p>
+</div>
 </div>
 
