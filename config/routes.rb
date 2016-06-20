@@ -11,9 +11,9 @@
 
   resources :leaderboards, only: [:show]
 
-  resources :chapters
+  # resources :chapters, only: [:show]
 
-  resources :activities do
+  resources :activities, only: [:show] do
     member do
       post 'complete'
     end
@@ -31,6 +31,7 @@
   namespace :instructor do
     # index shows all courses the current user can modify
     resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html]
+    resources :chapters, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
   end
 
   devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}

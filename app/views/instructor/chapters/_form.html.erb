@@ -1,4 +1,4 @@
-<%= form_for(@chapter) do |f| %>
+<%= form_for([:instructor, @chapter]) do |f| %>
   <% if @chapter.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@chapter.errors.count, "error") %> prohibited this chapter from being saved:</h2>
@@ -30,7 +30,7 @@
   <%= f.hidden_field :course_id, :value => params[:course_id], class: "form-control" %>
 
   <div class="field">
-      <%= f.label :Predecessor %><br> 
+      <%= f.label :Predecessor %><br>
       <%= collection_select(:course, :course_id, @ordered_chapters, :id, :name, prompt: true) %>
   </div>
 
