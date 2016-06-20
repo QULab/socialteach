@@ -3,6 +3,7 @@ class Activity < ActiveRecord::Base
 	has_many :activity_statuses
 
   belongs_to :content, polymorphic: true
+  accepts_nested_attributes_for :content
 
 	has_one :feedback, as: :commentable
 

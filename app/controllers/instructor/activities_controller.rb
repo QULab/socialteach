@@ -14,7 +14,18 @@ class Instructor::ActivitiesController < Instructor::BaseController
 
   # GET /activities/new
   def new
-    @activity = Activity.new
+    @chapter = Chapter.find(params[:chapter_id])
+    @activity = @chapter.activities.new
+
+    if params[:content_type] == "lecture"
+      @activity.content = ActivityLecture.new
+    elsif params[:content_type] == "exercise"
+      @activity.content = ActivityExercise.new
+    elsif params[:content_type] == "assessment"
+      @activity.content = ActivityAssessment.new
+    else
+      raise "Invalid Type Parameter"
+    end
   end
 
   # GET /activities/1/edit
@@ -25,6 +36,16 @@ class Instructor::ActivitiesController < Instructor::BaseController
   # POST /activities.json
   def create
     @activity = Activity.new(activity_params)
+
+    if @activity.content_type == "ActivityLecture"
+      @activity.content = ActivityLecture.new(content_params)
+    elsif @activity.content_type == "ActivityExercise"
+      @activity.content = ActivityExercise.new(content_params)
+    elsif @activity.content_type == "ActivityAssessment"
+      @activity.content = ActivityAssessment.new(content_params)
+    else
+      raise "Invalid Type Parameter"
+    end
 
     respond_to do |format|
       if @activity.save
@@ -39,7 +60,9 @@ class Instructor::ActivitiesController < Instructor::BaseController
   # PATCH/PUT /activities/1.json
   def update
     respond_to do |format|
-      if @activity.update(activity_params)
+      @activity.assign_attributes(activity_params)
+      @activity.content.assign_attributes(content_params)
+      if @activity.save
         format.html { redirect_to instructor_activity_path(@activity), notice: 'Activity was successfully updated.' }
       else
         format.html { render :edit }
@@ -62,8 +85,11 @@ class Instructor::ActivitiesController < Instructor::BaseController
       @activity = Activity.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def activity_params
-      params.require(:activity).permit(:name, :levelpoints, :chapter, :question)
+      params.require(:activity).permit(:name, :levelpoints, :shortname, :tier, :chapter_id, :question, :content_type)
+    end
+
+    def content_params
+      params.require(:activity).require(:content_attributes).permit(:text)
     end
 end

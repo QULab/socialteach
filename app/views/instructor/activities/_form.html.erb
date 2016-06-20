@@ -11,14 +11,28 @@
     </div>
   <% end %>
 
+  <%= f.hidden_field :chapter_id %>
+  <%= f.hidden_field :content_type %>
+
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
+    <%= f.label :shortname %><br>
+    <%= f.text_field :shortname %>
+  </div>
+  <div class="field">
     <%= f.label :levelpoints %><br>
     <%= f.number_field :levelpoints %>
   </div>
+  <div class="field">
+    <%= f.label :tier %><br>
+    <%= f.number_field :tier %>
+  </div>
+  <%= f.fields_for :content do |content_form| %>
+    <%= render 'form_lecture', f: content_form %>
+  <% end %>
   <div class="actions">
     <%= f.submit %>
   </div>
