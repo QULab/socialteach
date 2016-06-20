@@ -270,9 +270,9 @@ ActiveRecord::Schema.define(version: 20160614201517) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "username"
-    t.boolean  "is_instructor"
     t.integer  "sash_id"
     t.integer  "level",                  default: 0
+    t.boolean  "is_instructor"
     t.string   "provider"
     t.string   "userid"
   end

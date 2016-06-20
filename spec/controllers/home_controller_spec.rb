@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe HomeController, type: :controller do
+<<<<<<< HEAD
 
   describe "Login Process" do
     login_user
@@ -17,5 +18,4 @@ RSpec.describe HomeController, type: :controller do
         expect(response).to redirect_to(course_own_courses_path)  
         
     end      
-  end
 end

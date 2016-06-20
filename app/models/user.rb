@@ -10,16 +10,13 @@ class User < ActiveRecord::Base
   has_many :completed_m_questions
   has_many :completed_questionnaires
   validate :username_validation
-    
+
   def username_validation
-          
     if !username.present?
       errors.add :username, "can't be blank!"
-          
     elsif username.length > 20
       errors.add :username, "The user name should not have more than 20 letters!"
     end
-
   end
 
   def self.from_omniauth(auth)
@@ -76,6 +73,14 @@ class User < ActiveRecord::Base
   def completed?(activity)
     enrollment = self.get_enrollment(activity.course)
     return ActivityStatus.where("activity_id = ? AND course_enrollment_id = ?", activity.id, enrollment.id).exists?
+  end
+
+  def get_created_courses
+    unless self.is_instructor
+      return nil
+    else
+      return Course.where("creator_id = ?", self.id).to_a
+    end
   end
 
 end
