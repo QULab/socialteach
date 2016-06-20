@@ -1,0 +1,21 @@
+<h1>Edit your Profile Picture</h1>
+
+<%= form_for(@user, html:{multipart:true}) do |f| %>
+<p>
+    <%= f.label :birthday %><br />
+    <%= f.date_select :birthday, :start_year=>1950 %>
+</p>
+
+<p><%= f.label :Profilepicture %><br />
+	<%= f.file_field :avatar  %></p>
+
+<p>
+    <%= f.label :About_me %><br />
+    <%= f.text_field :aboutme%>
+</p>
+
+
+<%= f.submit "Save Change" , class: "btn btn-primary btn-file" %>
+<p> <%= link_to "Back", user_path(current_user) %></p>
+
+<% end%>
