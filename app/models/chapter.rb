@@ -19,4 +19,5 @@ class Chapter < ActiveRecord::Base
 
     validates :name, :shortname, :tier, :course, presence: true
     validates :tier, numericality: {greater_than_or_equal_to: 0}
+    
 end

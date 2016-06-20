@@ -10,7 +10,7 @@
     <%= @course.description %>
   </p>
 
-
+<% end -%>
 <% if check_course_belongs_to_current_user(@course) %>
   <%= link_to 'Edit', edit_course_path(@course) %> |
 <% end -%>
