@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>
+        <%= @activity.name %>
+      </h2>
+      <p>
+        <%= @activity.chapter.name %>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <%= link_to edit_instructor_activity_path(@activity), class:"btn btn-primary" do %>
+      Edit Activity
+    <% end %>
+  </div>
+  <div class="row">
+    <%= render 'shared/comments', commentable: @activity %>
+  </div>
+</div>
