@@ -1,4 +1,3 @@
-
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -16,6 +15,7 @@
       <%= render 'form' %>
       <legend>Course Chapters</legend>
       <%= render partial: 'chapters', locals: {course: @course, chapters: @course.chapters} %>
+      <%= link_to 'Show', instructor_course_path(@course), class: "btn btn-link" %> | 
       <%= link_to 'Back', instructor_courses_path, class: "btn btn-link" %>
     </div>
     <div class="col-md-8">
