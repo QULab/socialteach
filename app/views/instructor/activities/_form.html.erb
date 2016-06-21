@@ -1,49 +1,49 @@
-<div class="row">
-  <div class="col-md-6">
-    <%= form_for([:instructor, @activity]) do |f| %>
-      <% if @activity.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
+<%= form_for([:instructor, @activity]) do |f| %>
+  <div class="row">
+    <div class="col-md-6">
+        <% if @activity.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@activity.errors.count, "error") %> prohibited this activity from being saved:</h2>
 
-          <ul>
-          <% @activity.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-          </ul>
+            <ul>
+            <% @activity.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <%= f.hidden_field :chapter_id %>
+        <%= f.hidden_field :content_type %>
+
+        <div class="form-group">
+          <%= f.label :name %><br>
+          <%= f.text_field :name, class: "form-control" %>
         </div>
+        <div class="form-group">
+          <%= f.label :shortname %><br>
+          <%= f.text_field :shortname, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :levelpoints %><br>
+          <%= f.number_field :levelpoints, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :tier %><br>
+          <%= f.number_field :tier, class: "form-control" %>
+        </div>
+    </div>
+  </div>
+
+      <%= f.fields_for :content do |content_form| %>
+        <%= render 'form_lecture', f: content_form %>
       <% end %>
 
-      <%= f.hidden_field :chapter_id %>
-      <%= f.hidden_field :content_type %>
-
-      <div class="form-group">
-        <%= f.label :name %><br>
-        <%= f.text_field :name, class: "form-control" %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="actions">
+        <%= f.submit class: 'btn btn-primary' %>
       </div>
-      <div class="form-group">
-        <%= f.label :shortname %><br>
-        <%= f.text_field :shortname, class: "form-control" %>
-      </div>
-      <div class="form-group">
-        <%= f.label :levelpoints %><br>
-        <%= f.number_field :levelpoints, class: "form-control" %>
-      </div>
-      <div class="form-group">
-        <%= f.label :tier %><br>
-        <%= f.number_field :tier, class: "form-control" %>
-      </div>
-  </div>
-</div>
-
-    <%= f.fields_for :content do |content_form| %>
-      <%= render 'form_lecture', f: content_form %>
-    <% end %>
-
-<div class="row">
-  <div class="col-md-6">
-    <div class="actions">
-      <%= f.submit class: "btn btn-primary" %>
     </div>
-  <% end %>
   </div>
-</div>
+<% end %>
