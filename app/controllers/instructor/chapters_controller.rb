@@ -23,6 +23,7 @@ class Instructor::ChaptersController < Instructor::BaseController
   # GET /chapters/1/edit
   def edit
     require_permission(@chapter.course)
+    @ordered_chapters = Chapter.all
   end
 
   # POST /chapters
@@ -44,9 +45,10 @@ class Instructor::ChaptersController < Instructor::BaseController
   # PATCH/PUT /chapters/1.json
   def update
     require_permission(@chapter.course)
+    @ordered_chapters = Chapter.all
     respond_to do |format|
       if @chapter.update(chapter_params)
-        format.html { redirect_to instructor_chapter_path(@chapter), notice: 'Chapter was successfully updated.' }
+        format.html { redirect_to edit_instructor_course_path(@chapter.course), notice: 'Chapter was successfully updated.' }
       else
         format.html { render :edit }
       end
@@ -56,10 +58,11 @@ class Instructor::ChaptersController < Instructor::BaseController
   # DELETE /chapters/1
   # DELETE /chapters/1.json
   def destroy
-    require_permission(@chapter.course)
+    course = @chapter.course
+    require_permission(course)
     @chapter.destroy
     respond_to do |format|
-      format.html { redirect_to instructor_chapters_path, notice: 'Chapter was successfully destroyed.' }
+      format.html { redirect_to edit_instructor_course_path(course), notice: 'Chapter was successfully destroyed.' }
     end
   end
 
@@ -71,6 +74,6 @@ class Instructor::ChaptersController < Instructor::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def chapter_params
-        params.require(:chapter).permit(:name, :shortname, :description, :course_id, :tier)
+        params.require(:chapter).permit(:name, :shortname, :description, :tier)
     end
 end
