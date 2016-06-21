@@ -26,6 +26,7 @@
         </h1>
       </div>
     </div>
+
     <div class="col-md-4">
       <div class="page-header">
         <h1>
@@ -33,7 +34,28 @@
           User Statistics
         </h1>
       </div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <span class="badge">
+            <%= @course.get_number_of_enrollments %>
+          </span>
+          Enrolled Users
+        </li>
+        <li class="list-group-item">
+          <span class="badge">
+            <%= @course.get_number_of_enrollments %>
+          </span>
+          Users who finished this Course
+        </li>
+        <li class="list-group-item">
+          <span class="badge">
+            <%= @course.get_number_of_enrollments %>
+          </span>
+          New Users in the last 30 days
+        </li>
+      </ul>
     </div>
+
     <div class="col-md-4">
       <div class="page-header">
         <h1>
