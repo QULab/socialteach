@@ -9,6 +9,7 @@ class Instructor::CoursesController < Instructor::BaseController
   end
 
   def edit
+    require_permission(@course)
   end
 
   def create
@@ -28,6 +29,7 @@ class Instructor::CoursesController < Instructor::BaseController
   end
 
   def destroy
+    require_permission(@course)
     @course.destroy
     respond_to do |format|
       format.html { redirect_to instructor_courses_path, notice: 'Course was successfully destroyed.' }
@@ -35,6 +37,7 @@ class Instructor::CoursesController < Instructor::BaseController
   end
 
   def update
+    require_permission(@course)
     respond_to do |format|
       if @course.update(course_params)
         format.html { redirect_to instructor_course_path(@course), notice: 'Course was successfully updated.' }
@@ -54,5 +57,4 @@ class Instructor::CoursesController < Instructor::BaseController
     def course_params
         params.require(:course).permit(:name, :description, :creator_id)
     end
-
 end

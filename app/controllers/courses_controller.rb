@@ -1,5 +1,5 @@
 class CoursesController < BaseController
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :curriculum, :feedback]
+  before_action :set_course, only: [:show, :curriculum, :feedback]
 
   # GET /courses
   # GET /courses.json

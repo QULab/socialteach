@@ -1,12 +1,6 @@
 class Instructor::ActivitiesController < Instructor::BaseController
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
 
-  # GET /activities
-  # GET /activities.json
-  #  def index
-  #    @activities = Activity.all
-  #  end
-
   # GET /activities/1
   # GET /activities/1.json
   def show
@@ -30,12 +24,14 @@ class Instructor::ActivitiesController < Instructor::BaseController
 
   # GET /activities/1/edit
   def edit
+    require_permission(@activity.course)
   end
 
   # POST /activities
   # POST /activities.json
   def create
     @activity = Activity.new(activity_params)
+    require_permission(@activity.course)
 
     if @activity.content_type == "ActivityLecture"
       @activity.content = ActivityLecture.new(content_params)
@@ -59,6 +55,7 @@ class Instructor::ActivitiesController < Instructor::BaseController
   # PATCH/PUT /activities/1
   # PATCH/PUT /activities/1.json
   def update
+    require_permission(@activity.course)
     respond_to do |format|
       @activity.assign_attributes(activity_params)
       @activity.content.assign_attributes(content_params)
@@ -73,6 +70,7 @@ class Instructor::ActivitiesController < Instructor::BaseController
   # DELETE /activities/1
   # DELETE /activities/1.json
   def destroy
+    require_permission(@activity.course)
     @activity.destroy
     respond_to do |format|
       format.html { redirect_to instructor_chapter_path(@activity.chapter), notice: 'Activity was successfully destroyed.' }
