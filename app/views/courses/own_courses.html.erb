@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>My own courses</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <% @courses.each do |course| %>
+      <div class="col-md-12">
+        <div class="course jumbotron">
+          <h1><%= course.name %></h1>
+          <p><%= course.description %></p>
+          <p>
+            <%= link_to 'See More', course, class: "btn btn-primary btn-lg" %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if user_signed_in? and current_user.is_instructor? %>
+
+   <%= link_to 'New Course', new_course_path %>
+
+<% end -%>
