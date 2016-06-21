@@ -1,6 +1,15 @@
 class CoursesController < BaseController
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :curriculum]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :curriculum, :feedback]
 
+  before_filter :require_permission, only: [:edit, :update, :destroy]
+
+  def require_permission
+    if current_user.id != Course.find(params[:id]).creator_id
+      flash[:notice] = "You are not allowed to access to page!"
+      redirect_to root_path
+    end
+  end
+    
   # GET /courses
   # GET /courses.json
   def index
@@ -9,18 +18,8 @@ class CoursesController < BaseController
 
   # GET /courses/1
   # GET /courses/1.json
-  # Show different page enrolled user
-  # TODO: add different view for instructor
   def show
-    if user_signed_in?
-      set_enrollment(current_user)
-      # the enrollment could be nil, if user is not enrolled
-      unless @enrollment.nil?
-        render :show_enrolled
-      end
-    else
     render :show
-    end
   end
 
   def index_enrolled
@@ -30,8 +29,13 @@ class CoursesController < BaseController
     unless @enrollments.empty?
       render :index_enrolled
     else
-    render :index
+      @courses = Course.all
+      redirect_to courses_path, notice: 'You are not yet enrolled in any Courses. Choose a course to start learning!'
     end
+  end
+
+  def own_courses
+    @courses = Course.where(creator_id: current_user.id)
   end
 
   # GET /courses/new
@@ -41,6 +45,7 @@ class CoursesController < BaseController
 
   # GET /courses/1/edit
   def edit
+    @related_chapters = @course.chapters
   end
 
   # POST /courses
@@ -89,6 +94,20 @@ class CoursesController < BaseController
     end
   end
 
+  # POST /activities/1/feedback
+  def feedback
+    questionnaire = @course.feedback.questionnaire
+    user_id = current_user.id
+    CompletedMQuestion.create(m_question_id: questionnaire.m_questions.first.id,
+                              user_id: user_id,
+                              answer_id: params[:answer])
+
+    CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
+                                  user_id: user_id)
+    head :no_content
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
@@ -97,7 +116,7 @@ class CoursesController < BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
-      params.require(:course).permit(:name, :description)
+        params.require(:course).permit(:name, :description, :creator_id)
     end
 
     # There should be only one enrollment per user/course combination

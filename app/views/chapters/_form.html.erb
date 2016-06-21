@@ -23,7 +23,19 @@
     <%= f.label :description %><br>
     <%= f.text_field :description %>
   </div>
+  <div class="field">
+      <%= f.label :tier %><br>
+      <%= f.text_field :tier %>
+ </div>
+  <%= f.hidden_field :course_id, :value => params[:course_id], class: "form-control" %>
+
+  <div class="field">
+      <%= f.label :Predecessor %><br> 
+      <%= collection_select(:course, :course_id, @ordered_chapters, :id, :name, prompt: true) %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+

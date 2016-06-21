@@ -1,6 +1,17 @@
 class ChaptersController < ApplicationController
   before_action :set_chapter, only: [:show, :edit, :update, :destroy]
 
+  before_filter :require_permission, only: [:new, :show, :edit, :update, :destroy]
+
+  def require_permission
+        
+   # if current_user is not the creator redirect or if user tries access page via direct access
+   if !params.has_key?(:course_id) or current_user.id != Course.find(params[:course_id]).creator_id
+      flash[:notice] = "You are not allowed to access to page!"
+      redirect_to root_path
+    end
+  end
+    
   # GET /chapters
   # GET /chapters.json
   def index
@@ -15,10 +26,15 @@ class ChaptersController < ApplicationController
   # GET /chapters/new
   def new
     @chapter = Chapter.new
+      
+    @ordered_chapters = Chapter.order(:name)
+ 
   end
 
   # GET /chapters/1/edit
   def edit
+    @ordered_chapters = Chapter.order(:name)
+
   end
 
   # POST /chapters
@@ -69,6 +85,6 @@ class ChaptersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def chapter_params
-      params.require(:chapter).permit(:name, :shortname, :description, :course)
+        params.require(:chapter).permit(:name, :shortname, :description, :course_id, :tier)
     end
 end
