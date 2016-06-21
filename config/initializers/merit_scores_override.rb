@@ -31,6 +31,9 @@ GROUP BY #{c_enrollment}.id, merit_scores.sash_id
 ORDER BY sum_points DESC
 LIMIT #{options[:limit]}
 SQL
+
+# results = CourseEnrollment.joins("join merit_scores on course_enrollments.sash_id = merit_scores.sash_id").joins("join merit_score_points on merit_score_points.score_id = merit_scores.id").joins(:user).select("users.username as username, SUM(num_points) as sum_points").where("category = '#{options[:category]}'").where(is_visible: true, active: true).group("course_enrollments.id, merit_scores.sash_id").order("sum_points DESC")
+
       results = ActiveRecord::Base.connection.execute(sql_query)
       puts(results)
       results.map do |h|
