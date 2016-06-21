@@ -62,6 +62,18 @@ cy.on('click', 'node', function(evt){
   loadGraph("chapters", node.id())
 });
 
+cy.on('mouseover', 'node', function(evt){
+  var node = evt.cyTarget;
+  $("div.list-group-item[data-node-id=" + node.id() + "]").addClass('highlighted')
+  Graph.highlight(node.id())
+});
+
+cy.on('mouseout', 'node', function(evt){
+  var node = evt.cyTarget;
+  $("div.list-group-item[data-node-id=" + node.id() + "]").removeClass('highlighted')
+  Graph.unHighlight(node.id())
+});
+
 Graph.highlight = function(id){
   cy.$('#' + id).addClass('highlighted');
 };
