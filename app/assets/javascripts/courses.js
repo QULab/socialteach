@@ -1,10 +1,10 @@
 var ready = function() {
 
-$('a.list-group-item.chapter').hover(function(event){
+$('div.list-group-item.chapter').hover(function(event){
   Graph.highlight($(event.target).data("node-id"))
 })
 
-$('a.list-group-item.chapter').mouseleave(function(event){
+$('div.list-group-item.chapter').mouseleave(function(event){
   Graph.unHighlight($(event.target).data("node-id"))
 })
 };

@@ -1,0 +1,26 @@
+<div class="list-group">
+  <% chapters.each do |chapter| %>
+    <div href="#" class="list-group-item chapter" data-node-id="<%= chapter.id %>">
+      <div class="row" style="margin: 5px">
+        <h4 class="list-group-item-heading">
+          <span class="label label-default label-pill pull-right">
+            <%= chapter.shortname %>
+          </span>
+          <%= chapter.name %>
+        </h4>
+        <p class="list-group-item-text">
+          <%= truncate(chapter.description, length: 80) %>
+        </p>
+      </div>
+      <div class="row" style="margin: 5px">
+        <%= link_to "<i class='fa fa-x fa-trash'></i>".html_safe, '#' , class: "btn btn-link pull-right", title: 'Delete Chapter', data: { toggle: "tooltip"} %>
+        <%= link_to "<i class='fa fa-x fa-pencil'></i>".html_safe, edit_instructor_chapter_path(chapter) , class: "btn btn-link pull-right", title: 'Edit Chapter', data: { toggle: "tooltip"} %>
+        <%= link_to "<i class='fa fa-x fa-chevron-right'></i>".html_safe, '#' , class: "btn btn-link pull-right", title: 'Edit Successors', data: { toggle: "tooltip"} %>
+        <%= link_to "<i class='fa fa-x fa-chevron-left'></i>".html_safe, '#' , class: "btn btn-link pull-right", title: 'Edit Predecessors', data: { toggle: "tooltip"} %>
+      </div>
+    </div>
+  <% end %>
+
+  <p></p>
+  <%= link_to "<i class='fa fa-x fa-plus'></i>".html_safe, new_instructor_chapter_path(:course_id => @course.id) , class: "btn btn-primary btn-block", title: 'Add Chapter', data: { toggle: "tooltip"} %>
+</div>
