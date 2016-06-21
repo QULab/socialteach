@@ -11,7 +11,7 @@ class ActivitiesController < ApplicationController
 
   def complete
     unless current_user.completed?(@activity)
-      if @activity.content.is_a?(ActivityExcercise) || @activity.content.is_a?(ActivityAssessment)
+      if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)
         questionnaire = @activity.content.questionnaire
         user_id = current_user.id
 

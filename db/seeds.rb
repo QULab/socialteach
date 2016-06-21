@@ -30,8 +30,8 @@ chap5 =Chapter.create(name: 'Shopping by the Numbers', shortname: 'Shopping', de
 
 act1 = Activity.create!(name: 'Hello World to You', levelpoints: '2', tier: '2', shortname: 'Hello', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example"))
 act2 = Activity.create!(name: 'Now you!', levelpoints: '2', tier: '3', shortname: 'You', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example 2"))
-excercise = ActivityExcercise.create
-act3 = Activity.create!(name: 'Test yourself with a Questionnaire', levelpoints: '3', tier: '3', shortname: 'Test', chapter_id: chap1Id, content: excercise)
+exercise = ActivityExercise.create
+act3 = Activity.create!(name: 'Test yourself with a Questionnaire', levelpoints: '3', tier: '3', shortname: 'Test', chapter_id: chap1Id, content: exercise)
 assessment = ActivityAssessment.create
 act4 = Activity.create!(name: 'Knowledge Assessment', levelpoints: '2', tier: '1', shortname: 'Test', chapter_id: chap1Id, content: assessment)
 
@@ -47,7 +47,7 @@ act2.predecessors = [act1]
 act3.predecessors = [act1]
 
 # Add questionnaire to act3
-questionnaire = Questionnaire.create(qu_container: excercise)
+questionnaire = Questionnaire.create(qu_container: exercise)
 question1 = MQuestion.create(questionnaire_id: questionnaire.id, text: 'What was the name of the first Activity?')
 question1Id = question1.id
 answer1 = Answer.create(m_question_id: question1Id, text: 'Tell me who you are')
