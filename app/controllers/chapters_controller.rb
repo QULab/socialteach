@@ -1,6 +1,17 @@
 class ChaptersController < ApplicationController
   before_action :set_chapter, only: [:show, :edit, :update, :destroy]
 
+  before_filter :require_permission, only: [:new, :show, :edit, :update, :destroy]
+
+  def require_permission
+        
+   # if current_user is not the creator redirect or if user tries access page via direct access
+   if !params.has_key?(:course_id) or current_user.id != Course.find(params[:course_id]).creator_id
+      flash[:notice] = "You are not allowed to access to page!"
+      redirect_to root_path
+    end
+  end
+    
   # GET /chapters
   # GET /chapters.json
   def index

@@ -2,8 +2,8 @@
 <% feedback = commentable.feedback
 unless feedback.nil?
   question = feedback.questionnaire.m_questions.first
-  fresh = feedback.questionnaire.completed_questionnaires(user_id: current_user.id).empty?
-  given_answer = question.completed_m_questions(user_id: current_user.id).first.answer unless fresh
+  fresh = feedback.questionnaire.completed_questionnaires.where(user_id: current_user.id).empty?
+  given_answer = question.completed_m_questions.where(user_id: current_user.id).first.answer unless fresh
   icons = ["meh-o", "smile-o", "frown-o"] %>
 
   <div class="feedback-container">
