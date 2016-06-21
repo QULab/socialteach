@@ -22,8 +22,7 @@ class Instructor::ChaptersController < Instructor::BaseController
 
   # GET /chapters/1/edit
   def edit
-    @ordered_chapters = Chapter.order(:name)
-
+    require_permission(@chapter.course)
   end
 
   # POST /chapters
@@ -31,6 +30,7 @@ class Instructor::ChaptersController < Instructor::BaseController
   def create
     @chapter = Chapter.new(chapter_params)
 
+    require_permission(@chapter.course)
     respond_to do |format|
       if @chapter.save
         format.html { redirect_to instructor_chapter_path(@chapter), notice: 'Chapter was successfully created.' }
@@ -43,6 +43,7 @@ class Instructor::ChaptersController < Instructor::BaseController
   # PATCH/PUT /chapters/1
   # PATCH/PUT /chapters/1.json
   def update
+    require_permission(@chapter.course)
     respond_to do |format|
       if @chapter.update(chapter_params)
         format.html { redirect_to instructor_chapter_path(@chapter), notice: 'Chapter was successfully updated.' }
@@ -55,6 +56,7 @@ class Instructor::ChaptersController < Instructor::BaseController
   # DELETE /chapters/1
   # DELETE /chapters/1.json
   def destroy
+    require_permission(@chapter.course)
     @chapter.destroy
     respond_to do |format|
       format.html { redirect_to instructor_chapters_path, notice: 'Chapter was successfully destroyed.' }

@@ -1,15 +1,6 @@
 class CoursesController < BaseController
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :curriculum, :feedback]
+  before_action :set_course, only: [:show, :curriculum, :feedback]
 
-  before_filter :require_permission, only: [:edit, :update, :destroy]
-
-  def require_permission
-    if current_user.id != Course.find(params[:id]).creator_id
-      flash[:notice] = "You are not allowed to access to page!"
-      redirect_to root_path
-    end
-  end
-    
   # GET /courses
   # GET /courses.json
   def index
