@@ -1,22 +1,22 @@
 <div class="list-group">
-  <% chapters.each do |chapter| %>
-    <a href="#" class="list-group-item chapter" data-node-id="<%= chapter.id %>">
+  <% activities.each do |activity| %>
+    <a href="#" class="list-group-item chapter" data-node-id="<%= activity.id %>">
       <div class="row" style="margin: 5px">
       <h4 class="list-group-item-heading">
         <span class="label label-default label-pill pull-right">
-          <%= chapter.shortname %>
+          <%= activity.shortname %>
         </span>
-        <%= chapter.name %>
+        <%= activity.name %>
       </h4>
       <p class="list-group-item-text">
-      <%= truncate(chapter.description, length: 80) %>
+      Activities have no description?
       </p>
     </div>
     <div class="row" style="margin: 5px">
-      <button type="button" class="btn btn-link pull-right" data-toggle="tooltip" title="Delete Chapter">
+      <button type="button" class="btn btn-link pull-right" data-toggle="tooltip" title="Delete Activity">
       <i class="fa fa-x fa-trash"></i>
       </button>
-      <button type="button" class="btn btn-link pull-right" data-toggle="tooltip" title="Edit Chapter">
+      <button type="button" class="btn btn-link pull-right" data-toggle="tooltip" title="Edit Activity">
       <i class="fa fa-x fa-pencil"></i>
       </button>
       <button type="button" class="btn btn-link pull-right" data-toggle="tooltip" title="Edit Successors">
