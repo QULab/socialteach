@@ -1,6 +1,6 @@
 <div class="list-group">
   <% chapters.each do |chapter| %>
-    <a href="#" class="list-group-item chapter">
+    <a href="#" class="list-group-item chapter" data-node-id="<%= chapter.id %>">
       <div class="row" style="margin: 5px">
       <h4 class="list-group-item-heading">
         <span class="label label-default label-pill pull-right">
@@ -30,6 +30,6 @@
   <% end %>
   <p></p>
   <button type="button" class="btn btn-primary btn-block">
-    <i class="fa fa-x fa-plus"></i>
+    <i class="fa fa-x fa-plus" data-toggle="tooltip" title="Add Chapter"></i>
   </button>
 </div>

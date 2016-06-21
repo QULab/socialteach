@@ -23,7 +23,7 @@
         <div class="control-group">
           <div class="controls">
             <%= f.label :description, class: "control-label" %>
-            <%= f.text_area :description, rows: 3, class: "form-control" %>
+            <%= f.text_area :description, rows: 3, class: "form-control"%>
             <%= f.hidden_field :creator_id, :value => current_user.id, class: "form-control" %>
           </div>
 

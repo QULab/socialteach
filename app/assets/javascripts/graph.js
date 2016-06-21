@@ -1,3 +1,5 @@
+Graph = {};
+
 function loadGraph(type, id){
 $.ajax({
         url:  "/graph/" + type + "/" + id,
@@ -18,8 +20,8 @@ $('#cy').cytoscape({
 	style: cytoscape.stylesheet()
 		.selector('node')
 			.css({
-				'shape': 'ellipse',
-				'width': '50',
+				'shape': 'roundrectangle',
+				'width': '100',
 				'height': '50',
 				'content': 'data(name)',
 				'text-valign': 'center',
@@ -39,7 +41,13 @@ $('#cy').cytoscape({
         .css({
           'border-width': 3,
           'border-color': '#333'
-  }),
+      })
+      .selector('.highlighted')
+        .css({
+          'border-width': 15,
+          'border-color': '#000',
+          'border-opacity': 0.3
+        }),
 	elements: json,
 
 	ready: function(){
@@ -53,5 +61,13 @@ cy.on('click', 'node', function(evt){
   console.log( 'clicked node ' + node.id() );
   loadGraph("chapters", node.id())
 });
+
+Graph.highlight = function(id){
+  cy.$('#' + id).addClass('highlighted');
+};
+
+Graph.unHighlight = function(id){
+  cy.$('#' + id).removeClass('highlighted');
+};
 
 }

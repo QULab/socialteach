@@ -27,9 +27,9 @@ class Activity < ActiveRecord::Base
   def color
     case content
       when ActivityLecture
-        "#2234FF" # blue
+        "#428CCA" # blue
       else
-        "#558D99" # greyish blue
+        "#577B99" # greyish blue
     end
   end
 
