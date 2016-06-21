@@ -1,4 +1,4 @@
-<%= form_for(@chapter) do |f| %>
+<%= form_for([:instructor, @chapter]) do |f| %>
   <% if @chapter.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@chapter.errors.count, "error") %> prohibited this chapter from being saved:</h2>
@@ -48,3 +48,4 @@
   </div>
 </fieldset>
 <% end %>
+

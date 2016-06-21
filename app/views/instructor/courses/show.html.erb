@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="page-header">
+      <h1>
+        <%= @course.name %>
+        <small>Created <%= time_ago_in_words(@course.created_at) %> ago</small>
+      </h1>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%= @course.description%>
+        </div>
+      </div>
+      <%= link_to edit_instructor_course_path(@course), class: "btn btn-primary" do %>
+        <i class="fa fa-tasks"></i>
+        Edit Course
+      <%- end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="page-header">
+        <h1>
+          <i class="fa fa-1x fa-star"></i>
+          Related Badges
+        </h1>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="page-header">
+        <h1>
+          <i class="fa fa-1x fa-bar-chart"></i>
+          User Statistics
+        </h1>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="page-header">
+        <h1>
+          <i class="fa fa-1x fa-users"></i>
+          Feedback
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <%= render 'shared/comments', commentable: @course %>
+  </div>
+</div>
