@@ -2,7 +2,8 @@
   <div class="col-md-6">
     <div class="form-group">
       <%= f.label :text %><br>
-      <%= f.text_area :text, class: "form-control", rows: 9 %>
+      <p> The lecture content can be formatted using markdown syntax.</p>
+      <%= f.text_area :text, id: 'lecture-text', class: "form-control", rows: 9 %>
     </div>
   </div>
   <div class="col-md-6">
@@ -13,10 +14,10 @@
       <div class="panel-body">
         *bold* <br>
         # Heading 1 <br>
-        ## Heading 2
+        ## Heading 2 <br>
 
-        * list item
-        * list item
+        * list item <br>
+        * list item <br>
       </div>
     </div>
   </div>
