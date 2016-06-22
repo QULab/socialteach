@@ -38,11 +38,6 @@
   </div>
   <%= f.hidden_field :course_id, :value => params[:course_id], class: "form-control" %>
 
-  <div class="controls">
-      <%= f.label :Predecessor, class: "control-label" %><br>
-      <%= collection_select(:course, :course_id, @ordered_chapters, :id, :name, {prompt: true}, {class: "form-control"}) %>
-  </div>
-
   <div class="form-actions">
     <%= f.submit class: "btn btn-default btn-primary btn-block btn-success" %>
   </div>
