@@ -17,6 +17,19 @@ user = User.create!({
 
 instructor = User.create(email: 'instructor@test.com', username: 'Instructor', password: 'password', password_confirmation: 'password', is_instructor: true)
 
+user1 = User.create(email: 'user1@test.com', username: 'User 1', password: 'password', password_confirmation: 'password')
+user2 = User.create(email: 'user1@test.com', username: 'User 2', password: 'password', password_confirmation: 'password')
+user3 = User.create(email: 'user1@test.com', username: 'User 3', password: 'password', password_confirmation: 'password')
+user4 = User.create(email: 'user1@test.com', username: 'User 4', password: 'password', password_confirmation: 'password')
+user5 = User.create(email: 'user1@test.com', username: 'User 5', password: 'password', password_confirmation: 'password')
+user6 = User.create(email: 'user1@test.com', username: 'User 6', password: 'password', password_confirmation: 'password')
+user7 = User.create(email: 'user1@test.com', username: 'User 7', password: 'password', password_confirmation: 'password')
+user8 = User.create(email: 'user1@test.com', username: 'User 8', password: 'password', password_confirmation: 'password')
+user9 = User.create(email: 'user1@test.com', username: 'User 9', password: 'password', password_confirmation: 'password')
+user10 = User.create(email: 'user1@test.com', username: 'User 10', password: 'password', password_confirmation: 'password')
+
+
+
 # Course with Chapters and Activities
 course = Course.create!(name: 'Italian for Beginners', description: 'A course for people with no prior knowledge of the Italian language', creator_id: instructor.id)
 courseId = course.id
@@ -87,6 +100,26 @@ answer1 = Answer.create(m_question_id: feedback_questionId, text: 'Too Easy')
 answer2 = Answer.create(m_question_id: feedback_questionId, text: 'Perfect Difficulty')
 answer3 = Answer.create(m_question_id: feedback_questionId, text: 'Too Hard')
 
+# Given feedback for course
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user8.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user8.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user1.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user1.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user2.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user2.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer2.id, user_id: user3.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user3.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer2.id, user_id: user9.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user9.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user4.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user4.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user5.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user5.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user6.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user6.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user7.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user7.id)
+
 # Difficulty feedback for course
 feedback = Feedback.create(commentable: course)
 questionnaire = Questionnaire.create(qu_container: feedback)
@@ -95,6 +128,22 @@ questionId = question.id
 answer1 = Answer.create(m_question_id: questionId, text: 'Too Easy')
 answer2 = Answer.create(m_question_id: questionId, text: 'Perfect Difficulty')
 answer3 = Answer.create(m_question_id: questionId, text: 'Too Hard')
+
+# Given feedback for course
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer1.id, user_id: user1.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user1.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer1.id, user_id: user2.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user2.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer2.id, user_id: user3.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user3.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer3.id, user_id: user4.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user4.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer3.id, user_id: user5.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user5.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer3.id, user_id: user6.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user6.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer3.id, user_id: user7.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user7.id)
 
 # Difficulty feedback for act3
 feedback = Feedback.create(commentable: act3)
