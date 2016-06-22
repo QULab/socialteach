@@ -37,6 +37,8 @@ gem 'merit', '~> 2.3.0'
 
 # Markdown parser (for better formatting and display of a lecture text)
 gem 'redcarpet', '~>3.3.4'
+# Syntax Highlighting
+gem 'codemirror-rails', '~>5.11'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
