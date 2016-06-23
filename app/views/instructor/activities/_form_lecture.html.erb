@@ -3,22 +3,8 @@
     <div class="form-group">
       <%= f.label :text %><br>
       <p> The lecture content can be formatted using markdown syntax.</p>
-      <%= f.text_area :text, id: 'lecture-text', class: "form-control", rows: 9 %>
+      <%= f.text_area :text, id: 'lecture-text', class: "form-control", rows: 19 %>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Markdown Cheat Sheet
-      </div>
-      <div class="panel-body">
-        *bold* <br>
-        # Heading 1 <br>
-        ## Heading 2 <br>
-
-        * list item <br>
-        * list item <br>
-      </div>
-    </div>
-  </div>
+  <%= render 'markdown' %>
 </div>
