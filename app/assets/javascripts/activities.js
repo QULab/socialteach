@@ -5,6 +5,7 @@ $(function() {
         theme: 'ttcn',
         lineNumbers: true,
         lineWrapping: true,
+        viewportMargin: Infinity,
       }
       );
 });
