@@ -4,42 +4,20 @@ module Merit
       options[:since_date] ||= 0
       options[:limit]      ||= 18446744073
       options[:id]         ||= 1
-      options[:category]   ||= 'Levelpoints'
 
-      c_enrollment = :course_enrollments
-
-      alias_id_column = "#{c_enrollment.to_s.singularize}_id"
-      if options[:table_name] == :sashes
-        sash_id_column = "#{c_enrollment}.id"
-      else
-        sash_id_column = "#{c_enrollment}.sash_id"
+      enrollment_points = CourseEnrollment.all.map do |enrollment|
+        if enrollment.is_visible? and enrollment.course_id == options[:id]
+          points = enrollment.score_points(category: "Levelpoints").where("created_at > ?", options[:since_date]).sum(:num_points)
+          if points > 0
+            {:enrollment => enrollment, :points => points}
+          end
+        end
       end
 
-      # MeritableModel - Sash -< Scores -< ScorePoints
-      sql_query = <<SQL
-SELECT
-  users.username AS username,
-  SUM(num_points) as sum_points
-FROM #{c_enrollment}
-  LEFT JOIN merit_scores ON merit_scores.sash_id = #{sash_id_column}
-  LEFT JOIN merit_score_points ON merit_score_points.score_id = merit_scores.id
-  INNER JOIN users ON #{c_enrollment}.user_id = users.id
-WHERE merit_score_points.created_at > '#{options[:since_date]}'
-  AND is_visible = 't' AND active = 't' AND course_id = #{options[:id]}
-  AND category = '#{options[:category]}'
-GROUP BY #{c_enrollment}.id, merit_scores.sash_id
-ORDER BY sum_points DESC
-LIMIT #{options[:limit]}
-SQL
-
-# results = CourseEnrollment.joins("join merit_scores on course_enrollments.sash_id = merit_scores.sash_id").joins("join merit_score_points on merit_score_points.score_id = merit_scores.id").joins(:user).select("users.username as username, SUM(num_points) as sum_points").where("category = '#{options[:category]}'").where(is_visible: true, active: true).group("course_enrollments.id, merit_scores.sash_id").order("sum_points DESC")
-
-      results = ActiveRecord::Base.connection.execute(sql_query)
-      puts(results)
-      results.map do |h|
-        h.keep_if { |k, v| (k == 'username') || (k == 'sum_points') }
-      end
-      results
+      enrollment_points = enrollment_points.compact.sort_by {|v| v[:points]}
+      enrollment_points = enrollment_points.reverse.take(options[:limit])
+      
+      enrollment_points
     end
   end
 end

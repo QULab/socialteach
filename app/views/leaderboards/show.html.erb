@@ -1,27 +1,24 @@
 
 <p id="notice"><%= notice %></p>
 
-<p><%= @leaderboard%></p>
-
-
-
-<% @leaderboard.each do |user| %>
-  <p> <%= user["username"] %> <%= user["sum_points"] %> </p>
-<% end %>
-
-
-<%= link_to 'Back', course_enrollments_path %>
 
 <div class="container">
   <div align="center">
     <h2>Default Leaderboard</h2></div>
   <ul class="nav nav-pills">
-    <li class="active"><a href="#today">Today</a></li>
-    <li><a data-toggle="pill" href="#this_week">This week</a></li>
-    <li><a data-toggle="pill" href="#this_month">This month</a></li>
-    <li><a data-toggle="pill" href="#all_time">All time</a></li>
+    <li><%= link_to 'Today', leaderboard_path(:today => true)%></li>
+    <li><%= link_to 'This week', leaderboard_path(:week => true)%></li>
+    <li><%= link_to 'This month', leaderboard_path(:month => true)%></li>
+    <li><%= link_to 'All time', leaderboard_path()%></li>
   </ul>
+<% @leaderboard.each do |enrollment| %>
+  <p> <%= enrollment[:enrollment].user.username %> <%= enrollment[:points] %> </p>
+<% end %>
 
+
+<%= link_to 'Back', course_enrollments_path %>
+
+  <!--
   <div class="today">
     <div id="today" class="tab-pane fade in active">
       <div class="container">
@@ -312,5 +309,5 @@
         </table>
       </div>
     </div>
-  </div>
+  </div>-->
 </div>
