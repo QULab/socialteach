@@ -44,6 +44,9 @@ gem 'redcarpet', '~>3.3.4'
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+#for scheduling tasks like update emails every week
+gem 'rufus-scheduler', '~> 3.2'
+
 #omniauth
 gem 'omniauth-facebook'
 
