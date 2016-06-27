@@ -1,22 +1,49 @@
-
 <p id="notice"><%= notice %></p>
 
 
 <div class="container">
   <div align="center">
-    <h2>Default Leaderboard</h2></div>
+    <h2>Leaderboard</h2></div>
   <ul class="nav nav-pills">
-    <li><%= link_to 'Today', leaderboard_path(:today => true)%></li>
-    <li><%= link_to 'This week', leaderboard_path(:week => true)%></li>
-    <li><%= link_to 'This month', leaderboard_path(:month => true)%></li>
-    <li><%= link_to 'All time', leaderboard_path()%></li>
+    <li><%= link_to 'Today', leaderboard_path(:today => true) %></li>
+    <li><%= link_to 'This week', leaderboard_path(:week => true) %></li>
+    <li><%= link_to 'This month', leaderboard_path(:month => true) %></li>
+    <li><%= link_to 'All time', leaderboard_path() %></li>
   </ul>
-<% @leaderboard.each do |enrollment| %>
-  <p> <%= enrollment[:enrollment].user.username %> <%= enrollment[:points] %> </p>
-<% end %>
+
+  <div class="container tab-pane fade in active">
+    <table class="table table-hover">
+      <tbody>
+      <% @leaderboard.each_with_index do |enrollment, i| %>
+
+          <tr>
+            <td>
+              <%= (i+1) %>
+            </td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+              <%= enrollment[:enrollment].user.username %>
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0"
+                     aria-valuemax="<%= @leaderboard.first[:points]%>" style="width:<%= 100* enrollment[:points] / @leaderboard.first[:points] %>%">
+
+                </div>
+            </td>
+            <td><%= enrollment[:points] %></td>
+          </tr>
+
+      <% end %>
+
+      </tbody>
+    </table>
+  </div>
 
 
-<%= link_to 'Back', course_enrollments_path %>
+
+
+  <%= link_to 'Back', course_enrollments_path %>
 
   <!--
   <div class="today">

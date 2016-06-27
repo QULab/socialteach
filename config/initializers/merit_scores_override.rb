@@ -2,7 +2,7 @@ module Merit
   class Score < ActiveRecord::Base
     def self.top_scored_enrolled(options = {})
       options[:since_date] ||= 0
-      options[:limit]      ||= 18446744073
+      options[:limit]      ||= 184
       options[:id]         ||= 1
 
       enrollment_points = CourseEnrollment.all.map do |enrollment|
