@@ -1,5 +1,5 @@
-class ChaptersController < ApplicationController
-  before_action :set_chapter, only: [:show]
+class Instructor::ChaptersController < Instructor::BaseController
+  before_action :set_chapter, only: [:show, :edit, :update, :destroy]
 
   # GET /chapters
   # GET /chapters.json
@@ -22,8 +22,8 @@ class ChaptersController < ApplicationController
 
   # GET /chapters/1/edit
   def edit
-    @ordered_chapters = Chapter.order(:name)
-
+    require_permission(@chapter.course)
+    @ordered_chapters = Chapter.all
   end
 
   # POST /chapters
@@ -31,13 +31,12 @@ class ChaptersController < ApplicationController
   def create
     @chapter = Chapter.new(chapter_params)
 
+    require_permission(@chapter.course)
     respond_to do |format|
       if @chapter.save
-        format.html { redirect_to @chapter, notice: 'Chapter was successfully created.' }
-        format.json { render :show, status: :created, location: @chapter }
+        format.html { redirect_to instructor_chapter_path(@chapter), notice: 'Chapter was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @chapter.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -45,13 +44,13 @@ class ChaptersController < ApplicationController
   # PATCH/PUT /chapters/1
   # PATCH/PUT /chapters/1.json
   def update
+    require_permission(@chapter.course)
+    @ordered_chapters = Chapter.all
     respond_to do |format|
       if @chapter.update(chapter_params)
-        format.html { redirect_to @chapter, notice: 'Chapter was successfully updated.' }
-        format.json { render :show, status: :ok, location: @chapter }
+        format.html { redirect_to edit_instructor_course_path(@chapter.course), notice: 'Chapter was successfully updated.' }
       else
         format.html { render :edit }
-        format.json { render json: @chapter.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -59,10 +58,11 @@ class ChaptersController < ApplicationController
   # DELETE /chapters/1
   # DELETE /chapters/1.json
   def destroy
+    course = @chapter.course
+    require_permission(course)
     @chapter.destroy
     respond_to do |format|
-      format.html { redirect_to chapters_url, notice: 'Chapter was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to edit_instructor_course_path(course), notice: 'Chapter was successfully destroyed.' }
     end
   end
 
@@ -74,6 +74,6 @@ class ChaptersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def chapter_params
-        params.require(:chapter).permit(:name, :shortname, :description, :course_id, :tier)
+        params.require(:chapter).permit(:name, :shortname, :description, :tier)
     end
 end

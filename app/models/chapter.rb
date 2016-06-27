@@ -19,5 +19,13 @@ class Chapter < ActiveRecord::Base
 
     validates :name, :shortname, :tier, :course, presence: true
     validates :tier, numericality: {greater_than_or_equal_to: 0}
-    
+
+    # returns a list of all chapters, that are valid predecessors for this chapter
+    def valid_predecessors
+      course_chapters = self.course.chapters.to_a
+      predecessors = course_chapters.select do |chapter|
+        chapter.tier < self.tier
+      end
+      return predecessors
+    end
 end

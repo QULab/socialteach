@@ -5,4 +5,7 @@ class Course < ActiveRecord::Base
     belongs_to :users
     has_one :feedback, as: :commentable
 
+    def get_number_of_enrollments
+      CourseEnrollment.where("course_id = ?", self.id).count
+    end
 end
