@@ -22,7 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
 
         courses_path # acutally redirect to the user_page
       else
-        own_courses_path # redirect to instructor_page
+        instructor_courses_path # redirect to instructor_page
       end
   end
 

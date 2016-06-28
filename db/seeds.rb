@@ -17,6 +17,19 @@ user = User.create!({
 
 instructor = User.create(email: 'instructor@test.com', username: 'Instructor', password: 'password', password_confirmation: 'password', is_instructor: true)
 
+user1 = User.create(email: 'user1@test.com', username: 'User 1', password: 'password', password_confirmation: 'password')
+user2 = User.create(email: 'user1@test.com', username: 'User 2', password: 'password', password_confirmation: 'password')
+user3 = User.create(email: 'user1@test.com', username: 'User 3', password: 'password', password_confirmation: 'password')
+user4 = User.create(email: 'user1@test.com', username: 'User 4', password: 'password', password_confirmation: 'password')
+user5 = User.create(email: 'user1@test.com', username: 'User 5', password: 'password', password_confirmation: 'password')
+user6 = User.create(email: 'user1@test.com', username: 'User 6', password: 'password', password_confirmation: 'password')
+user7 = User.create(email: 'user1@test.com', username: 'User 7', password: 'password', password_confirmation: 'password')
+user8 = User.create(email: 'user1@test.com', username: 'User 8', password: 'password', password_confirmation: 'password')
+user9 = User.create(email: 'user1@test.com', username: 'User 9', password: 'password', password_confirmation: 'password')
+user10 = User.create(email: 'user1@test.com', username: 'User 10', password: 'password', password_confirmation: 'password')
+
+
+
 # Course with Chapters and Activities
 course = Course.create!(name: 'Italian for Beginners', description: 'A course for people with no prior knowledge of the Italian language', creator_id: instructor.id)
 courseId = course.id
@@ -28,12 +41,16 @@ chap3 =Chapter.create(name: 'The most important chapter: Food', shortname: 'Food
 chap4 =Chapter.create(name: 'Becoming a professional Tourist', shortname: 'Tourism', description: 'How to get the most out of a visit to Italy by asking the right questions', tier: 3, course_id: courseId)
 chap5 =Chapter.create(name: 'Shopping by the Numbers', shortname: 'Shopping', description: 'All about shopping and of course the most important thing to know about: Numbers!', tier: 4, course_id: courseId)
 
-act1 = Activity.create!(name: 'Hello World to You', levelpoints: '2', tier: '2', shortname: 'Hello', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example"))
-act2 = Activity.create!(name: 'Now you!', levelpoints: '2', tier: '3', shortname: 'You', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example 2"))
-excercise = ActivityExcercise.create
-act3 = Activity.create!(name: 'Test yourself with a Questionnaire', levelpoints: '3', tier: '3', shortname: 'Test', chapter_id: chap1Id, content: excercise)
+level1 = Level.create(level: 1, level_pass: 0)
+level2 = Level.create(level: 2, level_pass: 100)
+level3 = Level.create(level: 3, level_pass: 200)
+
+act1 = Activity.create!(name: 'Hello World to You', levelpoints: '2', tier: '2', shortname: 'Hello', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example"), level: level1)
+act2 = Activity.create!(name: 'Now you!', levelpoints: '2', tier: '3', shortname: 'You', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example 2"), level: level2)
+exercise = ActivityExercise.create
+act3 = Activity.create!(name: 'Test yourself with a Questionnaire', levelpoints: '3', tier: '3', shortname: 'Test', chapter_id: chap1Id, content: exercise, level: level2)
 assessment = ActivityAssessment.create
-act4 = Activity.create!(name: 'Knowledge Assessment', levelpoints: '2', tier: '1', shortname: 'Test', chapter_id: chap1Id, content: assessment)
+act4 = Activity.create!(name: 'Knowledge Assessment', levelpoints: '2', tier: '1', shortname: 'Test', chapter_id: chap1Id, content: assessment, level: level1)
 
 # add structure for Chapters
 chap2.predecessors = [chap1]
@@ -47,7 +64,7 @@ act2.predecessors = [act1]
 act3.predecessors = [act1]
 
 # Add questionnaire to act3
-questionnaire = Questionnaire.create(qu_container: excercise)
+questionnaire = Questionnaire.create(qu_container: exercise)
 question1 = MQuestion.create(questionnaire_id: questionnaire.id, text: 'What was the name of the first Activity?')
 question1Id = question1.id
 answer1 = Answer.create(m_question_id: question1Id, text: 'Tell me who you are')
@@ -87,6 +104,26 @@ answer1 = Answer.create(m_question_id: feedback_questionId, text: 'Too Easy')
 answer2 = Answer.create(m_question_id: feedback_questionId, text: 'Perfect Difficulty')
 answer3 = Answer.create(m_question_id: feedback_questionId, text: 'Too Hard')
 
+# Given feedback for course
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user8.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user8.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user1.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user1.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user2.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user2.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer2.id, user_id: user3.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user3.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer2.id, user_id: user9.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user9.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user4.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user4.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user5.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user5.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user6.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user6.id)
+CompletedMQuestion.create(m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user7.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user7.id)
+
 # Difficulty feedback for course
 feedback = Feedback.create(commentable: course)
 questionnaire = Questionnaire.create(qu_container: feedback)
@@ -95,6 +132,22 @@ questionId = question.id
 answer1 = Answer.create(m_question_id: questionId, text: 'Too Easy')
 answer2 = Answer.create(m_question_id: questionId, text: 'Perfect Difficulty')
 answer3 = Answer.create(m_question_id: questionId, text: 'Too Hard')
+
+# Given feedback for course
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer1.id, user_id: user1.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user1.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer1.id, user_id: user2.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user2.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer2.id, user_id: user3.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user3.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer3.id, user_id: user4.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user4.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer3.id, user_id: user5.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user5.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer3.id, user_id: user6.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user6.id)
+CompletedMQuestion.create(m_question_id: questionId, answer_id: answer3.id, user_id: user7.id)
+CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user7.id)
 
 # Difficulty feedback for act3
 feedback = Feedback.create(commentable: act3)

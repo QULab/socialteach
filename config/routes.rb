@@ -15,24 +15,29 @@
 
   resources :leaderboards, only: [:show]
 
-  resources :chapters
+  # resources :chapters, only: [:show]
 
-  resources :activities do
+  resources :activities, only: [:show] do
     member do
       post 'complete'
     end
   end
 
-  resources :courses do
+  resources :courses, only: [:show, :index] do
     member do
       get 'curriculum'
     end
   end
   get 'my_courses' => 'courses#index_enrolled', format: [:html]
 
-  # TODO: change this route, maybe using an instructor namespace
-  get 'own_courses' => 'courses#own_courses', format: [:html]
 
+  # Routes that are only for instructors
+  namespace :instructor do
+    # index shows all courses the current user can modify
+    resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html]
+    resources :chapters, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
+    resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
+  end
 
   devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}
   resources :users

@@ -12,8 +12,11 @@
  *
  *= require_self
  *= require graph
+ *= require courses
+ *= require chapters
  */
 
  @import "bootstrap";
  @import "activities";
+ @import "chapters";
  @import "font-awesome";
