@@ -3,7 +3,7 @@
     <div class="list-group-item activity" data-node-id="<%= activity.id %>">
       <div class="row" style="margin: 5px">
       <h4 class="list-group-item-heading">
-        <span class="label label-default label-pill pull-right">
+        <span class="label label-default label-pill pull-right <%= activity.content_type.underscore %>">
           <%= activity.shortname %>
         </span>
         <i class="fa <%= activity_icon(activity) =%>"></i>
