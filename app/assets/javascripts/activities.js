@@ -1,4 +1,4 @@
-$(function() {
+var ready = function() {
   var codeMirror = CodeMirror.fromTextArea($('#lecture-text').get(0),
       {
         mode: 'markdown',
@@ -8,4 +8,7 @@ $(function() {
         viewportMargin: Infinity,
       }
       );
-});
+};
+
+$(document).ready(ready);
+$(document).on('page:load', ready);
