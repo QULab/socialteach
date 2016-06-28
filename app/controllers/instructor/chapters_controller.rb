@@ -1,5 +1,5 @@
 class Instructor::ChaptersController < Instructor::BaseController
-  before_action :set_chapter, only: [:show, :edit, :update, :destroy]
+  before_action :set_chapter, only: [:show, :edit, :update, :destroy, :predec]
 
   # GET /chapters
   # GET /chapters.json
@@ -64,6 +64,11 @@ class Instructor::ChaptersController < Instructor::BaseController
     respond_to do |format|
       format.html { redirect_to edit_instructor_course_path(course), notice: 'Chapter was successfully destroyed.' }
     end
+  end
+
+  respond_to :js
+  def predec
+    render partial: 'instructor/courses/chapter_predec', locals: {chapter: @chapter}
   end
 
   private

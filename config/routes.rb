@@ -32,6 +32,7 @@
     # index shows all courses the current user can modify
     resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html]
     resources :chapters, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
+    get 'chapters/:id/predec' => 'chapters#predec', format: [:js], as: 'chapter_predec'
     resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
   end
 
