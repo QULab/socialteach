@@ -6,7 +6,7 @@
 	<div class="row">
   <div class="col-xs-6 col-md-4">
   	<p> <%= avatar_for(@user) %></p> 
-    <p> My Birthday : <%= @user.birthday.strftime("%d.%m.%Y")   %></p> 
+    <% if @user.birthday != nil %> <p> My Birthday : <%= @user.birthday.strftime("%d.%m.%Y")   %></p> <% end %>
     <p> My Badges : </p>
     <p> My Points : </p>
     <p> My Level : </p>
