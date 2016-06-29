@@ -38,5 +38,6 @@
   $(document).ready(ready);
   $(document).ready(add_event_handler);
   $(document).on('page:load', ready);
+  $(document).on('page:load', add_event_handler);
 })()
 
