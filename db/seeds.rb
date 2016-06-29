@@ -31,7 +31,7 @@ user10 = User.create(email: 'user1@test.com', username: 'User 10', password: 'pa
 
 
 # Course with Chapters and Activities
-course = Course.create!(name: 'Italian for Beginners', description: 'A course for people with no prior knowledge of the Italian language', creator_id: instructor.id)
+course = Course.create!(name: 'Italian for Beginners', published: true, description: 'A course for people with no prior knowledge of the Italian language', creator_id: instructor.id)
 courseId = course.id
 
 chap1 = Chapter.create(name: 'Hello World in Italian', shortname: 'Hello', description: 'Our first Sentence!', tier: 1, course_id: courseId)
