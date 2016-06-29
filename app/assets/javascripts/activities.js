@@ -1,8 +1,9 @@
 (function() {
+  var codeMirror;
   var ready = function() {
     var textArea = $('#lecture-text').get(0);
     if (textArea) {
-    var codeMirror = CodeMirror.fromTextArea(textArea,
+    codeMirror = CodeMirror.fromTextArea(textArea,
         {
           mode: 'markdown',
           theme: 'ttcn',
@@ -14,11 +15,11 @@
   }};
 
   var set_textarea_content = function() {
-    var codemirror = $('#lecture-text');
-    var text = codemirror.val();
+    var textarea = $('#lecture-text');
+    var text = codeMirror.doc.getValue();
     var preview = $('#preview-text');
 
-    var api_url = codemirror.data("markdown-api");
+    var api_url = textarea.data("markdown-api");
     if (api_url) {
       $.post(api_url, { "text": text }, function(data) {
         preview.html(data);
