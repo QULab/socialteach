@@ -36,6 +36,7 @@
     get 'chapters/:id/tier' => 'chapters#tier', format: [:js], as: 'chapter_tier'
     resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
     get 'activities/:id/predec' => 'activities#predec', format: [:js], as: 'activity_predec'
+    get 'activities/:id/tier' => 'activities#tier', format: [:js], as: 'activity_tier'
   end
 
   devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}

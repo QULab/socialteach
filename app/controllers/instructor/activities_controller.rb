@@ -1,5 +1,5 @@
 class Instructor::ActivitiesController < Instructor::BaseController
-  before_action :set_activity, only: [:show, :edit, :update, :destroy, :predec]
+  before_action :set_activity, only: [:show, :edit, :update, :destroy, :predec, :tier]
 
   # GET /activities/1
   # GET /activities/1.json
@@ -81,6 +81,12 @@ class Instructor::ActivitiesController < Instructor::BaseController
   def predec
     render partial: 'instructor/chapters/activity_predec', locals: {activity: @activity}
   end
+
+  respond_to :js
+  def tier
+    render partial: 'instructor/chapters/activity_tier', locals: {activity: @activity}
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
