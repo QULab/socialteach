@@ -66,7 +66,18 @@ class LeaderboardsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_leaderboard
-      @leaderboard = Merit::Score.top_scored_enrolled(id: params[:id], since_date: 0)
+
+      if params[:today]
+        @leaderboard = Merit::Score.top_scored_enrolled(id: params[:id].to_i, since_date: 1.day.ago)
+      elsif params[:week]
+        @leaderboard = Merit::Score.top_scored_enrolled(id: params[:id].to_i, since_date: 1.week.ago)
+      elsif params[:month]
+        @leaderboard = Merit::Score.top_scored_enrolled(id: params[:id].to_i, since_date: 1.month.ago)
+      else
+        @leaderboard = Merit::Score.top_scored_enrolled(id: params[:id].to_i)
+      end
+        
+        
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

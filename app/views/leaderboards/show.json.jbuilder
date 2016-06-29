@@ -1,3 +1,3 @@
-json.array!(@leaderboard) do |user|
-  json.extract! user, "username", "sum_points"
+json.array!(@leaderboard) do |enrollment|
+  json.extract! enrollment, :enrollment, :points
 end

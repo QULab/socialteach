@@ -1,11 +1,345 @@
 <p id="notice"><%= notice %></p>
 
-<p><%= @leaderboard%></p>
 
-<% @leaderboard.each do |user| %>
-  <p> <%= user["username"] %> <%= user["sum_points"] %> </p>
-<% end %>
+<div class="container">
+  <div align="center">
+    <h2>Leaderboard</h2></div>
+  <ul class="nav nav-pills">
+    <li><%= link_to 'Today', leaderboard_path(:today => true) %></li>
+    <li><%= link_to 'This week', leaderboard_path(:week => true) %></li>
+    <li><%= link_to 'This month', leaderboard_path(:month => true) %></li>
+    <li><%= link_to 'All time', leaderboard_path() %></li>
+  </ul>
+
+  <div class="container tab-pane fade in active">
+    <table class="table table-hover">
+      <tbody>
+      <% @leaderboard.each_with_index do |enrollment, i| %>
+
+          <tr>
+            
+            <td>
+              <%= (i+1) %>
+            </td>
+            <td>
+              <%= link_to(enrollment[:enrollment].user) do %>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+              
+              <%= enrollment[:enrollment].user.username %>
+              <% end %>
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0"
+                     aria-valuemax="<%= @leaderboard.first[:points]%>" style="width:<%= 100* enrollment[:points] / @leaderboard.first[:points] %>%">
+
+                </div>
+            </td>
+            <td><%= enrollment[:points] %></td>
+            
+          </tr>
+
+      <% end %>
+
+      </tbody>
+    </table>
+  </div>
 
 
 
-<%= link_to 'Back', course_enrollments_path %>
+
+  <%= link_to 'Back', course_path, class: "btn btn-primary btn-lg" %>
+
+  <!--
+  <div class="today">
+    <div id="today" class="tab-pane fade in active">
+      <div class="container">
+        <table class="table table-hover">
+          <tbody>
+          <tr>
+            <td>1</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="1000" aria-valuemin="0" aria-valuemax="1000" style="width:100%">
+                  100%
+                </div>
+            </td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="800" aria-valuemin="0" aria-valuemax="1000" style="width:80%">
+                  80%
+                </div>
+            </td>
+            <td>800</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="700" aria-valuemin="0" aria-valuemax="1000" style="width:70%">
+                  70%
+            <td>700</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="500" aria-valuemin="0" aria-valuemax="1000" style="width:50%">
+                  50%
+            <td>500</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="1000" style="width:10%">
+                  10%
+            <td>100</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <div id="this_week" class="tab-pane fade">
+      <div class="container">
+        <table class="table table-hover">
+          <tbody>
+          <tr>
+            <td>1</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="10000" aria-valuemin="0" aria-valuemax="10000" style="width:100%">
+                  100%
+                </div>
+            </td>
+            <td>10000</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="8000" aria-valuemin="0" aria-valuemax="10000" style="width:80%">
+                  80%
+                </div>
+            </td>
+            <td>8000</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="7000" aria-valuemin="0" aria-valuemax="10000" style="width:70%">
+                  70%
+            <td>7000</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="5000" aria-valuemin="0" aria-valuemax="10000" style="width:50%">
+                  50%
+            <td>5000</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="1000" aria-valuemin="0" aria-valuemax="10000" style="width:10%">
+                  10%
+            <td>1000</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <div id="this_month" class="tab-pane fade">
+      <div class="container">
+        <table class="table table-hover">
+          <tbody>
+          <tr>
+            <td>1</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="100000" aria-valuemin="0" aria-valuemax="100000" style="width:100%">
+                  100%
+                </div>
+            </td>
+            <td>100000</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="80000" aria-valuemin="0" aria-valuemax="100000" style="width:80%">
+                  80%
+                </div>
+            </td>
+            <td>80000</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="70000" aria-valuemin="0" aria-valuemax="100000" style="width:70%">
+                  70%
+            <td>70000</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="50000" aria-valuemin="0" aria-valuemax="100000" style="width:50%">
+                  50%
+            <td>50000</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="10000" aria-valuemin="0" aria-valuemax="100000" style="width:10%">
+                  10%
+            <td>10000</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <div id="all_time" class="tab-pane fade">
+      <div class="container">
+        <table class="table table-hover">
+          <tbody>
+          <tr>
+            <td>1</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="1000000" aria-valuemin="0" aria-valuemax="1000000" style="width:100%">
+                  100%
+                </div>
+              </div>
+            </td>
+            <td>1000000</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="800000" aria-valuemin="0" aria-valuemax="1000000" style="width:80%">
+                  80%
+                </div>
+              </div>
+            </td>
+            <td>800000</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="700000" aria-valuemin="0" aria-valuemax="1000000" style="width:70%">
+                  70%
+                </div>
+              </div>
+            </td>
+            <td>700000</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="500000" aria-valuemin="0" aria-valuemax="1000000" style="width:50%">
+                  50%
+                </div>
+              </div>
+            </td>
+            <td>500000</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+            </td>
+            <td>
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="100000" aria-valuemin="0" aria-valuemax="1000000" style="width:10%">
+                  10%
+                </div>
+              </div>
+            </td>
+            <td>100000</td>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>-->
+</div>

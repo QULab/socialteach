@@ -17,9 +17,9 @@
     <% @activity_statuses.each do |activity_status| %>
       <tr>
         <td><%= activity_status.is_completed %></td>
-        <td><%= activity_status.Status %></td>
-        <td><%= activity_status.Activity %></td>
-        <td><%= activity_status.Course_enrollment %></td>
+        <td><%= activity_status.status %></td>
+        <td><%= activity_status.activity %></td>
+        <td><%= activity_status.course_enrollment %></td>
         <td><%= link_to 'Show', activity_status %></td>
         <td><%= link_to 'Edit', edit_activity_status_path(activity_status) %></td>
         <td><%= link_to 'Destroy', activity_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>

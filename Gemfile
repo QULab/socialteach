@@ -37,7 +37,7 @@ gem 'merit', '~> 2.3.0'
 
 # Markdown parser (for better formatting and display of a lecture text)
 gem 'redcarpet', '~>3.3.4'
-
+gem "mini_magick"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -47,6 +47,7 @@ gem 'redcarpet', '~>3.3.4'
 #for scheduling tasks like update emails every week
 gem 'rufus-scheduler', '~> 3.2'
 
+gem 'carrierwave'
 #omniauth
 gem 'omniauth-facebook'
 

@@ -1,5 +1,9 @@
   Rails.application.routes.draw do
 
+  get 'users/edit_profile'
+
+  get 'users/show'
+
   resources :levels
 
   resources :activity_statuses
@@ -36,6 +40,7 @@
   end
 
   devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}
+  resources :users
 
 
   namespace :graph do
