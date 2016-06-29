@@ -4,6 +4,11 @@
       <h1>
         <%= @course.name %>
         <small>Created <%= time_ago_in_words(@course.created_at) %> ago</small>
+        <%- if @course.published %>
+          <span class="label label-success" style="float:right"> Published</span>
+        <%- else %>
+          <span class="label label-warning" style="float: right">Not published</span>
+        <%- end %>
       </h1>
       <div class="panel panel-default">
         <div class="panel-body">
