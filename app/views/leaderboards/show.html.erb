@@ -17,12 +17,16 @@
       <% @leaderboard.each_with_index do |enrollment, i| %>
 
           <tr>
+            
             <td>
               <%= (i+1) %>
             </td>
             <td>
+              <%= link_to(enrollment[:enrollment].user) do %>
               <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+              
               <%= enrollment[:enrollment].user.username %>
+              <% end %>
             </td>
             <td>
               <div class="progress">
@@ -32,6 +36,7 @@
                 </div>
             </td>
             <td><%= enrollment[:points] %></td>
+            
           </tr>
 
       <% end %>
@@ -43,7 +48,7 @@
 
 
 
-  <%= link_to 'Back', course_enrollments_path %>
+  <%= link_to 'Back', course_path, class: "btn btn-primary btn-lg" %>
 
   <!--
   <div class="today">

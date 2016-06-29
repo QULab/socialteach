@@ -17,6 +17,8 @@ class ActivityStatus < ActiveRecord::Base
 				end
 				learningpoints = self.course_enrollment.user.add_points(1,category: "Learningpoints")
 				self.update(learningpoints: learningpoints, levelpoints: levelpoints)
+
+				self.course_enrollment.set_level
 			end
 		end
 	end

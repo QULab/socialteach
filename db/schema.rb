@@ -283,6 +283,9 @@ ActiveRecord::Schema.define(version: 20160621214631) do
     t.boolean  "is_instructor"
     t.string   "provider"
     t.string   "userid"
+    t.string   "avatar"
+    t.string   "aboutme"
+    t.date     "birthday"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
