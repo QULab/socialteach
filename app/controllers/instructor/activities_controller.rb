@@ -60,7 +60,7 @@ class Instructor::ActivitiesController < Instructor::BaseController
       @activity.assign_attributes(activity_params)
       @activity.content.assign_attributes(content_params) if params[:activity].has_key?(:content_attributes)
       if @activity.save
-        format.html { redirect_to instructor_activity_path(@activity), notice: 'Activity was successfully updated.' }
+        format.html { redirect_to edit_instructor_chapter_path(@activity.chapter), notice: 'Activity was successfully updated.' }
       else
         format.html { render :edit }
       end
