@@ -5,4 +5,5 @@ class Course < ActiveRecord::Base
     belongs_to :users
     has_one :feedback, as: :commentable
 
+    has_many :activities, through: :chapters
 end
