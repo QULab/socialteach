@@ -20,7 +20,7 @@
       <div class="activity-content-container">
         <%- if @activity.content.is_a? ActivityLecture # check what type of activity and render proper view%>
           <%= render 'activities/lecture', lecture: @activity.content %>
-        <% elsif @activity.content.is_a?(ActivityExcercise) || @activity.content.is_a?(ActivityAssessment) %>
+        <% elsif @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment) %>
           <%= render 'activities/questionnaire', container: @activity.content %>
         <%- end %>
       </div>

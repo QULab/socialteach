@@ -2,4 +2,9 @@ Comments for
 <%= commentable.class %>
 (#<%= commentable.id %>)
 
-<%= render 'disqus' %>
+<% if commentable.class == Activity %>
+	<%= render 'disqusActivity' %>
+<% end %>
+<% if commentable.class == Course %>
+	<%= render 'disqusCourse' %>
+<% end %>

@@ -37,13 +37,13 @@ gem 'merit', '~> 2.3.0'
 
 # Markdown parser (for better formatting and display of a lecture text)
 gem 'redcarpet', '~>3.3.4'
-
+gem "mini_magick"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
-
+gem 'carrierwave'
 #omniauth
 gem 'omniauth-facebook'
 
