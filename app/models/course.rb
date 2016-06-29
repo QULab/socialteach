@@ -10,5 +10,8 @@ class Course < ActiveRecord::Base
 
     def get_number_of_enrollments
       CourseEnrollment.where("course_id = ?", self.id).count
+  def self.all_published_courses
+    where(published: true)
+  end
     end
 end
