@@ -1,5 +1,5 @@
 class Instructor::ActivitiesController < Instructor::BaseController
-  before_action :set_activity, only: [:show, :edit, :update, :destroy]
+  before_action :set_activity, only: [:show, :edit, :update, :destroy, :predec]
 
   # GET /activities/1
   # GET /activities/1.json
@@ -58,7 +58,7 @@ class Instructor::ActivitiesController < Instructor::BaseController
     require_permission(@activity.course)
     respond_to do |format|
       @activity.assign_attributes(activity_params)
-      @activity.content.assign_attributes(content_params)
+      @activity.content.assign_attributes(content_params) if params[:activity].has_key?(:content_attributes)
       if @activity.save
         format.html { redirect_to instructor_activity_path(@activity), notice: 'Activity was successfully updated.' }
       else
@@ -77,6 +77,11 @@ class Instructor::ActivitiesController < Instructor::BaseController
     end
   end
 
+  respond_to :js
+  def predec
+    render partial: 'instructor/chapters/activity_predec', locals: {activity: @activity}
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_activity
@@ -84,7 +89,7 @@ class Instructor::ActivitiesController < Instructor::BaseController
     end
 
     def activity_params
-      params.require(:activity).permit(:name, :levelpoints, :shortname, :tier, :chapter_id, :question, :content_type)
+      params.require(:activity).permit(:name, :levelpoints, :shortname, :tier, :chapter_id, :question, :content_type, :predecessor_ids => [])
     end
 
     def content_params
