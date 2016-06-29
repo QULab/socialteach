@@ -1,6 +1,8 @@
 (function() {
   var ready = function() {
-    var codeMirror = CodeMirror.fromTextArea($('#lecture-text').get(0),
+    var textArea = $('#lecture-text').get(0);
+    if (textArea) {
+    var codeMirror = CodeMirror.fromTextArea(textArea,
         {
           mode: 'markdown',
           theme: 'ttcn',
@@ -9,7 +11,7 @@
           viewportMargin: Infinity,
         }
         );
-  };
+  }};
 
   var set_textarea_content = function() {
     var codemirror = $('#lecture-text');
