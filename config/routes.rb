@@ -33,6 +33,7 @@
     resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html]
     resources :chapters, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
     get 'chapters/:id/predec' => 'chapters#predec', format: [:js], as: 'chapter_predec'
+    get 'chapters/:id/tier' => 'chapters#tier', format: [:js], as: 'chapter_tier'
     resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
     get 'activities/:id/predec' => 'activities#predec', format: [:js], as: 'activity_predec'
   end

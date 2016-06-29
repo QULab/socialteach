@@ -1,5 +1,5 @@
 class Instructor::ChaptersController < Instructor::BaseController
-  before_action :set_chapter, only: [:show, :edit, :update, :destroy, :predec]
+  before_action :set_chapter, only: [:show, :edit, :update, :destroy, :predec, :tier]
 
   # GET /chapters
   # GET /chapters.json
@@ -69,6 +69,11 @@ class Instructor::ChaptersController < Instructor::BaseController
   respond_to :js
   def predec
     render partial: 'instructor/courses/chapter_predec', locals: {chapter: @chapter}
+  end
+
+  respond_to :js
+  def tier
+    render partial: 'instructor/courses/chapter_tier', locals: {chapter: @chapter}
   end
 
   private

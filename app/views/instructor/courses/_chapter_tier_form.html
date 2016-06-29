@@ -1,0 +1,31 @@
+  <div class="row" style="margin: 5px">
+    <h4 class="list-group-item-heading">
+      <span class="label label-default label-pill pull-right chapter">
+        <%= chapter.shortname %>
+      </span>
+      <%= chapter.name %>
+    </h4>
+    <p class="list-group-item-text">
+      <%= truncate(chapter.description, length: 80) %>
+    </p>
+  </div>
+
+  <div class='tier'>
+  <%= form_for([:instructor, @chapter]) do |f| %>
+    <fieldset>
+      <div class="control-group">
+        <div class="controls">
+            <%= f.label :tier, class: "control-label" %><br>
+            <%= f.text_field :tier, class: "form-control" %>
+       </div>
+      </div>
+      <p></p>
+      <div class= "btn-group-justified">
+        <div class="form-actions">
+          <%= f.submit "Update Tier", class: "btn btn-default btn-primary btn-success"%>
+          <%= link_to 'Back', edit_instructor_course_path(@chapter.course), class: "btn btn-primary" %>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+<div>
