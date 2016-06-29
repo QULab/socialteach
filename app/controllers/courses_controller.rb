@@ -1,10 +1,13 @@
 class CoursesController < BaseController
   before_action :set_course, only: [:show, :curriculum, :feedback]
 
+  add_breadcrumb "Home", :root_path
+
   # GET /courses
   # GET /courses.json
   def index
     @courses = Course.all
+    add_breadcrumb "Courses", courses_path()
   end
 
   # GET /courses/1
@@ -18,6 +21,7 @@ class CoursesController < BaseController
     set_enrollments(current_user)
 
     unless @enrollments.empty?
+      add_breadcrumb "MyCourses", my_courses_path()
       render :index_enrolled
     else
       @courses = Course.all

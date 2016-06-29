@@ -1,6 +1,9 @@
 class LeaderboardsController < ApplicationController
   before_action :set_leaderboard, only: [:show]
 
+  add_breadcrumb "Home", :root_path
+  add_breadcrumb "Course", :course_path
+
   # GET /leaderboards
   # GET /leaderboards.json
   def index
@@ -10,6 +13,7 @@ class LeaderboardsController < ApplicationController
   # GET /leaderboards/1
   # GET /leaderboards/1.json
   def show
+    add_breadcrumb "Leaderboard", leaderboard_path()
   end
 
 =begin
