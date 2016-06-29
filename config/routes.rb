@@ -34,6 +34,7 @@
     resources :chapters, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
     get 'chapters/:id/predec' => 'chapters#predec', format: [:js], as: 'chapter_predec'
     resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
+    get 'activities/:id/predec' => 'activities#predec', format: [:js], as: 'activity_predec'
   end
 
   devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}
