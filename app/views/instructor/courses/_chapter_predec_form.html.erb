@@ -1,38 +1,38 @@
-<div class="list-group">
-  <div class="list-group-item chapter" data-node-id="<%= chapter.id %>">
-    <div class="row" style="margin: 5px">
-      <h4 class="list-group-item-heading">
-        <span class="label label-default label-pill pull-right chapter">
-          <%= chapter.shortname %>
-        </span>
-        <%= chapter.name %>
-      </h4>
-      <p class="list-group-item-text">
-        <%= truncate(chapter.description, length: 80) %>
-      </p>
-    </div>
-
-    <%= form_for([:instructor, @chapter]) do |f| %>
-      <fieldset>
-        <div class="control-group">
-          <div class="controls">
-
-            <%= f.label :predecessors, class: "control-label" %>
-            <%= f.select :predecessor_ids,
-                         options_from_collection_for_select(@chapter.valid_predecessors,
-                                                            'id',
-                                                            'name',
-                                                            @chapter.predecessors.ids),
-                          {include_blank: true}, {multiple: true, class: "form-control"} %>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <%= f.submit class: "btn btn-default btn-primary btn-block btn-success"%>
-        </div><p></p>
-      </fieldset>
-    <% end %>
-
+  <div class="row" style="margin: 5px">
+    <h4 class="list-group-item-heading">
+      <span class="label label-default label-pill pull-right chapter">
+        <%= chapter.shortname %>
+      </span>
+      <%= chapter.name %>
+    </h4>
+    <p class="list-group-item-text">
+      <%= truncate(chapter.description, length: 80) %>
+    </p>
   </div>
-</div>
+
+  <div class='predecessors'>
+  <%= form_for([:instructor, @chapter]) do |f| %>
+    <fieldset>
+      <div class="control-group">
+        <div class="controls">
+
+          <%= f.label :predecessors, class: "control-label" %>
+          <%= f.select :predecessor_ids,
+                       options_from_collection_for_select(@chapter.valid_predecessors,
+                                                          'id',
+                                                          'name',
+                                                          @chapter.predecessors.ids),
+                        {include_blank: true}, {multiple: true, class: "form-control"} %>
+          </select>
+        </div>
+      </div>
+      <p></p>
+      <div class= "btn-group-justified">
+        <div class="form-actions">
+          <%= f.submit "Update Predecessors", class: "btn btn-default btn-primary btn-success"%>
+          <%= link_to 'Back', edit_instructor_course_path(@chapter.course), class: "btn btn-primary" %>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+<div>
