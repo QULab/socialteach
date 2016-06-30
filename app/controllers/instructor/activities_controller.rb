@@ -1,6 +1,15 @@
 class Instructor::ActivitiesController < Instructor::BaseController
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
 
+  # POST /activities/markwodn
+  def markdown
+    text = params[:text] || ''
+
+    renderer = Redcarpet::Render::HTML.new(escape_html: true, safe_links_only: true)
+    markdown = Redcarpet::Markdown.new(renderer, no_intra_emphasis: true, autolink: true, fenced_code_blocks: true)
+    render text: markdown.render(text)
+  end
+
   # GET /activities/1
   # GET /activities/1.json
   def show
