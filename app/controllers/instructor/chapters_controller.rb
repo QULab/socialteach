@@ -84,6 +84,6 @@ class Instructor::ChaptersController < Instructor::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def chapter_params
-        params.require(:chapter).permit(:name, :shortname, :description, :tier, :predecessor_ids => [])
+        params.require(:chapter).permit(:name, :shortname, :description, :course_id, :tier, :predecessor_ids => [])
     end
 end
