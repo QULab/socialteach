@@ -4,7 +4,7 @@ class CoursesController < BaseController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.all
+    @courses = Course.all_published_courses
   end
 
   # GET /courses/1
