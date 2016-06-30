@@ -1,10 +1,12 @@
 Graph = {};
+var node_type;
 
 function loadGraph(type, id){
 $.ajax({
         url:  "/graph/" + type + "/" + id,
         dataType: "json",
         success: function(data) {
+          node_type = type;
           setupGraph(data);
         }
     });
@@ -59,19 +61,25 @@ $('#cy').cytoscape({
 cy.on('click', 'node', function(evt){
   var node = evt.cyTarget;
   console.log( 'clicked node ' + node.id() );
-  loadGraph("chapters", node.id())
+  console.log( 'type: ' + node_type);
+  if (node_type == "courses"){
+    window.location = "/instructor/chapters/" + node.id() + "/edit";
+  }
+  if (node_type == "chapters"){
+    window.location = "/instructor/activities/" + node.id() + "/edit";
+  }
 });
 
 cy.on('mouseover', 'node', function(evt){
   var node = evt.cyTarget;
-  $("div.list-group-item[data-node-id=" + node.id() + "]").addClass('highlighted')
-  Graph.highlight(node.id())
+  $("div.list-group-item[data-node-id=" + node.id() + "]").addClass('highlighted');
+  Graph.highlight(node.id());
 });
 
 cy.on('mouseout', 'node', function(evt){
   var node = evt.cyTarget;
-  $("div.list-group-item[data-node-id=" + node.id() + "]").removeClass('highlighted')
-  Graph.unHighlight(node.id())
+  $("div.list-group-item[data-node-id=" + node.id() + "]").removeClass('highlighted');
+  Graph.unHighlight(node.id());
 });
 
 Graph.highlight = function(id){

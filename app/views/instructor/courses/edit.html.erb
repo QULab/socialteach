@@ -14,7 +14,9 @@
       <legend>Course Attributes</legend>
       <%= render 'form' %>
       <legend>Course Chapters</legend>
-      <%= render partial: 'chapters', locals: {course: @course, chapters: @course.chapters} %>
+      <div id='chapter-area'>
+        <%= render partial: 'chapters', locals: {course: @course, chapters: @course.chapters} %>
+      </div>
       <div class="row">
         <div class="col-md-6">
           <%= link_to 'Show Course', instructor_course_path(@course), class: "btn btn-block btn-primary" %>
