@@ -43,13 +43,13 @@
         </li>
         <li class="list-group-item">
           <span class="badge">
-            <%= @course.get_number_of_enrollments %>
+            <%= @course.get_number_of_completed_enrollments %>
           </span>
           Users who finished this Course
         </li>
         <li class="list-group-item">
           <span class="badge">
-            <%= @course.get_number_of_enrollments %>
+            <%= @course.get_number_of_new_enrollments(30) %>
           </span>
           New Users in the last 30 days
         </li>

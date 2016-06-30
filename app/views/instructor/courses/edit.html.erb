@@ -15,9 +15,16 @@
       <%= render 'form' %>
       <legend>Course Chapters</legend>
       <%= render partial: 'chapters', locals: {course: @course, chapters: @course.chapters} %>
-      <%= link_to 'Show', instructor_course_path(@course), class: "btn btn-link" %> |
-      <%= link_to 'Back', instructor_courses_path, class: "btn btn-link" %>
+      <div class="row">
+        <div class="col-md-6">
+          <%= link_to 'Show Course', instructor_course_path(@course), class: "btn btn-block btn-primary" %>
+        </div>
+        <div class="col-md-6">
+          <%= link_to 'Back', instructor_courses_path, class: "btn btn-block btn-primary" %>
+        </div>
+      </div>
     </div>
+
     <div class="col-md-8">
       <div class="row">
         <legend>Course Structure</legend>
