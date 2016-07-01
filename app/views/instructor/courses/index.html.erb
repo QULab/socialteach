@@ -9,9 +9,13 @@
     <div class="list-group">
       <% @courses.each do |course| %>
         <%= link_to instructor_course_path(course), class: "list-group-item" do %>
-          <i class="fa fa-3x fa-check-circle" style="float: right"></i>
           <h4 class="list-group-item-heading">
             <%= course.name %>
+            <%- if course.published %>
+              <span class="label label-success" style="float: right"> Published </span>
+            <%- else %>
+              <span class="label label-warning" style="float: right"> Unpublished </span>
+            <%- end %>
           </h4>
           <h6 class="list-group-item-heading">
             Created <%= time_ago_in_words(course.created_at) %> ago
