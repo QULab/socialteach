@@ -166,6 +166,8 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mimemagic (0.3.1)
+    mini_magick (4.5.1)
     mini_portile2 (2.0.0)
     minitest (5.9.0)
     minitest-reporters (1.1.9)
@@ -323,6 +325,8 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rbenv
   capistrano3-puma
+  carrierwave
+  codemirror-rails (~> 5.11)
   devise (~> 3.2)
   factory_girl_rails
   figaro
@@ -330,6 +334,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   merit (~> 2.3.0)
+  mini_magick
   minitest
   minitest-reporters
   mysql2 (~> 0.3.21)
