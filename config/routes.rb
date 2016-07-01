@@ -47,6 +47,9 @@
   devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}
   resources :users
 
+  get 'users/edit_profile'
+  get 'users/show'
+
 
   namespace :graph do
     get 'courses/:id' => 'courses#show', format: [:json]
