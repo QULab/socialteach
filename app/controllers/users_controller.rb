@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 	before_action :authenticate_user!, only: [:edit_profil, :update]
-  	before_action :check_authorization, only: [:edit_profil, :update]
+  before_action :check_authorization, only: [:edit_profil, :update]
  	before_action :set_user, only: [:show]
+
   def show
   end
 
@@ -18,7 +19,7 @@ class UsersController < ApplicationController
   	end
   end
 
-  private 
+  private
 
   	def check_authorization
   		unless current_user.id == params[:id].to_i
