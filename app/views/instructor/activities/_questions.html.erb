@@ -1,0 +1,8 @@
+<% unless questionnaire.nil? %>
+  <% questionnaire.m_questions.each do |question| %>
+    <div>
+      <%= question.text %>
+    </div>
+  <% end %>
+<% end %>
+<%= link_to "<i class='fa fa-x fa-plus'></i>".html_safe, '#' , class: "btn btn-success btn-block", title: 'Add Question', data: { toggle: "tooltip"} %>

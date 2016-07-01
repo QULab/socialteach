@@ -36,7 +36,14 @@
   </div>
 
       <%= f.fields_for :content do |content_form| %>
-        <%= render 'form_lecture', f: content_form %>
+        <% case @activity.content_type %>
+        <% when 'ActivityLecture' %>
+          <%= render 'form_lecture', f: content_form %>
+        <% when 'ActivityExercise' %>
+          <%= render 'form_exercise', f: content_form %>
+        <% when 'ActivityAssessment' %>
+          <%= render 'form_assessment', f: content_form %>
+        <% end %>
       <% end %>
 
   <div class="row">

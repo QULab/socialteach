@@ -1,0 +1,3 @@
+<%= f.fields_for :questionnaire do |questionnaire_form| %>
+  <%= render 'form_questionnaire', questionnaire: @activity.content.questionnaire, f: questionnaire_form %>
+<% end %>
