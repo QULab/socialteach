@@ -1,9 +1,5 @@
   Rails.application.routes.draw do
 
-  get 'users/edit_profile'
-
-  get 'users/show'
-
   resources :levels
 
   resources :activity_statuses
@@ -36,11 +32,24 @@
     # index shows all courses the current user can modify
     resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html]
     resources :chapters, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
-    resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
+    resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html] do
+      collection do
+        post 'markdown'
+
+      end
+    end
+    get 'chapters/:id/predec' => 'chapters#predec', format: [:js], as: 'chapter_predec'
+    get 'chapters/:id/tier' => 'chapters#tier', format: [:js], as: 'chapter_tier'
+    get 'activities/:id/predec' => 'activities#predec', format: [:js], as: 'activity_predec'
+    get 'activities/:id/tier' => 'activities#tier', format: [:js], as: 'activity_tier'
   end
+
+  get 'users/edit_profile'
+  get 'users/show'
 
   devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}
   resources :users
+
 
 
   namespace :graph do

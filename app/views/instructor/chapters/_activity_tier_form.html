@@ -1,0 +1,28 @@
+  <div class="row" style="margin: 5px">
+    <h4 class="list-group-item-heading">
+      <span class="label label-default label-pill pull-right activity">
+        <%= activity.shortname %>
+      </span>
+      <%= activity.name %>
+    </h4>
+  </div>
+
+  <div class='tier'>
+  <%= form_for([:instructor, @activity]) do |f| %>
+    <fieldset>
+      <div class="control-group">
+        <div class="controls">
+            <%= f.label :tier, class: "control-label" %><br>
+            <%= f.number_field :tier, class: "form-control" %>
+       </div>
+      </div>
+      <p></p>
+      <div class= "btn-group-justified">
+        <div class="form-actions">
+          <%= f.submit "Update Tier", class: "btn btn-default btn-primary btn-success"%>
+          <%= link_to 'Back', edit_instructor_course_path(@activity.chapter), class: "btn btn-primary" %>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+<div>
