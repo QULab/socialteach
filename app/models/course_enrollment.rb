@@ -19,7 +19,7 @@ class CourseEnrollment < ActiveRecord::Base
   end
 
   def progress
-  	finished_activities = self.activity_statuses.select(:activity_id).distinct.count
+  	finished_activities = self.activity_statuses.where(is_completed: true, status: 1).select(:activity_id).distinct.count
   	total_activities = self.course.activities.distinct.count
   	return {:finished_activities => finished_activities, :total_activities => total_activities, :percent => finished_activities.to_f/total_activities.to_f}
   end

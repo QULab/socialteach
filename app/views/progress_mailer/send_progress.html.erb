@@ -4,5 +4,21 @@
   Hello <%= @user.username %>
 </p>
 <p>
-	This is a Test mail!
+	This is a overview of your Points for this week!
+	<p>
+		Your current socialpoints: <%= @socialp %> <br>
+		Your current learningpoints: <%= @learningp %> <br>
+
+		<% @enrollment_points.each do |enrollment| %>
+			<%= enrollment[:enrollment].course.name %>: <%= enrollment[:points] %><br>
+			Your current progress in <%= enrollment[:enrollment].course.name %>: <%= enrollment[:enrollment].progress[:percent]*100 %> % <br>
+		<% end %>
+		<br>
+		<br>
+		This week you earned for your course the following levelpoints:<br>
+		<% @enrollment_points.each do |enrollment| %>
+			<%= enrollment[:enrollment].course.name %>: <%= enrollment[:last_week] %> (this week) in contrast <%= enrollment[:the_week_before] %> (the week before)<br>
+
+		<% end %>
+	</p>
 </p>

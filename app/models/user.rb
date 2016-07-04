@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :completed_m_questions
   has_many :completed_questionnaires
   validate :username_validation
+  has_many :course_enrollments
 
   def username_validation
     if !username.present?
