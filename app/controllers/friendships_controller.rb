@@ -25,7 +25,6 @@ class FriendshipsController < ApplicationController
   # POST /friendships.json
   def create
     @friendship = current_user.friendships.build(:friend_id => params[:friend_id])
-  
 
     respond_to do |format|
       if @friendship.save
@@ -62,14 +61,6 @@ class FriendshipsController < ApplicationController
       format.html { redirect_to user_path(current_user), notice: 'Removed friendship' }
       format.json { head :no_content }
     end
-  end
-
-  def find_friendship(user1, user2)
-    Friendship.find_by_user_id_and_friend_id(user1.id,user.id)
-  end
-
-  def find_facebookfriends
-
   end
 
   private
