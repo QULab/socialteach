@@ -251,14 +251,6 @@ ActiveRecord::Schema.define(version: 20160629213407) do
     t.string  "category", default: "default"
   end
 
-  create_table "merits", force: :cascade do |t|
-    t.string   "course"
-    t.float    "points"
-    t.datetime "earned_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "questionnaires", force: :cascade do |t|
     t.integer  "qu_container_id"
     t.string   "qu_container_type"
