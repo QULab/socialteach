@@ -41,3 +41,7 @@
   $(document).on('page:load', add_event_handler);
 })()
 
+function remove_fields(link) {
+  $(link).prev("input[type=hidden]").val("1");
+  $(link).closest(".fields").hide();
+}

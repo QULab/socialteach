@@ -1,0 +1,10 @@
+<div class="field row">
+  <div class="col-md-11 col-md-offset-1">
+
+  <%= f.label :text, "Answer" %>
+  <%= link_to "<i class='fa fa-x fa-trash'></i>".html_safe, '#', onclick: "remove_fields(this);", class: "pull-right" %>
+  <%= f.text_field :text, class: "form-control" %>
+  <%= f.hidden_field :_destroy %>
+</div>
+
+</div>

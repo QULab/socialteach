@@ -5,5 +5,5 @@ class Questionnaire < ActiveRecord::Base
   # feedback, assessment, or exercise
   belongs_to :qu_container, polymorphic: true
 
-  accepts_nested_attributes_for :m_questions
+  accepts_nested_attributes_for :m_questions, allow_destroy: true
 end
