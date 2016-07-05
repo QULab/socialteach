@@ -4,8 +4,16 @@
       <legend>Questions</legend>
       <%= f.fields_for :questionnaire do |questionnaire_form| %>
         <%= questionnaire_form.fields_for :m_questions do |questions_form| %>
+          <p>
             <%= questions_form.label :text, "Question" %><br />
             <%= questions_form.text_area :text, rows: 3, class: "form-control" %>
+            <%= questions_form.fields_for :answers do |answers_form| %>
+              <p>
+                <%= answers_form.label :text, "Answer" %>
+                <%= answers_form.text_field :text, class: "form-control" %>
+              </p>
+            <% end %>
+          </p>
         <% end %>
       <% end %>
     </div>

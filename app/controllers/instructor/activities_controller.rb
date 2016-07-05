@@ -25,7 +25,10 @@ class Instructor::ActivitiesController < Instructor::BaseController
     elsif params[:content_type] == "exercise"
       @activity.content = ActivityExercise.new
       @activity.content.questionnaire = Questionnaire.new(qu_container: @activity.content)
-      5.times {   @activity.content.questionnaire.m_questions.build }
+      2.times do
+        question = @activity.content.questionnaire.m_questions.build
+        3.times { question.answers.build }
+      end
     elsif params[:content_type] == "assessment"
       @activity.content = ActivityAssessment.new
     else
