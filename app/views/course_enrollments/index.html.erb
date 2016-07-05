@@ -1,0 +1,35 @@
+<h1>Listing Course Enrollments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Active</th>
+      <th>Completed</th>
+      <th>Is visible</th>
+      <th>Is visible friends</th>
+      <th>User</th>
+      <th>Course</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @course_enrollments.each do |course_enrollment| %>
+      <tr>
+        <td><%= course_enrollment.active %></td>
+        <td><%= course_enrollment.completed %></td>
+        <td><%= course_enrollment.is_visible %></td>
+        <td><%= course_enrollment.is_visible_friends %></td>
+        <td><%= course_enrollment.user.id %></td>
+        <td><%= course_enrollment.course.id %></td>
+        <td><%= link_to 'Show', course_enrollment %></td>
+        <td><%= link_to 'Edit', edit_course_enrollment_path(course_enrollment) %></td>
+        <td><%= link_to 'Destroy', course_enrollment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Course enrollment', new_course_enrollment_path %>

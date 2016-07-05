@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Is completed:</strong>
+  <%= @activity_status.is_completed %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @activity_status.status %>
+</p>
+
+<p>
+  <strong>Activity:</strong>
+  <%= @activity_status.activity %>
+</p>
+
+<p>
+  <strong>Course enrollment:</strong>
+  <%= @activity_status.course_enrollment %>
+</p>
+
+<%= link_to 'Edit', edit_activity_status_path(@activity_status) %> |
+<%= link_to 'Back', activity_statuses_path %>

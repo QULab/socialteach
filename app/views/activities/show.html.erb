@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>
+        <%= @activity.name %>
+      </h2>
+      <p>
+        <%= @activity.chapter.name %>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1">
+      <%= link_to :back, title: 'Back to last Page' do %>
+        <i class="arrows fa fa-3x fa-arrow-left"></i>
+      <%- end %>
+    </div>
+
+    <div class="col-md-10">
+      <div class="activity-content-container">
+        <%- if @activity.content.is_a? ActivityLecture # check what type of activity and render proper view%>
+          <%= render 'activities/lecture', lecture: @activity.content %>
+        <% elsif @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment) %>
+          <%= render 'activities/questionnaire', container: @activity.content %>
+        <%- end %>
+      </div>
+      <%= render 'shared/feedback', commentable: @activity %>
+      <% # render 'shared/comments', commentable: @activity %>
+    </div>
+
+    <div class="col-md-1">
+      <%= link_to curriculum_course_path(@activity.course, chapter: @activity.chapter.id), title: 'Proceed to Curriculum' do %>
+        <i class=" arrows fa fa-3x fa-arrow-up"></i>
+      <%- end %>
+    </div>
+  </div>
+</div>

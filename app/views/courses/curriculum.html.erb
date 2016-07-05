@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row">
+    <div class="page-header">
+      <h1>
+        <%= @course.name %>
+        <small>Started <%= time_ago_in_words(@enrollment.created_at) %> ago</small>
+      </h1>
+      <%= link_to course_path, class: "btn btn-primary" do %>
+        <i class="fa fa-star"></i>
+        Show Course Progress
+      <%- end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <%- @course.chapters.each do |chapter| %>
+        <%= link_to curriculum_course_path(@course, chapter: chapter.id), class: ["thumbnail", ("alert-info" if chapter == @active_chapter)] do %>
+          <i class="fa fa-3x fa-check-circle"></i>
+          <i class="fa fa-3x fa-question-circle"></i>
+          <i class="fa fa-3x fa-times-circle"></i>
+          <div class="caption">
+            <h3>
+              <%= chapter.name %>
+            </h3>
+            <p>
+              <%= chapter.description %>
+            </p>
+          </div>
+        <%- end %>
+      <%- end %>
+    </div>
+
+    <div class="col-md-9">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <%= @active_chapter.name %>
+            </h3>
+          </div>
+          <div class="panel-body">
+            <%= @active_chapter.description %>
+          </div>
+          <div class="progress" style="margin: 5px">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 35%">
+              35% Complete
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="list-group">
+        <%- @active_chapter.activities.each do |act| %>
+          <% completed = current_user.completed?(act) %>
+          <%= link_to activity_path(act), class: ["list-group-item", ("list-group-item-success" if completed)] do %>
+
+            <% if completed %>
+              <i class="fa fa-3x fa-check" style="float: right"></i>
+            <% end %>
+
+            <h4 class="list-group-item-heading">
+              <i class="fa fa-2x <%= activity_icon(act) %>"></i>
+              <%= act.name %>
+            </h4>
+            <p class="list-group-item-text">
+              Nur zum Testen, hier sollten Punkte oder sowas auftauchen!
+            </p>
+          <%- end %>
+        <%- end %>
+      </div>
+    </div>
+  </div>
+
+</div>
+

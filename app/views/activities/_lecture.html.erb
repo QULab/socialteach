@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= render_markdown(lecture.text) %>
+  </div>
+</div>
+
+<% unless current_user.completed?(@activity) %>
+  <%= form_for @activity, url: complete_activity_path(@activity), method: :post do |form| %>
+    <%= form.submit 'Finish this Lecture', class: "btn btn-success" %>
+  <% end %>
+<% end %>

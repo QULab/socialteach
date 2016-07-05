@@ -1,7 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
-  
+
   before_filter :configure_permitted_parameters
-    
+
   def new
     super
   end
@@ -14,15 +14,22 @@ class RegistrationsController < Devise::RegistrationsController
   def update
     super
   end
-    
-  # redirect page after successful sign up    
+
+  # redirect page after successful sign up
   def after_sign_up_path_for(resource)
-      lessons_path # Or :prefix_to_your_route     
+
+      if !current_user.is_instructor?
+
+        courses_path # acutally redirect to the user_page
+      else
+        instructor_courses_path # redirect to instructor_page
+      end
   end
-    
+
   protected
 
   def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up).push(:username)
+      devise_parameter_sanitizer.for(:sign_up).push(:is_instructor)
   end
-end 
+end

@@ -1,16 +1,66 @@
   Rails.application.routes.draw do
 
+  resources :levels
+
+  resources :activity_statuses
+
+  resources :course_enrollments
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  resources :lessons
+  resources :leaderboards, only: [:show]
 
-  resources :lectures
+  # resources :chapters, only: [:show]
 
-  resources :courses
+  resources :activities, only: [:show] do
+    member do
+      post 'complete'
+    end
+  end
 
-  devise_for :users, :controllers => {:registrations => "registrations"}
-                
+  resources :courses, only: [:show, :index] do
+    member do
+      get 'curriculum'
+    end
+  end
+  get 'my_courses' => 'courses#index_enrolled', format: [:html]
+
+
+  # Routes that are only for instructors
+  namespace :instructor do
+    # index shows all courses the current user can modify
+    resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html]
+    resources :chapters, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
+    resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html] do
+      collection do
+        post 'markdown'
+
+      end
+    end
+    get 'chapters/:id/predec' => 'chapters#predec', format: [:js], as: 'chapter_predec'
+    get 'chapters/:id/tier' => 'chapters#tier', format: [:js], as: 'chapter_tier'
+    get 'activities/:id/predec' => 'activities#predec', format: [:js], as: 'activity_predec'
+    get 'activities/:id/tier' => 'activities#tier', format: [:js], as: 'activity_tier'
+  end
+
+  get 'users/edit_profile'
+  get 'users/show'
+
+  devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}
+  resources :users
+
+
+
+  namespace :graph do
+    get 'courses/:id' => 'courses#show', format: [:json]
+    get 'chapters/:id' => 'chapters#show', format: [:json]
+  end
+
+  post 'activities/:id/feedback' => 'activities#feedback', format: [:json]
+  post 'courses/:id/feedback' => 'courses#feedback', format: [:json]
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

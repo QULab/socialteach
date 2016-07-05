@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  active: false
+  completed: false
+  is_visible: false
+  is_visible_friends: false
+  user_id: 
+  course_id: 
+
+two:
+  active: false
+  completed: false
+  is_visible: false
+  is_visible_friends: false
+  user_id: 
+  course_id: 

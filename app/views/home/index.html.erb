@@ -1,12 +1,11 @@
 <div class="container">
-    <div class="center jumbotron">
-        <h1>Hello World! Welcome to the social-teach Platform!</h1>
-        <p>
-            This is a learning platform, where learning is fun and interactive.
-        
-        </p>
-        
-        <p><a href=<%=  new_user_registration_path  %> class="btn btn-lg btn-primary">Sign up now!</a></p>    </div>
+  <div class="center jumbotron">
+    <h1>Hello <%= current_user.username %>! Welcome to the social-teach Platform!</h1>
+    <p>
+      This is a learning platform, where learning is fun and interactive.
+
+    </p>
+  </div>
 
 </div>
 

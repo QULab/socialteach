@@ -14,4 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
+//= require cytoscape
+//= require codemirror
+//= require codemirror/modes/markdown
 //= require_tree .

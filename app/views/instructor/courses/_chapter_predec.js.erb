@@ -1,0 +1,4 @@
+
+$(".btn").addClass('disabled');
+$(".form-control").prop('disabled', true);
+$("div.chapter[data-node-id='<%=chapter.id%>']").html("<%= j render 'instructor/courses/chapter_predec_form', chapter: chapter %>");

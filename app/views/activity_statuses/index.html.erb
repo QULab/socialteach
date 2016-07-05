@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Activity Statuses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Is completed</th>
+      <th>Status</th>
+      <th>Activity</th>
+      <th>Course enrollment</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @activity_statuses.each do |activity_status| %>
+      <tr>
+        <td><%= activity_status.is_completed %></td>
+        <td><%= activity_status.status %></td>
+        <td><%= activity_status.activity %></td>
+        <td><%= activity_status.course_enrollment %></td>
+        <td><%= link_to 'Show', activity_status %></td>
+        <td><%= link_to 'Edit', edit_activity_status_path(activity_status) %></td>
+        <td><%= link_to 'Destroy', activity_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Activity status', new_activity_status_path %>

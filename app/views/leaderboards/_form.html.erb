@@ -1,0 +1,17 @@
+<%= form_for(@leaderboard) do |f| %>
+  <% if @leaderboard.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@leaderboard.errors.count, "error") %> prohibited this leaderboard from being saved:</h2>
+
+      <ul>
+      <% @leaderboard.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

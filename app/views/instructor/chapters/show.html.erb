@@ -1,0 +1,17 @@
+<p>
+  <strong>Name:</strong>
+  <%= @chapter.name %>
+</p>
+
+<p>
+  <strong>Shortname:</strong>
+  <%= @chapter.shortname %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @chapter.description %>
+</p>
+
+<%= link_to 'Edit', edit_instructor_chapter_path(@chapter) %> |
+<%= link_to 'Back', instructor_course_path(@chapter.course) %>
