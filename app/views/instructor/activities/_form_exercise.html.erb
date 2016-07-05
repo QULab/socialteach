@@ -1,3 +1,13 @@
-<%= f.fields_for :questionnaire do |questionnaire_form| %>
-  <%= render 'form_questionnaire', questionnaire: @activity.content.questionnaire, f: questionnaire_form %>
-<% end %>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <legend>Questions</legend>
+      <%= f.fields_for :questionnaire do |questionnaire_form| %>
+        <%= questionnaire_form.fields_for :m_questions do |questions_form| %>
+            <%= questions_form.label :text, "Question" %><br />
+            <%= questions_form.text_area :text, rows: 3, class: "form-control" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
