@@ -1,7 +1,8 @@
-<div class="well field">
+<div class="well fields">
   <div class="row">
     <div class="col-md-12">
   <%= f.label :text, "Question" %>
+  <%= f.hidden_field :_destroy %>
   <%= link_to "<i class='fa fa-x fa-trash'></i>".html_safe, '#', onclick: "remove_fields(this);", class: "pull-right" %>
   <%= f.text_area :text, rows: 3, class: "form-control" %><br \>
 </div>
@@ -11,5 +12,4 @@
     <%= render "answer_fields", f: answers_form %>
   <% end %>
   <%= link_to_add_fields "Add Answer", f, :answers %>
-  <%= f.hidden_field :_destroy %>
 </div>
