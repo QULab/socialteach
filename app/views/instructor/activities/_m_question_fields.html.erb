@@ -11,5 +11,5 @@
   <%= f.fields_for :answers do |answers_form| %>
     <%= render "answer_fields", f: answers_form %>
   <% end %>
-  <%= link_to_add_fields "Add Answer", f, :answers %>
+  <%= link_to_add_fields "<i class='fa fa-x fa-plus'></i> Answer".html_safe, f, :answers %>
 </div>
