@@ -13,11 +13,42 @@
   <div class="col-xs-6 col-md-4">    
   	<h1>About me :</h1>
   	<p><%= @user.aboutme %></p>
-</div>
+
+    <div>
+      <% @users = User.all %>
+      <% @users.each do |user| %>
+        <%-# dont show urself in userlist -%>
+        <% unless user.id == current_user.id %>
+              <div class="row">
+                <strong><%= user.username %></strong>
+                <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
+              </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div>
+      <h2>My friends on socialteach:</h2>
+      <% for friendship in @user.friendships %>
+        <li>
+          <%= friendship.friend.username %>
+          (<%= link_to "remove", friendship, :method => :delete %>)
+        </li>
+      <% end %>
+
+      <h2>Friended by Users:</h2>
+      <% for friendship in @user.inverse_friendships %>
+        <li>
+          <%= friendship.friend.username %>
+        </li>
+      <% end %>
+    </div>
 
 </div>
 
-<div class="div2"
+</div>
+
+<div class="div2">
 
        <% if @user.id==current_user.id %><p> <%= link_to "Edit Profile", users_edit_profile_path() %></p><% end %>
 </div>

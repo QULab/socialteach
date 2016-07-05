@@ -13,6 +13,10 @@ class User < ActiveRecord::Base
   has_many :completed_questionnaires
   validate :username_validation
   has_many :course_enrollments
+  has_many :friendships
+  has_many :friends, :through => :friendships
+  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+  has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
   def username_validation
     if !username.present?
