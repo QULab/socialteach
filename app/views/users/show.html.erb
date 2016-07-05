@@ -1,11 +1,12 @@
 <div class="container">
     <div class="page-header">
   <h1><%= @user.username %>'s Profile
-    <% unless @user.id == current_user.id %>
-      <%= link_to friendships_path(:friend_id => @user), :method => :post, class: "btn btn-primary" do %>
-        Add friend
-      <%- end %>
-    <% end %></h1>
+  <% unless @user.id == current_user.id || Friendship.find_by_user_id_and_friend_id(current_user.id,@user.id)%>
+    <%= link_to friendships_path(:friend_id => @user), :method => :post, class: "btn btn-primary" do %>
+      Add friend
+    <%- end %>
+  <% end %>
+  </h1>
 	</div>
 	<div class="row">
   <div class="col-xs-6 col-md-4">
@@ -20,31 +21,24 @@
   	<p><%= @user.aboutme %></p>
 
     <div>
-      <% @users = User.all %>
-      <% @users.each do |user| %>
-        <%-# dont show urself in userlist -%>
-        <% unless user.id == current_user.id %>
-              <div class="row">
-                <strong><%= user.username %></strong>
-                <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
-              </div>
-        <% end %>
-      <% end %>
-    </div>
-
-    <div>
       <h2>My friends on socialteach:</h2>
       <% for friendship in @user.friendships %>
         <li>
-          <%= friendship.friend.username %>
-          (<%= link_to "remove", friendship, :method => :delete %>)
+          <%= link_to friendship.friend do %>
+            <%= friendship.friend.username %>
+          <% end %>
+          <% if current_user == @user %>
+            (<%= link_to "remove", friendship, :method => :delete %>)
+          <% end %>
         </li>
       <% end %>
 
       <h2>Friended by Users:</h2>
       <% for friendship in @user.inverse_friendships %>
         <li>
-          <%= friendship.friend.username %>
+          <%= link_to friendship.user do %>
+            <%= friendship.user.username %>
+          <% end %>
         </li>
       <% end %>
     </div>
