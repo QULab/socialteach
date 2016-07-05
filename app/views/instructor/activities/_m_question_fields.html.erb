@@ -10,5 +10,6 @@
   <%= f.fields_for :answers do |answers_form| %>
     <%= render "answer_fields", f: answers_form %>
   <% end %>
+  <%= link_to_add_fields "Add Answer", f, :answers %>
   <%= f.hidden_field :_destroy %>
 </div>

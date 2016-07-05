@@ -4,8 +4,9 @@
       <legend>Questions</legend>
       <%= f.fields_for :questionnaire do |questionnaire_form| %>
         <%= questionnaire_form.fields_for :m_questions do |questions_form| %>
-          <%= render "question_fields", f: questions_form %>
+          <%= render "m_question_fields", f: questions_form %>
         <% end %>
+        <%= link_to_add_fields "Add Question", questionnaire_form, :m_questions %>
       <% end %>
     </div>
   </div>
