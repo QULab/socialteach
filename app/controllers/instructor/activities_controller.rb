@@ -17,8 +17,8 @@ class Instructor::ActivitiesController < Instructor::BaseController
 
   # GET /activities/new
   def new
-    @chapter = Chapter.find(params[:chapter_id])
-    @activity = @chapter.activities.new
+    chapter = Chapter.find(params[:chapter_id])
+    @activity = chapter.activities.new
 
     if params[:content_type] == "lecture"
       @activity.content = ActivityLecture.new
