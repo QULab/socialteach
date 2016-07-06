@@ -7,7 +7,7 @@ class WeeklyMailerWorker
 	sidekiq_options :queue => :remindermailer
 
 	recurrence do
-		daily
+		weekly
 	end
 
 	def perform
