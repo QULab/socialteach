@@ -1,11 +1,12 @@
 class Course < ActiveRecord::Base
 
   validate :cannot_unpublish_if_users_enrolled
-
+  has_many :course_badges
   has_many :chapters
   has_many :course_enrollments
   belongs_to :users
   has_one :feedback, as: :commentable
+  has_one :user, as: :creator
 
     has_many :activities, through: :chapters
 

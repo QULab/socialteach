@@ -1,5 +1,7 @@
   Rails.application.routes.draw do
 
+  resources :course_badges
+
   resources :friendships
 
   resources :levels

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705170954) do
+ActiveRecord::Schema.define(version: 20160706032410) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -164,6 +164,18 @@ ActiveRecord::Schema.define(version: 20160705170954) do
 
   add_index "completed_questionnaires", ["questionnaire_id"], name: "index_completed_questionnaires_on_questionnaire_id"
   add_index "completed_questionnaires", ["user_id"], name: "index_completed_questionnaires_on_user_id"
+
+  create_table "course_badges", force: :cascade do |t|
+    t.string   "badge"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "course_id"
+  end
+
+  add_index "course_badges", ["course_id"], name: "index_course_badges_on_course_id"
 
   create_table "course_enrollments", force: :cascade do |t|
     t.boolean  "active",             default: true
