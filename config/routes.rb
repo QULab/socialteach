@@ -44,8 +44,12 @@
     get 'activities/:id/tier' => 'activities#tier', format: [:js], as: 'activity_tier'
   end
 
+  get 'users/edit_profile'
+  get 'users/show'
+
   devise_for :users, :controllers => {:registrations => "registrations", omniauth_callbacks: "omniauth_callbacks"}
   resources :users
+
 
 
   namespace :graph do

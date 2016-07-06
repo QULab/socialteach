@@ -10,7 +10,11 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    render :show
+    if @course.published
+      render :show
+    else
+      redirect_to courses_path
+    end
   end
 
   def index_enrolled
