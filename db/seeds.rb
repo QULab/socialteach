@@ -27,11 +27,12 @@ user7 = User.create(email: 'user1@test.com', username: 'User 7', password: 'pass
 user8 = User.create(email: 'user1@test.com', username: 'User 8', password: 'password', password_confirmation: 'password')
 user9 = User.create(email: 'user1@test.com', username: 'User 9', password: 'password', password_confirmation: 'password')
 user10 = User.create(email: 'user1@test.com', username: 'User 10', password: 'password', password_confirmation: 'password')
+user11 = User.create(email: 'qu.socialteach@gmail.com', username: 'Duc', password: 'password', password_confirmation: 'password')
 
 
 
 # Course with Chapters and Activities
-course = Course.create!(name: 'Italian for Beginners', description: 'A course for people with no prior knowledge of the Italian language', creator_id: instructor.id)
+course = Course.create!(name: 'Italian for Beginners', published: true, description: 'A course for people with no prior knowledge of the Italian language', creator_id: instructor.id)
 courseId = course.id
 
 chap1 = Chapter.create(name: 'Hello World in Italian', shortname: 'Hello', description: 'Our first Sentence!', tier: 1, course_id: courseId)

@@ -4,13 +4,17 @@ class CoursesController < BaseController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.all
+    @courses = Course.all_published_courses
   end
 
   # GET /courses/1
   # GET /courses/1.json
   def show
-    render :show
+    if @course.published
+      render :show
+    else
+      redirect_to courses_path
+    end
   end
 
   def index_enrolled

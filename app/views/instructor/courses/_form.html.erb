@@ -1,8 +1,8 @@
 <%= form_for([:instructor, @course]) do |f| %>
 
   <% if @course.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+    <div class="alert alert-danger" id="error_explanation">
+      <h4><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h4>
 
       <ul>
       <% @course.errors.full_messages.each do |message| %>
@@ -18,7 +18,7 @@
         <%= f.label :name, class: "control-label" %>
         <%= f.text_field :name, class: "form-control"%>
       </div>
-    </div><p>
+    </div>
 
         <div class="control-group">
           <div class="controls">
@@ -27,11 +27,19 @@
             <%= f.hidden_field :creator_id, :value => current_user.id, class: "form-control" %>
           </div>
 
-        </div><p></p>
+        </div>
+    <br>
+    <div class="form-group">
+      <div class="controls">
+        <%= f.label :published, class: "control-label" %>
+        <%= f.check_box :published, class: "checkbox"%>
+        Publish your Course to make it visible to other Users
+      </div>
+    </div>
 
     <div class="form-actions">
       <%= f.submit class: "btn btn-default btn-primary btn-block btn-success"%>
-    </div><p></p>
+    </div>
   </fieldset>
 
 <% end %>
