@@ -47,9 +47,7 @@ gem "mini_magick"
 # gem 'unicorn'
 
 #for scheduling tasks like update emails every week
-gem 'sidekiq'
-gem 'sidetiq'
-gem 'sinatra', :require => false
+gem 'rufus-scheduler', '~> 3.2'
 
 gem 'carrierwave'
 #omniauth

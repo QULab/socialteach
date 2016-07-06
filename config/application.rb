@@ -24,6 +24,5 @@ module Socialteach
     config.active_record.raise_in_transactional_callbacks = true
     config.app_generators.scaffold_controller = :scaffold_controller
 
-    config.active_job.queue_adapter = :sidekiq
   end
 end
