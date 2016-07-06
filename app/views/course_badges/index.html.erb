@@ -6,7 +6,6 @@
       <tr>
         <th>Badge</th>
         <th>Description</th>
-        <th></th>
       </tr>
     </thead>
 
@@ -15,20 +14,12 @@
         <tr>
           <td><img src="<%= course_badge.badge %>"/></td>
           <td><%= course_badge.description %></td>
-          <td>
-            <div class="btn-group">
-              <%= link_to 'Show', course_badge, class: "btn btn-primary" %>
-              <%= link_to 'Edit', edit_course_badge_path(course_badge), class: "btn btn-primary" %>
-              <%= link_to 'Destroy', course_badge, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-primary" %>
-            </div>
-          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 
-  <br>
+  <%= link_to "Back", course_path(params[:course_id]), class: "btn btn-primary" %>
 
-  <%= link_to 'New Course badge', new_course_badge_path, class: "btn btn-primary" %>
 
 </div>

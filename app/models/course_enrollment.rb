@@ -4,6 +4,8 @@ class CourseEnrollment < ActiveRecord::Base
   belongs_to :user
   belongs_to :course
   has_many :activity_statuses
+  has_many :owned_badges
+  has_many :course_badges, through: :owned_badges
 
   belongs_to :level
 

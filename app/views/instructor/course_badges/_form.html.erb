@@ -1,0 +1,27 @@
+<div class="well">
+<%= form_for(@path) do |f| %>
+  <% if @course_badge.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course_badge.errors.count, "error") %> prohibited this course_badge from being saved:</h2>
+
+      <ul>
+      <% @course_badge.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :Badge_Image %><br>
+    <%= f.file_field :badge %>
+  </div>
+  <div class="form-group">
+    <%= f.label :Description %><br>
+    <%= f.text_field :description , class: "form-control"%>
+  </div>
+  <div class="actions">
+    <%= f.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
+</div>

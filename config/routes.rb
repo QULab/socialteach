@@ -1,6 +1,6 @@
   Rails.application.routes.draw do
 
-  resources :course_badges
+  #resources :course_badges
 
   resources :friendships
 
@@ -24,6 +24,7 @@
   end
 
   resources :courses, only: [:show, :index] do
+    resources :course_badges, only: [:index]
     member do
       get 'curriculum'
     end
@@ -34,7 +35,9 @@
   # Routes that are only for instructors
   namespace :instructor do
     # index shows all courses the current user can modify
-    resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html]
+    resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html] do
+      resources :course_badges, shallow: true
+    end
     resources :chapters, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
     resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html] do
       collection do
@@ -42,6 +45,7 @@
 
       end
     end
+
     get 'chapters/:id/predec' => 'chapters#predec', format: [:js], as: 'chapter_predec'
     get 'chapters/:id/tier' => 'chapters#tier', format: [:js], as: 'chapter_tier'
     get 'activities/:id/predec' => 'activities#predec', format: [:js], as: 'activity_predec'

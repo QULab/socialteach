@@ -4,7 +4,6 @@ class CourseEnrollmentsController < ApplicationController
   # GET /course_enrollments
   # GET /course_enrollments.json
   def index
-    @course_enrollments = CourseEnrollment.all
   end
 
   # GET /course_enrollments/1

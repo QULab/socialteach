@@ -1,5 +1,7 @@
 class CourseBadge < ActiveRecord::Base
 	belongs_to :course
+	belongs_to :creator, :class_name => 'User', :foreign_key => 'user_id'
+
 	mount_uploader :badge, BadgeUploader
 
 	validate :check_badge_dimensions

@@ -1,6 +1,5 @@
-class CourseBadgesController < ApplicationController
+class Instructor::CourseBadgesController < Instructor::BaseController
   before_action :set_course_badge, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
 
   # GET /course_badges
   # GET /course_badges.json
@@ -15,21 +14,24 @@ class CourseBadgesController < ApplicationController
 
   # GET /course_badges/new
   def new
-    @course_badge = Course.new
+    @course_badge = Course.find(params[:course_id]).course_badges.build
+    @path = [:instructor, @course_badge.course, @course_badge]
   end
 
   # GET /course_badges/1/edit
   def edit
+    @path = [:instructor, @course_badge]
   end
 
   # POST /course_badges
   # POST /course_badges.json
   def create
-    @course_badge = CourseBadge.new(course_badge_params)
-
+    require_permission(Course.find(params[:course_id]))
+    @course_badge = Course.find(params[:course_id]).course_badges.build(course_badge_params)
+    puts @course_badge.course_id
     respond_to do |format|
       if @course_badge.save
-        format.html { redirect_to @course_badge, notice: 'Course badge was successfully created.' }
+        format.html { redirect_to instructor_course_course_badges_path(@course_badge.course_id), notice: 'Course badge was successfully created.' }
         format.json { render :show, status: :created, location: @course_badge }
       else
         format.html { render :new }
@@ -41,9 +43,10 @@ class CourseBadgesController < ApplicationController
   # PATCH/PUT /course_badges/1
   # PATCH/PUT /course_badges/1.json
   def update
+    require_permission(@course_badge.course)
     respond_to do |format|
       if @course_badge.update(course_badge_params)
-        format.html { redirect_to @course_badge, notice: 'Course badge was successfully updated.' }
+        format.html { redirect_to instructor_course_course_badges_path(@course_badge.course_id), notice: 'Course badge was successfully updated.' }
         format.json { render :show, status: :ok, location: @course_badge }
       else
         format.html { render :edit }
@@ -55,9 +58,11 @@ class CourseBadgesController < ApplicationController
   # DELETE /course_badges/1
   # DELETE /course_badges/1.json
   def destroy
+    require_permission(@course_badge.course)
+    course_id = @course_badge.course_id
     @course_badge.destroy
     respond_to do |format|
-      format.html { redirect_to course_badges_url, notice: 'Course badge was successfully destroyed.' }
+      format.html { redirect_to instructor_course_course_badges_path(course_id), notice: 'Course badge was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

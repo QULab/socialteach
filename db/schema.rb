@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706032410) do
+ActiveRecord::Schema.define(version: 20160706065243) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -173,9 +173,11 @@ ActiveRecord::Schema.define(version: 20160706032410) do
     t.integer  "width"
     t.integer  "height"
     t.integer  "course_id"
+    t.integer  "user_id"
   end
 
   add_index "course_badges", ["course_id"], name: "index_course_badges_on_course_id"
+  add_index "course_badges", ["user_id"], name: "index_course_badges_on_user_id"
 
   create_table "course_enrollments", force: :cascade do |t|
     t.boolean  "active",             default: true
@@ -270,6 +272,16 @@ ActiveRecord::Schema.define(version: 20160706032410) do
     t.string  "category", default: "default"
   end
 
+  create_table "owned_badges", force: :cascade do |t|
+    t.integer  "course_badge_id"
+    t.integer  "course_enrollment_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "owned_badges", ["course_badge_id"], name: "index_owned_badges_on_course_badge_id"
+  add_index "owned_badges", ["course_enrollment_id"], name: "index_owned_badges_on_course_enrollment_id"
+
   create_table "questionnaires", force: :cascade do |t|
     t.integer  "qu_container_id"
     t.string   "qu_container_type"
@@ -283,6 +295,16 @@ ActiveRecord::Schema.define(version: 20160706032410) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "unlock_course_badges", force: :cascade do |t|
+    t.integer  "course_badge_id"
+    t.integer  "activity_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "unlock_course_badges", ["activity_id"], name: "index_unlock_course_badges_on_activity_id"
+  add_index "unlock_course_badges", ["course_badge_id"], name: "index_unlock_course_badges_on_course_badge_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
