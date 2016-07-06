@@ -1,13 +1,9 @@
-<div class="row">
-  <div class="col-md-6">
-    <div class="form-group">
-      <legend>Questions</legend>
-      <%= f.fields_for :questionnaire do |questionnaire_form| %>
-        <%= questionnaire_form.fields_for :m_questions do |questions_form| %>
-          <%= render "m_question_fields", f: questions_form %>
-        <% end %>
-        <%= link_to_add_fields "<i class='fa fa-x fa-plus'></i> Question".html_safe, questionnaire_form, :m_questions %>
-      <% end %>
-    </div>
-  </div>
+<div class="form-group">
+  <legend>Questions</legend>
+  <%= f.fields_for :questionnaire do |questionnaire_form| %>
+    <%= questionnaire_form.fields_for :m_questions do |questions_form| %>
+      <%= render "m_question_fields", f: questions_form %>
+    <% end %>
+    <%= link_to_add_fields "<i class='fa fa-x fa-plus'></i> Question".html_safe, questionnaire_form, :m_questions %>
+  <% end %>
 </div>
