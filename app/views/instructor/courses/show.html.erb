@@ -4,6 +4,11 @@
       <h1>
         <%= @course.name %>
         <small>Created <%= time_ago_in_words(@course.created_at) %> ago</small>
+        <%- if @course.published %>
+          <span class="label label-success" style="float:right"> Published</span>
+        <%- else %>
+          <span class="label label-warning" style="float: right">Not published</span>
+        <%- end %>
       </h1>
       <div class="panel panel-default">
         <div class="panel-body">
@@ -43,13 +48,13 @@
         </li>
         <li class="list-group-item">
           <span class="badge">
-            <%= @course.get_number_of_enrollments %>
+            <%= @course.get_number_of_completed_enrollments %>
           </span>
           Users who finished this Course
         </li>
         <li class="list-group-item">
           <span class="badge">
-            <%= @course.get_number_of_enrollments %>
+            <%= @course.get_number_of_new_enrollments(30) %>
           </span>
           New Users in the last 30 days
         </li>

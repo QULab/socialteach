@@ -1,5 +1,5 @@
 class Instructor::ChaptersController < Instructor::BaseController
-  before_action :set_chapter, only: [:show, :edit, :update, :destroy]
+  before_action :set_chapter, only: [:show, :edit, :update, :destroy, :predec, :tier]
 
   # GET /chapters
   # GET /chapters.json
@@ -66,6 +66,16 @@ class Instructor::ChaptersController < Instructor::BaseController
     end
   end
 
+  respond_to :js
+  def predec
+    render partial: 'instructor/courses/chapter_predec', locals: {chapter: @chapter}
+  end
+
+  respond_to :js
+  def tier
+    render partial: 'instructor/courses/chapter_tier', locals: {chapter: @chapter}
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_chapter
@@ -74,6 +84,6 @@ class Instructor::ChaptersController < Instructor::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def chapter_params
-        params.require(:chapter).permit(:name, :shortname, :description, :tier)
+        params.require(:chapter).permit(:name, :shortname, :description, :course_id, :tier, :predecessor_ids => [])
     end
 end
