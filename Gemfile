@@ -10,7 +10,7 @@ gem 'activeadmin', '~> 1.0.0.pre2'
 gem 'puma'
 # Use exact version for nokogiri
 # Do not change this Version
-gem 'nokogiri', '1.6.8.'
+gem 'nokogiri', '1.6.8'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3'
