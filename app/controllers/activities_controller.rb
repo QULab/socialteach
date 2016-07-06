@@ -15,12 +15,13 @@ class ActivitiesController < ApplicationController
         questionnaire = @activity.content.questionnaire
         user_id = current_user.id
 
+        cquestionnaire = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user_id)
         questionnaire.m_questions.each_with_index do |question, i|
           CompletedMQuestion.create(m_question_id: question.id,
+                                    completed_questionnaire_id: cquestionnaire.id,
                                     user_id: user_id,
                                     answer_id: params[:question][i.to_s.to_sym][:answer_id])
         end
-        CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user_id)
       end
       enrollment = current_user.get_enrollment(@activity.course)
       status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
