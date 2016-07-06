@@ -28,4 +28,15 @@ class Chapter < ActiveRecord::Base
       end
       return predecessors
     end
+
+    def progress(course_enrollment)
+      total_activities = self.activities.count
+      finished_activities = course_enrollment.activity_statuses.where(activity_id: self.activities.select(:id), is_completed: true, status: 1).select(:activity_id).distinct.count
+      if (total_activities > 0)
+        percent = finished_activities.to_f / total_activities.to_f * 100
+      else
+        percent = 100
+      end
+      return {:total_activities => total_activities, :finished_activities => finished_activities, :percent => percent}
+    end
 end

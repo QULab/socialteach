@@ -1,0 +1,72 @@
+
+    <style type="text/css">
+
+    .numberCircle {
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      width: 30px;
+      padding: 8px;
+      font-size: 16px;
+      line-height: 1em;
+      border: 2px solid #666;
+      position: relative;
+
+    }
+    .numberCircle .height_fix {
+      margin-top: 100%;
+    }
+    .numberCircle .content {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      margin-top: -8px; /* Note, this must be half the font size */
+    }
+
+    </style>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <div style="width:100px;"></div>
+        </li>
+        <% enrollment = current_user.get_enrollment(@course) %>
+        <li style="margin-left: 50px;">
+          Course Progress
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                 aria-valuemin="0" aria-valuemax="100" style="width:<%= enrollment.progress[:percent]*100%>%">
+              <%= (enrollment.progress[:percent]*100).to_i%>%
+            </div>
+          </div>
+        </li>
+        <li style="margin-left: 50px;">
+          LevelUp
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                 aria-valuemin="0" aria-valuemax="100" style="width:<%= enrollment.next_level[:percent] %>%">
+            </div>
+            <%= enrollment.points(category: "Levelpoints") %>
+          </div>
+         </li>
+
+         <li style="margin-left: 5px; margin-top: 20px">
+          <div></div>
+          <%= enrollment.next_level[:next_pass] %>
+         </li>
+
+         <li style="margin-left: 50px">
+          Level
+          <div class="numberCircle">
+            <div class="height_fix"></div>
+            <div class="content"><%= enrollment.level.level %></div>
+          </div>
+         </li>
+
+      </ul>
+
+    </div><!-- /.container-fluid -->

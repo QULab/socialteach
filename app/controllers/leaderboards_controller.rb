@@ -14,6 +14,7 @@ class LeaderboardsController < ApplicationController
   # GET /leaderboards/1.json
   def show
     add_breadcrumb "Leaderboard", leaderboard_path()
+    @course = Course.find(params[:id])
   end
 
 =begin
