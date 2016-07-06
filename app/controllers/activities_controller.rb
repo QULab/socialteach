@@ -36,12 +36,14 @@ class ActivitiesController < ApplicationController
   def feedback
     questionnaire = @activity.feedback.questionnaire
     user_id = current_user.id
+    cquestionnaire = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
+                                  user_id: user_id)
+
     CompletedMQuestion.create(m_question_id: questionnaire.m_questions.first.id,
+                              completed_questionnaire_id: cquestionnaire.id,
                               user_id: user_id,
                               answer_id: params[:answer])
 
-    CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
-                                  user_id: user_id)
     head :no_content
   end
 
