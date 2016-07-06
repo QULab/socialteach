@@ -46,6 +46,9 @@ gem "mini_magick"
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+#gem for nested comments
+gem 'closure_tree'
+
 #for scheduling tasks like update emails every week
 gem 'rufus-scheduler', '~> 3.2'
 

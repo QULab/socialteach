@@ -2,6 +2,17 @@ Comments for
 <%= commentable.class %>
 (#<%= commentable.id %>)
 
+<div class="jumbotron">
+  <div class="container">
+    <h1>Join the discussion</h1>
+    <p>Click the button below to see the discussion forum:</p>
+    <p>
+      <%= link_to 'Discussion forum', comments_path, class: 'btn btn-primary btn-lg' %>
+    </p>
+  </div>
+</div>
+
+
 <% if commentable.class == Activity %>
 	<%= render 'disqusActivity' %>
 <% end %>

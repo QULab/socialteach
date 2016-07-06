@@ -1,0 +1,14 @@
+<div class="container">
+<div class="jumbotron">
+  <div class="container">
+    <h1>Join the discussion</h1>
+    <p>
+      <%= link_to 'Add a new Comment', new_comment_path, class: 'btn btn-primary btn-lg' %>
+    </p>
+  </div>
+</div>
+
+
+<%= comments_tree_for @comments %>
+
+</div>
