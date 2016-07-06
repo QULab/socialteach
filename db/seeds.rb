@@ -18,15 +18,15 @@ user = User.create!({
 instructor = User.create(email: 'instructor@test.com', username: 'Instructor', password: 'password', password_confirmation: 'password', is_instructor: true)
 
 user1 = User.create(email: 'user1@test.com', username: 'User 1', password: 'password', password_confirmation: 'password')
-user2 = User.create(email: 'user1@test.com', username: 'User 2', password: 'password', password_confirmation: 'password')
-user3 = User.create(email: 'user1@test.com', username: 'User 3', password: 'password', password_confirmation: 'password')
-user4 = User.create(email: 'user1@test.com', username: 'User 4', password: 'password', password_confirmation: 'password')
-user5 = User.create(email: 'user1@test.com', username: 'User 5', password: 'password', password_confirmation: 'password')
-user6 = User.create(email: 'user1@test.com', username: 'User 6', password: 'password', password_confirmation: 'password')
-user7 = User.create(email: 'user1@test.com', username: 'User 7', password: 'password', password_confirmation: 'password')
-user8 = User.create(email: 'user1@test.com', username: 'User 8', password: 'password', password_confirmation: 'password')
-user9 = User.create(email: 'user1@test.com', username: 'User 9', password: 'password', password_confirmation: 'password')
-user10 = User.create(email: 'user1@test.com', username: 'User 10', password: 'password', password_confirmation: 'password')
+user2 = User.create(email: 'user2@test.com', username: 'User 2', password: 'password', password_confirmation: 'password')
+user3 = User.create(email: 'user3@test.com', username: 'User 3', password: 'password', password_confirmation: 'password')
+user4 = User.create(email: 'user4@test.com', username: 'User 4', password: 'password', password_confirmation: 'password')
+user5 = User.create(email: 'user5@test.com', username: 'User 5', password: 'password', password_confirmation: 'password')
+user6 = User.create(email: 'user6@test.com', username: 'User 6', password: 'password', password_confirmation: 'password')
+user7 = User.create(email: 'user7@test.com', username: 'User 7', password: 'password', password_confirmation: 'password')
+user8 = User.create(email: 'user8@test.com', username: 'User 8', password: 'password', password_confirmation: 'password')
+user9 = User.create(email: 'user9@test.com', username: 'User 9', password: 'password', password_confirmation: 'password')
+user10 = User.create(email: 'user10@test.com', username: 'User 10', password: 'password', password_confirmation: 'password')
 
 
 
