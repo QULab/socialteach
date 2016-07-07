@@ -31,3 +31,8 @@ span.label-pill.activity_lecture {
   border: 1px solid #eee;
   height: auto;
 }
+
+#cheatsheet {
+  max-height: 380px;
+  overflow: scroll;
+}
