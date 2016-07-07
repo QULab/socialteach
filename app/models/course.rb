@@ -1,5 +1,7 @@
 class Course < ActiveRecord::Base
 
+  after_save :create_default_feedback, :create_default_assessment
+
   validate :cannot_unpublish_if_users_enrolled
 
   has_many :chapters
@@ -32,5 +34,18 @@ class Course < ActiveRecord::Base
      if (published_was && get_number_of_enrollments > 0 && !published)
        self.errors[:base] << "There are Users enrolled in this course, you can not unpublish it."
      end
+   end
+
+   def create_default_feedback
+     questionnaire = Questionnaire.create!(qu_container: Feedback.create!(commentable: self))
+     question = questionnaire.m_questions.create!(text: 'How difficult was this unit?')
+     questionId = question.id
+     Answer.create(m_question_id: questionId, text: 'Too Easy')
+     Answer.create(m_question_id: questionId, text: 'Perfect Difficulty')
+     Answer.create(m_question_id: questionId, text: 'Too Hard')
+   end
+
+   def create_default_assessment
+
    end
 end
