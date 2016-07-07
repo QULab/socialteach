@@ -1,6 +1,6 @@
 class Course < ActiveRecord::Base
 
-  after_save :create_default_feedback, :create_default_assessment
+  after_save :create_default_feedback, :create_default_chapter_and_assessment
 
   validate :cannot_unpublish_if_users_enrolled
 
@@ -45,7 +45,9 @@ class Course < ActiveRecord::Base
      Answer.create(m_question_id: questionId, text: 'Too Hard')
    end
 
-   def create_default_assessment
-
+   def create_default_chapter_and_assessment
+     chapter = self.chapters.create!(name: 'Default Chapter', shortname: 'Default', description: 'This is a defualt chapter, containing an initial assessment questionnaire. Feel free to change it', tier: 1)
+     activity = chapter.activities.create!(name: 'Initial Assessment', shortname: 'Assessment', levelpoints: 5, tier: 1, content: ActivityAssessment.create!)
+     Questionnaire.create!(qu_container: activity.content)
    end
 end
