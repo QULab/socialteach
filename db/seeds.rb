@@ -92,17 +92,9 @@ question2Id = question2.id
 answer1 = Answer.create(m_question_id: question2Id, text: 'Boot', correct: true)
 answer2 = Answer.create(m_question_id: question2Id, text: 'Cat')
 
-# Difficulty feedback for act1
-feedback = Feedback.create(commentable: act1)
-questionnaire = Questionnaire.create(qu_container: feedback)
-feedback_question = MQuestion.create(questionnaire_id: questionnaire.id, text: 'How difficult was this unit?')
-feedback_questionId = feedback_question.id
-answer1 = Answer.create(m_question_id: feedback_questionId, text: 'Too Easy')
-answer2 = Answer.create(m_question_id: feedback_questionId, text: 'Perfect Difficulty')
-answer3 = Answer.create(m_question_id: feedback_questionId, text: 'Too Hard')
-
 # Given feedback for course
 questionnaire = course.feedback.questionnaire
+feedback_questionId = questionnaire.m_questions.first.id
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user8.id)
 CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user8.id)
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user1.id)
@@ -123,7 +115,9 @@ cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: 
 CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user7.id)
 
 
-# Given feedback for course
+# Given feedback for act1
+questionnaire = act1.feedback.questionnaire
+feedback_questionId = questionnaire.m_questions.first.id
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user8.id)
 CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user8.id)
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user1.id)
@@ -138,12 +132,3 @@ cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: 
 CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user4.id)
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user5.id)
 CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user5.id)
-
-# Difficulty feedback for act3
-feedback = Feedback.create(commentable: act3)
-questionnaire = Questionnaire.create(qu_container: feedback)
-question = MQuestion.create(questionnaire_id: questionnaire.id, text: 'How difficult was this unit?')
-questionId = question.id
-answer1 = Answer.create(m_question_id: questionId, text: 'Too Easy')
-answer2 = Answer.create(m_question_id: questionId, text: 'Perfect Difficulty')
-answer3 = Answer.create(m_question_id: questionId, text: 'Too Hard')
