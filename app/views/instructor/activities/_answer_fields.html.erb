@@ -1,10 +1,23 @@
 <div class="fields row">
   <div class="col-md-11 col-md-offset-1">
-
-  <%= f.label :text, "Answer" %>
-  <%= f.hidden_field :_destroy %>
-  <%= link_to "<i class='fa fa-x fa-trash'></i>".html_safe, '#', onclick: "remove_fields(this);", class: "pull-right" %>
-  <%= f.text_field :text, class: "form-control" %>
-</div>
-
+    <div class="row">
+      <div class="col-md-9">
+        <%= f.label :text, "Answer" %>
+        <%= f.hidden_field :_destroy %>
+        <%= link_to "<i class='fa fa-x fa-trash'></i>".html_safe, '#', onclick: "remove_fields(this);", class: "pull-right" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <%= f.text_field :text, class: "form-control" %>
+      </div>
+      <div class="col-md-3">
+        <div class="checkbox">
+          <label>
+            <%= f.check_box :correct, class: "checkbox" %>correct
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

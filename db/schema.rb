@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706203523) do
+ActiveRecord::Schema.define(version: 20160707070551) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -106,8 +106,9 @@ ActiveRecord::Schema.define(version: 20160706203523) do
   create_table "answers", force: :cascade do |t|
     t.integer  "m_question_id"
     t.text     "text"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "correct",       default: false
   end
 
   add_index "answers", ["m_question_id"], name: "index_answers_on_m_question_id"
@@ -211,10 +212,9 @@ ActiveRecord::Schema.define(version: 20160706203523) do
 
   create_table "m_questions", force: :cascade do |t|
     t.integer  "questionnaire_id"
-    t.integer  "correct_answer_id"
     t.text     "text"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   add_index "m_questions", ["questionnaire_id"], name: "index_m_questions_on_questionnaire_id"
