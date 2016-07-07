@@ -69,16 +69,14 @@ questionnaire = Questionnaire.create(qu_container: exercise)
 question1 = MQuestion.create(questionnaire_id: questionnaire.id, text: 'What was the name of the first Activity?')
 question1Id = question1.id
 answer1 = Answer.create(m_question_id: question1Id, text: 'Tell me who you are')
-answer2 = Answer.create(m_question_id: question1Id, text: 'Shopping by Numbers')
+answer2 = Answer.create(m_question_id: question1Id, text: 'Shopping by Numbers', correct: true)
 answer3 = Answer.create(m_question_id: question1Id, text: 'Hello World to You')
 answer4 = Answer.create(m_question_id: question1Id, text: 'Hello World in Italian')
-question1.update(correct_answer_id: answer3.id)
 
 question2 = MQuestion.create(questionnaire_id: questionnaire.id, text: 'What was the name of the second Activity?')
 question2Id = question2.id
-answer1 = Answer.create(m_question_id: question2Id, text: 'Now you!')
+answer1 = Answer.create(m_question_id: question2Id, text: 'Now you!', correct: true)
 answer2 = Answer.create(m_question_id: question2Id, text: 'Shopping by Numbers')
-question2.update(correct_answer_id: answer1.id)
 
 # Add questionnaire to act4
 questionnaire = Questionnaire.create(qu_container: assessment)
@@ -86,15 +84,13 @@ question1 = MQuestion.create(questionnaire_id: questionnaire.id, text: "What is 
 question1Id = question1.id
 answer1 = Answer.create(m_question_id: question1Id, text: 'cane')
 answer2 = Answer.create(m_question_id: question1Id, text: 'otto volante')
-answer3 = Answer.create(m_question_id: question1Id, text: 'lingua')
+answer3 = Answer.create(m_question_id: question1Id, text: 'lingua', correct: true)
 answer4 = Answer.create(m_question_id: question1Id, text: 'patata')
-question1.update(correct_answer_id: answer3.id)
 
 question2 = MQuestion.create(questionnaire_id: questionnaire.id, text: 'Italy looks like a...?')
 question2Id = question2.id
-answer1 = Answer.create(m_question_id: question2Id, text: 'Boot')
+answer1 = Answer.create(m_question_id: question2Id, text: 'Boot', correct: true)
 answer2 = Answer.create(m_question_id: question2Id, text: 'Cat')
-question2.update(correct_answer_id: answer1.id)
 
 # Difficulty feedback for act1
 feedback = Feedback.create(commentable: act1)
