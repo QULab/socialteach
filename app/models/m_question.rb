@@ -4,5 +4,5 @@ class MQuestion < ActiveRecord::Base
   has_many :answers, dependent: :destroy # possible answers
   has_many :completed_m_questions
 
-  accepts_nested_attributes_for :answers, allow_destroy: true
+  accepts_nested_attributes_for :answers, allow_destroy: true, reject_if: lambda { |a| a[:text].blank? }
 end
