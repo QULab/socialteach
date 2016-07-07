@@ -4,7 +4,7 @@
       <div class="col-md-9">
         <%= f.label :text, "Answer" %>
         <%= f.hidden_field :_destroy %>
-        <%= link_to "<i class='fa fa-x fa-trash'></i>".html_safe, '#', onclick: "remove_fields(this);", class: "pull-right" %>
+        <%= button_tag "<i class='fa fa-x fa-trash'></i>".html_safe, onclick: "remove_fields(this);", class: "pull-right btn-link", type: 'button' %>
       </div>
     </div>
     <div class="row">
