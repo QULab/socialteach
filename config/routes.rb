@@ -1,5 +1,7 @@
   Rails.application.routes.draw do
 
+  resources :friendships
+
   resources :levels
 
   resources :activity_statuses

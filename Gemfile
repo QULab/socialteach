@@ -8,6 +8,9 @@ gem 'mysql2', '~> 0.3.21'
 gem 'devise', '~> 3.2'
 gem 'activeadmin', '~> 1.0.0.pre2'
 gem 'puma'
+# Use exact version for nokogiri
+# Do not change this Version
+gem 'nokogiri', '1.6.8'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3'
@@ -45,6 +48,10 @@ gem "mini_magick"
 
 # Use Unicorn as the app server
 # gem 'unicorn'
+
+#for scheduling tasks like update emails every week
+gem 'rufus-scheduler', '~> 3.2'
+
 gem 'carrierwave'
 #omniauth
 gem 'omniauth-facebook'

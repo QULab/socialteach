@@ -27,6 +27,7 @@ user7 = User.create(email: 'user7@test.com', username: 'User 7', password: 'pass
 user8 = User.create(email: 'user8@test.com', username: 'User 8', password: 'password', password_confirmation: 'password')
 user9 = User.create(email: 'user9@test.com', username: 'User 9', password: 'password', password_confirmation: 'password')
 user10 = User.create(email: 'user10@test.com', username: 'User 10', password: 'password', password_confirmation: 'password')
+user11 = User.create(email: 'qu.socialteach@gmail.com', username: 'Duc', password: 'password', password_confirmation: 'password')
 
 
 
