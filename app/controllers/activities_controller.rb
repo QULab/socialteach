@@ -1,5 +1,6 @@
 class ActivitiesController < ApplicationController
 
+  include ActivitiesHelper
   before_action :authenticate_user!
   before_action :set_activity, only: [:show, :complete, :feedback]
 
@@ -10,16 +11,14 @@ class ActivitiesController < ApplicationController
   end
 
   def complete
-    unless current_user.completed?(@activity)
+    if !current_user.completed?(@activity) or current_user.completed?(@activity)
       if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)
         questionnaire = @activity.content.questionnaire
         user_id = current_user.id
 
-        questionnaire.m_questions.each_with_index do |question, i|
-          CompletedMQuestion.create(m_question_id: question.id,
-                                    user_id: user_id,
-                                    answer_id: params[:question][i.to_s.to_sym][:answer_id])
-        end
+        # calculating difficulty
+        calc_amount_of_correct_answers(questionnaire)
+          
         CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user_id)
       end
       enrollment = current_user.get_enrollment(@activity.course)

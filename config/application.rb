@@ -25,5 +25,6 @@ module Socialteach
     config.app_generators.scaffold_controller = :scaffold_controller
 
     config.active_job.queue_adapter = :sidekiq
+    config.logger = Logger.new(STDOUT)
   end
 end

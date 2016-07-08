@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705170954) do
+ActiveRecord::Schema.define(version: 20160708141458) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20160705170954) do
     t.integer  "content_id",   null: false
     t.string   "content_type", null: false
     t.integer  "level_id"
+    t.integer  "difficulty"
   end
 
   add_index "activities", ["chapter_id"], name: "index_activities_on_chapter_id"
@@ -177,6 +178,7 @@ ActiveRecord::Schema.define(version: 20160705170954) do
     t.integer  "sash_id"
     t.integer  "level",              default: 0
     t.integer  "level_id"
+    t.integer  "difficulty",         default: 3
   end
 
   add_index "course_enrollments", ["course_id"], name: "index_course_enrollments_on_course_id"
