@@ -17,10 +17,14 @@ class ActivitiesController < ApplicationController
 
         cquestionnaire = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user_id)
         questionnaire.m_questions.each_with_index do |question, i|
-          CompletedMQuestion.create(m_question_id: question.id,
+          cquestion = CompletedMQuestion.create(m_question_id: question.id,
                                     completed_questionnaire_id: cquestionnaire.id,
-                                    user_id: user_id,
-                                    answer_id: params[:question][i.to_s.to_sym][:answer_id])
+                                    user_id: user_id)
+
+          params[:question][i.to_s.to_sym][:answers].each do |answer|
+            cquestion.answers << Answer.find(answer[1][:answer_id])
+          end
+
         end
       end
       enrollment = current_user.get_enrollment(@activity.course)
@@ -39,10 +43,9 @@ class ActivitiesController < ApplicationController
     cquestionnaire = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
                                   user_id: user_id)
 
-    CompletedMQuestion.create(m_question_id: questionnaire.m_questions.first.id,
+    CompletedMQuestion.create!(m_question_id: questionnaire.m_questions.first.id,
                               completed_questionnaire_id: cquestionnaire.id,
-                              user_id: user_id,
-                              answer_id: params[:answer])
+                              user_id: user_id).answers << Answer.find(params[:answer])
 
     head :no_content
   end

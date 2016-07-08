@@ -95,40 +95,19 @@ answer2 = Answer.create(m_question_id: question2Id, text: 'Cat')
 # Given feedback for course
 questionnaire = course.feedback.questionnaire
 feedback_questionId = questionnaire.m_questions.first.id
-cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user8.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user8.id)
-cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user1.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user1.id)
-cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user2.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user2.id)
-cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user3.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer2.id, user_id: user3.id)
-cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user9.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer2.id, user_id: user9.id)
-cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user4.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user4.id)
-cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user5.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user5.id)
-cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user6.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user6.id)
-cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user7.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user7.id)
+answer1 = questionnaire.m_questions.first.answers[0]
+answer2 = questionnaire.m_questions.first.answers[1]
+answer3 = questionnaire.m_questions.first.answers[2]
 
-
-# Given feedback for act1
-questionnaire = act1.feedback.questionnaire
-feedback_questionId = questionnaire.m_questions.first.id
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user8.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user8.id)
+CompletedMQuestion.create!(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, user_id: user8.id).answers << [answer1]
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user1.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user1.id)
+CompletedMQuestion.create!(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, user_id: user1.id).answers << [answer1]
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user2.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer1.id, user_id: user2.id)
+CompletedMQuestion.create!(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, user_id: user2.id).answers << [answer1]
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user3.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer2.id, user_id: user3.id)
+CompletedMQuestion.create!(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, user_id: user3.id).answers << [answer2]
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user9.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer2.id, user_id: user9.id)
+CompletedMQuestion.create!(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, user_id: user9.id).answers << [answer2]
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user4.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user4.id)
-cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user5.id)
-CompletedMQuestion.create(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, answer_id: answer3.id, user_id: user5.id)
+CompletedMQuestion.create!(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, user_id: user4.id).answers << [answer3]
