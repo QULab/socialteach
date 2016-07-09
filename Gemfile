@@ -85,5 +85,5 @@ group :test do
 end
 
 group :production do
-  gem 'skylight'
+  gem 'skylight', '0.10.5'
 end
