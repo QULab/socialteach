@@ -1,29 +1,14 @@
 class Instructor::ChaptersController < Instructor::BaseController
-  before_action :set_chapter, only: [:show, :edit, :update, :destroy, :predec, :tier]
-
-  # GET /chapters
-  # GET /chapters.json
-  def index
-    @chapters = Chapter.all
-  end
-
-  # GET /chapters/1
-  # GET /chapters/1.json
-  def show
-  end
+  before_action :set_chapter, only: [:edit, :update, :destroy, :predec, :tier]
 
   # GET /chapters/new
   def new
-    @chapter = Chapter.new
-
-    @ordered_chapters = Chapter.order(:name)
-
+    @chapter = Chapter.new(params.permit(:course_id))
   end
 
   # GET /chapters/1/edit
   def edit
     require_permission(@chapter.course)
-    @ordered_chapters = Chapter.all
   end
 
   # POST /chapters
