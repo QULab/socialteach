@@ -1,4 +1,5 @@
 <div class="list-group">
+  <% activities = activities.order("tier ASC") %>
   <% activities.each do |activity| %>
     <div class="list-group-item activity" data-node-id="<%= activity.id %>">
       <div class="row" style="margin: 5px">
