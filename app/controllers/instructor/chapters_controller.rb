@@ -56,11 +56,6 @@ class Instructor::ChaptersController < Instructor::BaseController
     render partial: 'instructor/courses/chapter_predec', locals: {chapter: @chapter}
   end
 
-  respond_to :js
-  def tier
-    render partial: 'instructor/courses/chapter_tier', locals: {chapter: @chapter}
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_chapter
