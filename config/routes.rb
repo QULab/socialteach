@@ -42,7 +42,6 @@
     end
     get 'chapters/:id/predec' => 'chapters#predec', format: [:js], as: 'chapter_predec'
     get 'activities/:id/predec' => 'activities#predec', format: [:js], as: 'activity_predec'
-    get 'activities/:id/tier' => 'activities#tier', format: [:js], as: 'activity_tier'
   end
 
   get 'users/edit_profile'
