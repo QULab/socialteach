@@ -19,7 +19,7 @@ class Instructor::ChaptersController < Instructor::BaseController
     require_permission(@chapter.course)
     respond_to do |format|
       if @chapter.save
-        format.html { redirect_to instructor_chapter_path(@chapter), notice: 'Chapter was successfully created.' }
+        format.html { redirect_to edit_instructor_course_path(@chapter.course), notice: 'Chapter was successfully created.' }
       else
         format.html { render :new }
       end
@@ -30,12 +30,11 @@ class Instructor::ChaptersController < Instructor::BaseController
   # PATCH/PUT /chapters/1.json
   def update
     require_permission(@chapter.course)
-    @ordered_chapters = Chapter.all
     respond_to do |format|
       if @chapter.update(chapter_params)
         format.html { redirect_to edit_instructor_course_path(@chapter.course), notice: 'Chapter was successfully updated.' }
       else
-        format.html { render :edit }
+        format.html { render :edit}
       end
     end
   end
