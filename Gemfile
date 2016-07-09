@@ -83,3 +83,7 @@ group :test do
     gem 'minitest'
 
 end
+
+group :production do
+  gem 'skylight'
+end
