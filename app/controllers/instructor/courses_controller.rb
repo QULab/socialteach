@@ -14,6 +14,7 @@ class Instructor::CoursesController < Instructor::BaseController
 
   def create
     @course = Course.new(course_params)
+    
 
     respond_to do |format|
       if @course.save

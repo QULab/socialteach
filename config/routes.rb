@@ -1,5 +1,7 @@
   Rails.application.routes.draw do
 
+  resources :chapter_statuses
+
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
 

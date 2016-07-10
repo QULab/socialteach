@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Chapter Statuses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Skip</th>
+      <th>Course enrollment</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @chapter_statuses.each do |chapter_status| %>
+      <tr>
+        <td><%= chapter_status.skip %></td>
+        <td><%= chapter_status.course_enrollment %></td>
+        <td><%= link_to 'Show', chapter_status %></td>
+        <td><%= link_to 'Edit', edit_chapter_status_path(chapter_status) %></td>
+        <td><%= link_to 'Destroy', chapter_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Chapter status', new_chapter_status_path %>

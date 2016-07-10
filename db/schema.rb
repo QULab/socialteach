@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708141458) do
+ActiveRecord::Schema.define(version: 20160708181052) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -132,6 +132,17 @@ ActiveRecord::Schema.define(version: 20160708141458) do
   add_index "chapter_edges", ["head_id"], name: "index_chapter_edges_on_head_id"
   add_index "chapter_edges", ["tail_id"], name: "index_chapter_edges_on_tail_id"
 
+  create_table "chapter_statuses", force: :cascade do |t|
+    t.boolean  "skip",                 default: false
+    t.integer  "course_enrollment_id"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.float    "difficultyFit",        default: 0.0
+    t.integer  "chapter_id",           default: 0
+  end
+
+  add_index "chapter_statuses", ["course_enrollment_id"], name: "index_chapter_statuses_on_course_enrollment_id"
+
   create_table "chapters", force: :cascade do |t|
     t.string   "name"
     t.string   "shortname"
@@ -178,7 +189,6 @@ ActiveRecord::Schema.define(version: 20160708141458) do
     t.integer  "sash_id"
     t.integer  "level",              default: 0
     t.integer  "level_id"
-    t.integer  "difficulty",         default: 3
   end
 
   add_index "course_enrollments", ["course_id"], name: "index_course_enrollments_on_course_id"

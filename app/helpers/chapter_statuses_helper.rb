@@ -1,0 +1,2 @@
+module ChapterStatusesHelper
+end

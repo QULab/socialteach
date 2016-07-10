@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Skip:</strong>
+  <%= @chapter_status.skip %>
+</p>
+
+<p>
+  <strong>Course enrollment:</strong>
+  <%= @chapter_status.course_enrollment %>
+</p>
+
+<%= link_to 'Edit', edit_chapter_status_path(@chapter_status) %> |
+<%= link_to 'Back', chapter_statuses_path %>
