@@ -18,8 +18,9 @@ class Chapter < ActiveRecord::Base
     uniq: true
 
   validates :name, :shortname, :course, presence: true
-  validates :tier, numericality: {greater_than_or_equal_to: 0}
+  #validates :tier, numericality: {greater_than_or_equal_to: 0}
   validate :validate_predecessors
+  validate :validate_tier
 
   before_validation :assign_tier
   after_save :update_successor_tiers
@@ -56,11 +57,26 @@ class Chapter < ActiveRecord::Base
     end
   end
 
+  def validate_tier
+    succ_min = self.successors.order(tier: :asc).first
+    if self.tier.present? and succ_min.present? and succ_min.tier <= self.tier
+      errors.add(:base, "Tier may not be higher than successor's tier")
+    end
+  end
+
   def assign_tier
     max_pred = self.predecessors.order(tier: :desc).first
+    min_succ = self.successors.order(tier: :asc).first
     if max_pred.nil?
-      self.tier = 0
+      if min_succ.present?
+        Rails.logger.info("#{self.name}: min succ is #{min_succ.name} with a tier of #{min_succ.tier}")
+        self.tier = min_succ.tier - 1
+      else
+        Rails.logger.info("#{self.name}: no succ or pred found, assigning tier 0")
+        self.tier = 0
+      end
     else
+      Rails.logger.info("#{self.name}: max pred is #{max_pred.name} with a tier of #{max_pred.tier}")
       self.tier = max_pred.tier + 1
     end
   end
