@@ -72,6 +72,26 @@ class Activity < ActiveRecord::Base
     chapter.course
   end
 
+  ##
+  # checks if this activity is locked for the given user
+  # locked activities are those, where the user has not completed the necessary requirements
+  def locked?(user)
+    predecessors = self.predecessors.to_a
+    # if there are no predecessors, the activity is not locked
+    locked = predecessors.present?
+    completed_predecessors = 0
+    predecessors.each do |pred|
+      status = pred.activity_statuses.where(is_completed: true).first
+      if status.present?
+        completed_predecessors += 1
+      end
+    end
+    if completed_predecessors == predecessors.size
+      locked = false
+    end
+    locked
+  end
+
 	def create_default_feedback
 		questionnaire = Questionnaire.create!(qu_container: Feedback.create!(commentable: self))
 		question = questionnaire.m_questions.create!(text: 'How difficult was this unit?')
