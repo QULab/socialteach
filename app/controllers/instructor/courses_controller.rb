@@ -17,7 +17,7 @@ class Instructor::CoursesController < Instructor::BaseController
 
     respond_to do |format|
       if @course.save
-        format.html { redirect_to instructor_course_path(@course), notice: 'Course was successfully created.' }
+        format.html { redirect_to edit_instructor_course_path(@course), notice: 'Course was successfully created.' }
       else
         format.html { render :new }
       end
