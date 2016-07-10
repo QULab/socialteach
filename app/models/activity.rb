@@ -1,4 +1,6 @@
 class Activity < ActiveRecord::Base
+	after_save :create_default_feedback
+
 	belongs_to :chapter
 	has_many :activity_statuses
   belongs_to :level
@@ -71,4 +73,13 @@ class Activity < ActiveRecord::Base
     end
     locked
   end
+
+	def create_default_feedback
+		questionnaire = Questionnaire.create!(qu_container: Feedback.create!(commentable: self))
+		question = questionnaire.m_questions.create!(text: 'How difficult was this unit?')
+		questionId = question.id
+		Answer.create(m_question_id: questionId, text: 'Too Easy')
+		Answer.create(m_question_id: questionId, text: 'Perfect Difficulty')
+		Answer.create(m_question_id: questionId, text: 'Too Hard')
+	end
 end
