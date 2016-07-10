@@ -10,7 +10,11 @@
       </small>
     </legend>
     <div class="col-md-6">
-      <% # add activity content here %>
+      <div class="activity-content-container">
+        <%- if @activity.content.is_a? ActivityLecture %>
+          <%= render 'instructor/activities/lecture', lecture: @activity.content %>
+        <%- end %>
+      </div>
     </div>
     <div class="col-md-6">
       <legend> Feedback </legend>
