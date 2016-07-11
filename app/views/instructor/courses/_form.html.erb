@@ -31,9 +31,8 @@
     <br>
     <div class="form-group">
       <div class="controls">
-        <%= f.label :published, class: "control-label" %>
-        <%= f.check_box :published, class: "checkbox"%>
-        Publish your Course to make it visible to other Users
+        <%= f.label :published, class: "control-label", id: "published-check-label" %>
+        <%= f.check_box :published, class: "checkbox", id: "published-check-box" %> Publish your Course to make it visible to Users
       </div>
     </div>
 

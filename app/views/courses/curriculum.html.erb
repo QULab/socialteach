@@ -52,7 +52,8 @@
       <div class="list-group">
         <%- @active_chapter.activities.each do |act| %>
           <% completed = current_user.completed?(act) %>
-          <%= link_to activity_path(act), class: ["list-group-item", ("list-group-item-success" if completed)] do %>
+          <% locked = completed ? false : act.locked?(current_user) %>
+          <%= link_to activity_path(act), class: ["list-group-item", ("list-group-item-success" if completed), ("list-group-item-danger" if locked)] do %>
 
             <% if completed %>
               <i class="fa fa-3x fa-check" style="float: right"></i>
@@ -62,9 +63,6 @@
               <i class="fa fa-2x <%= activity_icon(act) %>"></i>
               <%= act.name %>
             </h4>
-            <p class="list-group-item-text">
-              Nur zum Testen, hier sollten Punkte oder sowas auftauchen!
-            </p>
           <%- end %>
         <%- end %>
       </div>

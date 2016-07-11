@@ -17,15 +17,25 @@ class Instructor::ActivitiesController < Instructor::BaseController
 
   # GET /activities/new
   def new
-    @chapter = Chapter.find(params[:chapter_id])
-    @activity = @chapter.activities.new
+    chapter = Chapter.find(params[:chapter_id])
+    @activity = chapter.activities.new
 
     if params[:content_type] == "lecture"
       @activity.content = ActivityLecture.new
     elsif params[:content_type] == "exercise"
       @activity.content = ActivityExercise.new
+      @activity.content.questionnaire = Questionnaire.new(qu_container: @activity.content)
+      2.times do
+        question = @activity.content.questionnaire.m_questions.build
+        3.times { question.answers.build }
+      end
     elsif params[:content_type] == "assessment"
       @activity.content = ActivityAssessment.new
+      @activity.content.questionnaire = Questionnaire.new(qu_container: @activity.content)
+      2.times do
+        question = @activity.content.questionnaire.m_questions.build
+        3.times { question.answers.build }
+      end
     else
       raise "Invalid Type Parameter"
     end
@@ -46,8 +56,10 @@ class Instructor::ActivitiesController < Instructor::BaseController
       @activity.content = ActivityLecture.new(content_params)
     elsif @activity.content_type == "ActivityExercise"
       @activity.content = ActivityExercise.new(content_params)
+      @activity.content.questionnaire = Questionnaire.new(questionnaire_params)
     elsif @activity.content_type == "ActivityAssessment"
       @activity.content = ActivityAssessment.new(content_params)
+      @activity.content.questionnaire = Questionnaire.new(questionnaire_params)
     else
       raise "Invalid Type Parameter"
     end
@@ -104,10 +116,17 @@ class Instructor::ActivitiesController < Instructor::BaseController
     end
 
     def activity_params
+      #params.require(:activity).permit!
       params.require(:activity).permit(:name, :levelpoints, :shortname, :tier, :chapter_id, :question, :content_type, :predecessor_ids => [])
     end
 
     def content_params
-      params.require(:activity).require(:content_attributes).permit(:text)
+      #params.require(:activity).require(:content_attributes).permit(:text)
+      params.require(:activity).require(:content_attributes).permit!
+    end
+
+    def questionnaire_params
+    #  params.require(:activity).require(:content_attributes).require(:questionnaire_attributes).permit(m_questions: [])
+    params.require(:activity).require(:content_attributes).require(:questionnaire_attributes).permit!
     end
 end
