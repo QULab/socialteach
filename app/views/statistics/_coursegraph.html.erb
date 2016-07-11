@@ -1,9 +1,11 @@
-<%= @user.username %>'s learningpoint history:
+
+
+<%= @user.username %>'s learningpoint:
 <div>
 	<%= line_chart @user.points(category: "Learningpoints") %>
 </div>
 
-<%= @user.username %>'s socialpoint history:
+<%= @user.username %>'s socialpoint:
 <div>
 	<%= line_chart @user.points(category: "Learningpoints") %>
 </div>
