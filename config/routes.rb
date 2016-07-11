@@ -1,7 +1,5 @@
   Rails.application.routes.draw do
 
-  get 'statistics/show'
-
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
 
