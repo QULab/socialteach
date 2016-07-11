@@ -8,6 +8,9 @@ gem 'mysql2', '~> 0.3.21'
 gem 'devise', '~> 3.2'
 gem 'activeadmin', '~> 1.0.0.pre2'
 gem 'puma'
+# Use exact version for nokogiri
+# Do not change this Version
+gem 'nokogiri', '1.6.8'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3'
@@ -37,7 +40,9 @@ gem 'merit', '~> 2.3.0'
 
 # Markdown parser (for better formatting and display of a lecture text)
 gem 'redcarpet', '~>3.3.4'
-
+# Syntax Highlighting
+gem 'codemirror-rails', '~>5.11'
+gem "mini_magick"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -48,6 +53,14 @@ gem 'redcarpet', '~>3.3.4'
 gem 'chartkick', '~> 1.2.4'
 gem 'dateslices', '~> 0.0.3'
 gem 'active_median', '~> 0.1.0'
+
+#for scheduling tasks like update emails every week
+gem 'sidekiq'
+gem 'sidetiq'
+gem 'sinatra', :require => false
+
+
+gem 'carrierwave'
 
 #omniauth
 gem 'omniauth-facebook'

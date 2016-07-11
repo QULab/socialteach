@@ -1,6 +1,5 @@
 .activity-content-container {
   min-height: 200px;
-  background-color: lightgray;
   padding: 10px;
 }
 
@@ -13,4 +12,26 @@
   position: absolute;
   margin-top: 30px;
   padding: 0 20px;
+}
+
+span.label-pill.activity_exercise {
+  background-color: #CAA82C;
+}
+
+span.label-pill.activity_assessment {
+  background-color: #99413F;
+}
+
+span.label-pill.activity_lecture {
+  background-color: #428CCA;
+}
+
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+}
+
+#cheatsheet {
+  max-height: 380px;
+  overflow: scroll;
 }

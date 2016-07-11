@@ -6,10 +6,17 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  mount_uploader :avatar, AvatarUploader 
+
   has_many :courses
   has_many :completed_m_questions
   has_many :completed_questionnaires
   validate :username_validation
+  has_many :course_enrollments
+  has_many :friendships
+  has_many :friends, :through => :friendships
+  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+  has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
   def username_validation
     if !username.present?

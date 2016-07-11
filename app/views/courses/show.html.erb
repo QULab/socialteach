@@ -9,10 +9,8 @@
     <strong>Description:</strong>
     <%= @course.description %>
   </p>
-<% end -%>
-
-<% if user_signed_in? and current_user.is_enrolled?(@course)%>
+<%- else %>
   <%= render 'show_enrolled', course: @course %>
-<% end %>
+<% end -%>
 
 <%= link_to 'Back', courses_path %>

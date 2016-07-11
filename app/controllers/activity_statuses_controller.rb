@@ -69,6 +69,7 @@ class ActivityStatusesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def activity_status_params
-      params.require(:activity_status).permit(:is_completed, :Status, :Activity, :Course_enrollment)
+      params.require(:activity_status).permit(:is_completed, :status, :activity_id, :course_enrollment_id)
     end
+
 end

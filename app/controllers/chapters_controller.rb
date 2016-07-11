@@ -1,5 +1,5 @@
 class ChaptersController < ApplicationController
-  before_action :set_chapter, only: [:show, :edit, :update, :destroy]
+  before_action :set_chapter, only: [:show]
 
   # GET /chapters
   # GET /chapters.json
@@ -15,9 +15,9 @@ class ChaptersController < ApplicationController
   # GET /chapters/new
   def new
     @chapter = Chapter.new
-      
+
     @ordered_chapters = Chapter.order(:name)
- 
+
   end
 
   # GET /chapters/1/edit

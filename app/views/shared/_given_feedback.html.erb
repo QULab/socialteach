@@ -7,10 +7,13 @@ unless feedback.nil?
   progress = ["warning", "success", "danger"]
   count_all = question.completed_m_questions.count %>
 
-    <h4>Total number of users who gave feedback: <%= count_all %></h4>
       <% question.answers.each_with_index do |answer, i| %>
-        <% count = question.completed_m_questions.where(answer_id: answer.id).count
-        percentage = count * 100 / count_all%>
+        <% count = 0 %>
+        <% question.completed_m_questions.each do |cquestion| %>
+          <% count += 1 if cquestion.answers.first.id == answer.id %>
+        <% end %>
+
+        <% percentage = count_all > 0 ? count * 100 / count_all : 0 %>
         <div class="row">
           <div class="col-md-12">
             <%= fa_icon icons[i], text: answer.text %>
@@ -26,4 +29,6 @@ unless feedback.nil?
           </div>
         </div>
       <% end %>
+      <p></p>
+      <div>Total number of users who gave feedback: <%= count_all %></div>
 <% end %>

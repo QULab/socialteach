@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <h2>
+      <%= @activity.name %>
+    </h2>
+    <legend>
+      <small>
+        <%= @activity.course.name %> >
+        <%= @activity.chapter.name %>
+      </small>
+    </legend>
+    <div class="col-md-6">
+      <div class="activity-content-container">
+        <%- if @activity.content.is_a? ActivityLecture %>
+          <%= render 'instructor/activities/lecture', lecture: @activity.content %>
+        <% elsif @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment) %>
+          <%= render 'instructor/activities/questionnaire', container: @activity.content %>
+        <%- end %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <legend> Feedback </legend>
+      <%= render 'shared/given_feedback', commentable: @activity %>
+    </div>
+  </div>
+
+  <div class="row">
+    <%= link_to edit_instructor_activity_path(@activity), class:"btn btn-primary" do %>
+      Edit Activity
+    <% end %>
+    <%= link_to edit_instructor_chapter_path(@activity.chapter), class:"btn btn-primary" do %>
+      Back to Chapter
+    <% end %>
+    <%= link_to instructor_course_path(@activity.course), class:"btn btn-primary" do %>
+      Back to Course
+    <% end %>
+  </div>
+  <div class="row">
+    <%- #render 'shared/comments', commentable: @activity %>
+  </div>
+</div>

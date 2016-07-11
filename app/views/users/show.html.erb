@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="page-header">
+  <h1><%= @user.username %>'s Profile
+  <% unless @user.id == current_user.id || Friendship.find_by_user_id_and_friend_id(current_user.id,@user.id)%>
+    <%= link_to friendships_path(:friend_id => @user), :method => :post, class: "btn btn-primary" do %>
+      Add friend
+    <%- end %>
+  <% end %>
+  </h1>
+	</div>
+	<div class="row">
+  <div class="col-xs-6 col-md-4">
+  	<p> <%= avatar_for(@user) %></p> 
+    <% if @user.birthday != nil %> <p> My Birthday : <%= @user.birthday.strftime("%d.%m.%Y")   %></p> <% end %>
+    <p> My Badges :  </p>
+    <p> Learning Points : <%= @user.points(category: "Learningpoints") %></p>
+    <p> Social Points : <%= @user.points(category: "Socialpoints") %> </p>
+</div>
+  <div class="col-xs-6 col-md-4">    
+  	<h1>About me :</h1>
+  	<p><%= @user.aboutme %></p>
+
+    <div>
+      <h2>My friends on socialteach:</h2>
+      <% for friendship in @user.friendships %>
+        <li>
+          <%= link_to friendship.friend do %>
+            <%= friendship.friend.username %>
+          <% end %>
+          <% if current_user == @user %>
+            (<%= link_to "remove", friendship, :method => :delete %>)
+          <% end %>
+        </li>
+      <% end %>
+
+      <h2>Friended by Users:</h2>
+      <% for friendship in @user.inverse_friendships %>
+        <li>
+          <%= link_to friendship.user do %>
+            <%= friendship.user.username %>
+          <% end %>
+        </li>
+      <% end %>
+    </div>
+
+</div>
+
+</div>
+
+<div class="div2">
+
+       <% if @user.id==current_user.id %><p> <%= link_to "Edit Profile", users_edit_profile_path() %></p><% end %>
+</div>
+</div>
+

@@ -9,6 +9,6 @@ json.edges @edges do |node, succ|
   json.data do
     json.source node.id
     json.target succ.id
-    json.color "#6fb1fc"
+    json.color "#5bc0de"
   end
 end
