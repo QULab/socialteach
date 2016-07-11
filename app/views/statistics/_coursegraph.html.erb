@@ -1,1 +1,15 @@
-<%= line_chart Merit.where(course: 'United States').group(:earned_at).sum(:points) %>
+<%= @user.username %>'s learningpoint history:
+<div>
+	<%= line_chart @user.points(category: "Learningpoints") %>
+</div>
+
+<%= @user.username %>'s socialpoint history:
+<div>
+	<%= line_chart @user.points(category: "Learningpoints") %>
+</div>
+
+<% @enrollment_points.each do |enrollment| %>
+	<%= enrollment[:enrollment].course.name %> - Course: <%= enrollment[:points] %><br>
+	Your current progress in <%= enrollment[:enrollment].course.name %>: <%= enrollment[:enrollment].progress[:percent]*100 %> % <br>
+	<%= line_chart enrollment[:points] %><br>
+<% end %>
