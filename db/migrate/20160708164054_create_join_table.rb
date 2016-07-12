@@ -6,7 +6,7 @@ class CreateJoinTable < ActiveRecord::Migration
     end
 
     CompletedMQuestion.all.each do | completed_question |
-      completed_question.answers << Answer.find(completed_question.answer_id)
+      completed_question.answers << Answer.find(completed_question.answer_id) if completed_question.answer_id
     end
 
     remove_column :completed_m_questions, :answer_id
