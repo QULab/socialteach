@@ -21,4 +21,34 @@ module ActivitiesHelper
     end
     button_tag(name, onclick: "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", class: "btn btn-success btn-block", type: 'button')
   end
+
+  def user_completed?(activity)
+    activity.activity_statuses.where(course_enrollment: CourseEnrollment.where(user_id: current_user.id),
+                                     is_completed: true).exists?
+  end
+
+  def get_last_completed(questionnaire)
+    questionnaire.completed_questionnaires.where(user_id: 1).last
+  end
+
+  def question_success?(completed_question)
+    unless completed_question.answers.any?{ |answer| !answer.correct }
+      completed_question.m_question.answers.where(correct: true).count == completed_question.answers.where(correct: true).count
+    end
+  end
+
+  def given_answer_status(completed_question, answer)
+    answer_given = given_answer?(completed_question, answer)
+    if answer.correct
+      return 'correct' if answer_given
+      return 'missing'
+    else
+      return 'wrong' if answer_given
+      return 'ok'
+    end
+  end
+
+  def given_answer?(completed_question, answer)
+    completed_question.answers.include?(answer)
+  end
 end
