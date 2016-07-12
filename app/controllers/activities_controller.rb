@@ -15,12 +15,17 @@ class ActivitiesController < ApplicationController
         questionnaire = @activity.content.questionnaire
         user_id = current_user.id
 
+        cquestionnaire = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user_id)
         questionnaire.m_questions.each_with_index do |question, i|
-          CompletedMQuestion.create(m_question_id: question.id,
-                                    user_id: user_id,
-                                    answer_id: params[:question][i.to_s.to_sym][:answer_id])
+          cquestion = CompletedMQuestion.create(m_question_id: question.id,
+                                    completed_questionnaire_id: cquestionnaire.id,
+                                    user_id: user_id)
+
+          params[:question][i.to_s.to_sym][:answers].each do |answer|
+            cquestion.answers << Answer.find(answer[1][:answer_id])
+          end
+
         end
-        CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user_id)
       end
       enrollment = current_user.get_enrollment(@activity.course)
       status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
@@ -35,12 +40,13 @@ class ActivitiesController < ApplicationController
   def feedback
     questionnaire = @activity.feedback.questionnaire
     user_id = current_user.id
-    CompletedMQuestion.create(m_question_id: questionnaire.m_questions.first.id,
-                              user_id: user_id,
-                              answer_id: params[:answer])
-
-    CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
+    cquestionnaire = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
                                   user_id: user_id)
+
+    CompletedMQuestion.create!(m_question_id: questionnaire.m_questions.first.id,
+                              completed_questionnaire_id: cquestionnaire.id,
+                              user_id: user_id).answers << Answer.find(params[:answer])
+
     head :no_content
   end
 

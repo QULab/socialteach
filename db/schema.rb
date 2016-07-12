@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629213407) do
+ActiveRecord::Schema.define(version: 20160708164054) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -106,11 +106,20 @@ ActiveRecord::Schema.define(version: 20160629213407) do
   create_table "answers", force: :cascade do |t|
     t.integer  "m_question_id"
     t.text     "text"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "correct",       default: false
   end
 
   add_index "answers", ["m_question_id"], name: "index_answers_on_m_question_id"
+
+  create_table "answers_completed_m_questions", id: false, force: :cascade do |t|
+    t.integer "completed_m_question_id", null: false
+    t.integer "answer_id",               null: false
+  end
+
+  add_index "answers_completed_m_questions", ["answer_id", "completed_m_question_id"], name: "i_answers_c_questions_on_answer_id_and_c_question_id"
+  add_index "answers_completed_m_questions", ["completed_m_question_id", "answer_id"], name: "i_answers_c_questions_on_c_question_id_and_answer_id"
 
   create_table "badges_sashes", force: :cascade do |t|
     t.integer  "badge_id"
@@ -145,13 +154,12 @@ ActiveRecord::Schema.define(version: 20160629213407) do
 
   create_table "completed_m_questions", force: :cascade do |t|
     t.integer  "m_question_id"
-    t.integer  "answer_id"
     t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "completed_questionnaire_id"
   end
 
-  add_index "completed_m_questions", ["answer_id"], name: "index_completed_m_questions_on_answer_id"
   add_index "completed_m_questions", ["m_question_id"], name: "index_completed_m_questions_on_m_question_id"
   add_index "completed_m_questions", ["user_id"], name: "index_completed_m_questions_on_user_id"
 
@@ -201,6 +209,13 @@ ActiveRecord::Schema.define(version: 20160629213407) do
 
   add_index "feedbacks", ["commentable_type", "commentable_id"], name: "index_feedbacks_on_commentable_type_and_commentable_id"
 
+  create_table "friendships", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "levels", force: :cascade do |t|
     t.integer  "level"
     t.integer  "level_pass"
@@ -210,10 +225,9 @@ ActiveRecord::Schema.define(version: 20160629213407) do
 
   create_table "m_questions", force: :cascade do |t|
     t.integer  "questionnaire_id"
-    t.integer  "correct_answer_id"
     t.text     "text"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   add_index "m_questions", ["questionnaire_id"], name: "index_m_questions_on_questionnaire_id"

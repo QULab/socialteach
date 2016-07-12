@@ -10,9 +10,9 @@
                 <%= question.text %>
               </div>
               <div class="row">
-                <% question.answers.each do |answer| %>
+                <% question.answers.each_with_index do |answer, j| %>
                   <label class="radio-inline">
-                    <%= radio_button_tag "question[#{i}[answer_id]]", answer.id %>
+                    <%= check_box_tag "question[#{i}[answers[#{j}[answer_id]]]", answer.id %>
                     <%= answer.text %>
                   </label>
                 <% end %>

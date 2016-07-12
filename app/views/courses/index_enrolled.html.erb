@@ -10,7 +10,11 @@
       <% @enrollments.each do |enrollment| %>
         <%- course = enrollment.course %>
         <%= link_to course_path(course), class: "list-group-item" do %>
-          <i class="fa fa-3x fa-check-circle" style="float: right"></i>
+          <% if enrollment.completed %>
+            <i class="fa fa-3x fa-check-circle" style="float: right"></i>
+          <% else %>
+            <i class="fa fa-3x fa-spinner" style="float: right"></i>
+           <% end %>
           <h4 class="list-group-item-heading">
             <%= course.name %>
           </h4>
@@ -18,7 +22,9 @@
             Started <%= time_ago_in_words(enrollment.created_at) %> ago
           </h6>
           <p class="list-group-item-text">
-            <%= course.description %>
+          <label class="label label-info">Level <%= enrollment.level.level %></label>
+          <label class="label label-primary"><%= enrollment.progress[:percent] %>% Complete</label>
+            <label class="label label-success">14 Badges</label>
           </p>
         <%- end %>
       <%- end %>
