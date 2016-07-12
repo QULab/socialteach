@@ -21,8 +21,11 @@ class ActivitiesController < ApplicationController
                                     completed_questionnaire_id: cquestionnaire.id,
                                     user_id: user_id)
 
-          params[:question][i.to_s.to_sym][:answers].each do |answer|
-            cquestion.answers << Answer.find(answer[1][:answer_id])
+          answers = params[:question][i.to_s.to_sym][:answers]
+          unless answers.nil?
+            answers.each do |answer|
+              cquestion.answers << Answer.find(answer[1][:answer_id])
+            end
           end
 
         end
@@ -30,7 +33,11 @@ class ActivitiesController < ApplicationController
       enrollment = current_user.get_enrollment(@activity.course)
       status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
       status.save
-      redirect_to curriculum_course_path(@activity.course) , notice: 'Congratulations, you finished this Activity!'
+      if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)
+        redirect_to activity_result_path(@activity) , notice: 'Congratulations, you finished this Activity!'
+      else
+        redirect_to curriculum_course_path(@activity.course) , notice: 'Congratulations, you finished this Activity!'
+      end
     # else
       # redirect_to curriculum_course_path(@activity.course) , notice: 'You already finished this activity before!'
     # end
