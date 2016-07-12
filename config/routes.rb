@@ -19,6 +19,7 @@
 
   # resources :chapters, only: [:show]
 
+  get 'activities/:id/result' => 'activities#result', format: [:html], as: 'activity_result'
   resources :activities, only: [:show] do
     member do
       post 'complete'

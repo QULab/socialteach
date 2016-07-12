@@ -10,7 +10,7 @@ class ActivitiesController < ApplicationController
   end
 
   def complete
-    unless current_user.completed?(@activity)
+    # unless current_user.completed?(@activity)
       if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)
         questionnaire = @activity.content.questionnaire
         user_id = current_user.id
@@ -31,9 +31,9 @@ class ActivitiesController < ApplicationController
       status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
       status.save
       redirect_to curriculum_course_path(@activity.course) , notice: 'Congratulations, you finished this Activity!'
-    else
-      redirect_to curriculum_course_path(@activity.course) , notice: 'You already finished this activity before!'
-    end
+    # else
+      # redirect_to curriculum_course_path(@activity.course) , notice: 'You already finished this activity before!'
+    # end
   end
 
   # POST /activities/1/feedback

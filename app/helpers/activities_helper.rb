@@ -22,11 +22,6 @@ module ActivitiesHelper
     button_tag(name, onclick: "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")", class: "btn btn-success btn-block", type: 'button')
   end
 
-  def user_completed?(activity)
-    activity.activity_statuses.where(course_enrollment: CourseEnrollment.where(user_id: current_user.id),
-                                     is_completed: true).exists?
-  end
-
   def get_last_completed(questionnaire)
     questionnaire.completed_questionnaires.where(user_id: current_user.id).order("created_at").last
   end
