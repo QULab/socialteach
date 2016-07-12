@@ -5,16 +5,6 @@ class UsersController < ApplicationController
 
   def show
 
-    @socialp = @user.points(category: "Socialpoints")
-    @learningp = @user.points(category: "Learningpoints")
-    @enrollment_points = @user.course_enrollments.map do |enrollment|
-      {:enrollment => enrollment, :points =>enrollment.points(category: "Levelpoints")}
-    end
-
-    #delete all nil hashes
-    @enrollment_points.compact
-
-
   end
 
   def edit_profil
