@@ -26,6 +26,8 @@
   end
 
   resources :courses, only: [:show, :index] do
+    resources :comments
+    get '/comments/new/(:parent_id)', to: 'comments#new', as: :new_comment
     member do
       get 'curriculum'
     end
