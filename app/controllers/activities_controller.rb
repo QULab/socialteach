@@ -11,11 +11,15 @@ class ActivitiesController < ApplicationController
 
   def complete
     # unless current_user.completed?(@activity)
+
+      success_status = ActivityStatus.successfull
+
       if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)
         questionnaire = @activity.content.questionnaire
         user_id = current_user.id
 
         cquestionnaire = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user_id)
+
         questionnaire.m_questions.each_with_index do |question, i|
           cquestion = CompletedMQuestion.create(m_question_id: question.id,
                                     completed_questionnaire_id: cquestionnaire.id,
@@ -29,9 +33,10 @@ class ActivitiesController < ApplicationController
           end
 
         end
+        success_status = ActivityStatus.failed unless cquestionnaire.passed? || @activity.content.is_a?(ActivityAssessment)
       end
       enrollment = current_user.get_enrollment(@activity.course)
-      status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
+      status = ActivityStatus.new(is_completed: true, course_enrollment: enrollment, activity: @activity, status: success_status)
       status.save
       if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)
         redirect_to activity_result_path(@activity) , notice: 'Congratulations, you finished this Activity!'
