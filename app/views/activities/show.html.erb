@@ -24,11 +24,7 @@
         <%- if @activity.content.is_a? ActivityLecture # check what type of activity and render proper view%>
           <%= render 'activities/lecture', lecture: @activity.content %>
         <% elsif @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment) %>
-          <% if user_completed?(@activity) %>
-            <%= render 'completed_questionnaire', completed_questionnaire: get_last_completed(@activity.content.questionnaire), container: @activity.content %>
-          <% else %>
-            <%= render 'activities/questionnaire', container: @activity.content %>
-          <% end %>
+          <%= render 'activities/questionnaire', container: @activity.content %>
         <%- end %>
       </div>
       <%= render 'shared/feedback', commentable: @activity %>

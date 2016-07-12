@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_activity, only: [:show, :complete, :feedback]
+  before_action :set_activity, only: [:show, :complete, :feedback, :result]
 
 
   # GET /activities/1
@@ -48,6 +48,11 @@ class ActivitiesController < ApplicationController
                               user_id: user_id).answers << Answer.find(params[:answer])
 
     head :no_content
+  end
+
+  # GET /activities/1/result
+  def result
+    render 'result', completed_questionnaire: @activity.content.questionnaire.completed_questionnaires.where(user_id: current_user.id).last, container: @activity.content
   end
 
   private

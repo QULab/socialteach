@@ -25,4 +25,7 @@
   </div>
 
   <%= f.submit 'Finish this Activity', class: "btn btn-success" %>
+  <% if user_completed?(@activity) %>
+    <%= link_to 'Show last result', activity_result_path(@activity), class: "btn btn-primary" %>
+  <% end %>
 <% end %>

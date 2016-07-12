@@ -28,7 +28,7 @@ module ActivitiesHelper
   end
 
   def get_last_completed(questionnaire)
-    questionnaire.completed_questionnaires.where(user_id: 1).last
+    questionnaire.completed_questionnaires.where(user_id: current_user.id).order("created_at").last
   end
 
   def question_success?(completed_question)
