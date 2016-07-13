@@ -54,7 +54,10 @@
           <% completed = current_user.completed?(act) %>
           <% successfull = current_user.completed_successfull?(act) %>
           <% locked = completed ? false : act.locked?(current_user) %>
-          <%= link_to activity_path(act), class: ["list-group-item", ("list-group-item-success" if completed && successfull), ("disabled" if locked), ("list-group-item-danger" if completed && !successfull)] do %>
+          <%= link_to activity_path(act), class: ["list-group-item",
+                                                  ("list-group-item-success" if completed && successfull),
+                                                  ("disabled" if locked),
+                                                  ("list-group-item-danger" if completed && !successfull)] do %>
 
             <% if completed && successfull%>
               <i class="fa fa-3x fa-check" style="float: right"></i>
