@@ -103,6 +103,12 @@ class Instructor::ActivitiesController < Instructor::BaseController
     render partial: 'instructor/chapters/activity_predec', locals: {activity: @activity}
   end
 
+  respond_to :js
+  def tier
+    render partial: 'instructor/chapters/activity_tier', locals: {activity: @activity}
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_activity

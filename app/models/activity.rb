@@ -24,34 +24,28 @@ class Activity < ActiveRecord::Base
     association_foreign_key: :tail_id,
     uniq: true
 
-  validates :name, :shortname, :tier, :chapter, presence: true
-  validates :tier, :levelpoints, numericality: {greater_than_or_equal_to: 0}
+  validates :name, :shortname, :chapter, presence: true
+  validates :levelpoints, numericality: {greater_than_or_equal_to: 0}
 
+  validate :validate_tier
   validate :validate_predecessors
 
   before_validation :assign_tier
-  after_save :update_successor_tiers
 
   def valid_predecessors
-    return if tier_update_in_progress?
+    chapter_activities = self.chapter.activities.where.not(id: self.id).to_a
+    unless self.tier.present?
+      return chapter_activities
+    end
 
     succ_min = self.successors.order(tier: :asc).first
 
-    chapter_activities = self.chapter.activities.where.not(id: self.id).to_a
     unless succ_min.nil?
-      chapter_activities.select! do |chapter|
-        chapter.tier < succ_min.tier
+      chapter_activities.select! do |activity|
+        activity.tier.present? && activity.tier < succ_min.tier - 1
       end
     end
     chapter_activities
-  end
-
-  def signal_tier_update
-    @tier_update_in_progress = true
-  end
-
-  def tier_update_in_progress?
-    @tier_update_in_progress
   end
 
   # Update switch statment as soon as other content classes exist!
@@ -103,6 +97,13 @@ class Activity < ActiveRecord::Base
 
   private
 
+  def validate_tier
+    succ_min = self.successors.order(tier: :asc).first
+    if self.tier.present? and succ_min.present? and succ_min.tier <= self.tier
+      errors.add(:base, "Tier may not be higher than or equal to successor's tier")
+    end
+  end
+
   def validate_predecessors
     invalid = self.predecessors.to_a - valid_predecessors.to_a
     if invalid.present?
@@ -111,19 +112,14 @@ class Activity < ActiveRecord::Base
   end
 
   def assign_tier
-    max_pred = self.predecessors.order(tier: :desc).first
-    if max_pred.nil?
-      self.tier = 0
-    else
-      self.tier = max_pred.tier + 1
+    if self.tier.present?
+      return
     end
-  end
-
-  def update_successor_tiers
-    self.successors.each do |activity|
-      activity.send(:assign_tier)
-      activity.signal_tier_update
-      activity.save!
+    max_pred = self.predecessors.order(tier: :desc).first
+    if !max_pred.nil?
+      if max_pred.tier.present?
+        self.tier = max_pred.tier + 1
+      end
     end
   end
 

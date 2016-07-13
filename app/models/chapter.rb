@@ -58,6 +58,9 @@ class Chapter < ActiveRecord::Base
   end
 
   def assign_tier
+    if self.tier.present?
+      return
+    end
     max_pred = self.predecessors.order(tier: :desc).first
     if !max_pred.nil?
       if max_pred.tier.present?
