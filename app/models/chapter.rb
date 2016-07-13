@@ -18,16 +18,13 @@ class Chapter < ActiveRecord::Base
     uniq: true
 
   validates :name, :shortname, :course, presence: true
-  #validates :tier, numericality: {greater_than_or_equal_to: 0}
   validate :validate_predecessors
   validate :validate_tier
 
   before_validation :assign_tier
-  #after_save :update_successor_tiers
 
   # returns a list of all chapters, that are valid predecessors for this chapter
   def valid_predecessors
-    #return if tier_update_in_progress?
     course_chapters = self.course.chapters.where.not(id: self.id).to_a
     unless self.tier.present?
       return course_chapters
@@ -43,13 +40,6 @@ class Chapter < ActiveRecord::Base
     course_chapters
   end
 
-  #def signal_tier_update
-    #@tier_update_in_progress = true
-  #end
-
-  #def tier_update_in_progress?
-    #@tier_update_in_progress
-  #end
 
   private
 
@@ -76,11 +66,4 @@ class Chapter < ActiveRecord::Base
     end
   end
 
-  #def update_successor_tiers
-    #self.successors.each do |chapter|
-      #chapter.send(:assign_tier)
-      #chapter.signal_tier_update
-      #chapter.save!
-    #end
-  #end
 end
