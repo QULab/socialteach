@@ -52,8 +52,11 @@ class Chapter < ActiveRecord::Base
 
   def validate_tier
     succ_min = self.successors.order(tier: :asc).first
+    max_pred = self.predecessors.order(tier: :desc).first
     if self.tier.present? and succ_min.present? and succ_min.tier <= self.tier
       errors.add(:base, "Tier may not be higher than or equal to successor's tier")
+    elsif self.tier.present? and max_pred.present? and max_pred.tier >= self.tier
+      errors.add(:base, "Tier may not be lower than or equal to predecessor's tier")
     end
   end
 
