@@ -26,12 +26,6 @@ module ActivitiesHelper
     questionnaire.completed_questionnaires.where(user_id: current_user.id).order("created_at").last
   end
 
-  def question_success?(completed_question)
-    unless completed_question.answers.any?{ |answer| !answer.correct }
-      completed_question.m_question.answers.where(correct: true).count == completed_question.answers.where(correct: true).count
-    end
-  end
-
   def given_answer_status(completed_question, answer)
     answer_given = given_answer?(completed_question, answer)
     if answer.correct

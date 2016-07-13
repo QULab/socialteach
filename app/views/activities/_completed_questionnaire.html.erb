@@ -1,11 +1,20 @@
 <div class="panel panel-default">
   <div class="panel-body">
-    <legend>Your Last Results</legend>
+    <legend>
+      <% if completed_questionnaire.questionnaire.qu_container.is_a?(ActivityAssessment) %>
+        <span class="label label-warning label-pill pull-right">Completed with <%= completed_questionnaire.score%>%</span>
+      <% elsif completed_questionnaire.passed? %>
+        <span class="label label-success label-pill pull-right">Passed with <%= completed_questionnaire.score%>%</span>
+      <% else %>
+        <span class="label label-danger label-pill pull-right">Failed with <%= completed_questionnaire.score %>%</span>
+      <% end %>
+      Your Last Results
+    </legend>
     <% container.questionnaire.m_questions.each_with_index do |question, i| %>
       <div class= "row">
         <div class="col-md-12">
           <% completed_question = completed_questionnaire.completed_m_questions.where(m_question: question).last %>
-          <% if question_success?(completed_question) %>
+          <% if completed_question.correct? %>
             <div class="panel panel-success">
               <div class="panel-heading">
                 <i class="fa fa-lg fa-check-circle text-success pull-right"></i>

@@ -59,11 +59,12 @@ class Activity < ActiveRecord::Base
   # locked activities are those, where the user has not completed the necessary requirements
   def locked?(user)
     predecessors = self.predecessors.to_a
+    enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", user.id, self.course.id).first.id
     # if there are no predecessors, the activity is not locked
     locked = predecessors.present?
     completed_predecessors = 0
     predecessors.each do |pred|
-      status = pred.activity_statuses.where(is_completed: true).first
+      status = pred.activity_statuses.where(is_completed: true, course_enrollment_id: enrollment).first
       if status.present?
         completed_predecessors += 1
       end
