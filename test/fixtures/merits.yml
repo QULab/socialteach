@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  course: MyString
+  points: 1.5
+  earned_at: 2016-06-15 02:29:50
+
+two:
+  course: MyString
+  points: 1.5
+  earned_at: 2016-06-15 02:29:50

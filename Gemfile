@@ -49,6 +49,11 @@ gem "mini_magick"
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+# using chartkick for point charts and some helper gems
+gem 'chartkick', '~> 1.2.4'
+gem 'dateslices', '~> 0.0.3'
+gem 'active_median', '~> 0.1.0'
+
 #for scheduling tasks like update emails every week
 gem 'sidekiq'
 gem 'sidetiq'
@@ -56,6 +61,7 @@ gem 'sinatra', :require => false
 
 
 gem 'carrierwave'
+
 #omniauth
 gem 'omniauth-facebook'
 
@@ -66,7 +72,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.4'
   gem "factory_girl_rails"
 end
-
 
 group :development do
   gem 'byebug'
