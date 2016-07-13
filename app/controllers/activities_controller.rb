@@ -7,6 +7,10 @@ class ActivitiesController < ApplicationController
   # GET /activities/1
   # GET /activities/1.json
   def show
+    # check enrollment
+    # this should also redirect if the course is not published (because then there can be no enrollment)
+    unless current_user.is_enrolled?(@activity.course)
+      redirect_to courses_path, notice: 'You are not enrolled in this course'
   end
 
   def complete
@@ -64,6 +68,10 @@ class ActivitiesController < ApplicationController
 
   # GET /activities/1/result
   def result
+    # check enrollment
+    unless current_user.is_enrolled?(@activity.course)
+      redirect_to courses_path, notice: 'You are not enrolled in this course'
+    # TODO: check completion?
     render 'result', completed_questionnaire: @activity.content.questionnaire.completed_questionnaires.where(user_id: current_user.id).last, container: @activity.content
   end
 
