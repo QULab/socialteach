@@ -32,14 +32,14 @@ ActiveRecord::Schema.define(version: 20160708181052) do
     t.string   "name"
     t.integer  "levelpoints"
     t.integer  "chapter_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "tier"
     t.text     "shortname"
-    t.integer  "content_id",   null: false
-    t.string   "content_type", null: false
+    t.integer  "content_id",               null: false
+    t.string   "content_type",             null: false
     t.integer  "level_id"
-    t.integer  "difficulty"
+    t.integer  "difficulty",   default: 0, null: false
   end
 
   add_index "activities", ["chapter_id"], name: "index_activities_on_chapter_id"
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 20160708181052) do
 
   create_table "chapter_statuses", force: :cascade do |t|
     t.boolean  "skip",                 default: false
+    t.boolean  "finished",             default: false
     t.integer  "course_enrollment_id"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
