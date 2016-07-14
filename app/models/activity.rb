@@ -24,16 +24,32 @@ class Activity < ActiveRecord::Base
     association_foreign_key: :tail_id,
     uniq: true
 
-  validates :name, :shortname, :tier, :chapter, presence: true
-  validates :tier, :levelpoints, numericality: {greater_than_or_equal_to: 0}
+  validates :name, :shortname, :chapter, presence: true
+  validates :levelpoints, numericality: {greater_than_or_equal_to: 0}
 
-  # returns a list of all activities, that are valid predecessors for this activity
+  validate :validate_tier
+  validate :validate_predecessors
+
+  before_validation :assign_tier
+
   def valid_predecessors
-    chapter_activities = self.chapter.activities.to_a
-    predecessors = chapter_activities.select do |act|
-      act.tier < self.tier
+    chapter_activities = self.chapter.activities.where.not(id: self.id).to_a
+    chapter_activities.select! do |activity|
+      activity.tier.present?
     end
-    return predecessors
+
+    unless self.tier.present?
+      return chapter_activities
+    end
+
+    succ_min = self.successors.order(tier: :asc).first
+
+    unless succ_min.nil?
+      chapter_activities.select! do |activity|
+        activity.tier < succ_min.tier - 1
+      end
+    end
+    chapter_activities
   end
 
   # Update switch statment as soon as other content classes exist!
@@ -83,4 +99,36 @@ class Activity < ActiveRecord::Base
 		Answer.create(m_question_id: questionId, text: 'Perfect Difficulty')
 		Answer.create(m_question_id: questionId, text: 'Too Hard')
 	end
+
+  private
+
+  def validate_tier
+    succ_min = self.successors.order(tier: :asc).first
+    max_pred = self.predecessors.order(tier: :desc).first
+    if self.tier.present? and succ_min.present? and succ_min.tier <= self.tier
+      errors.add(:base, "Tier may not be higher than or equal to successor's tier")
+    elsif self.tier.present? and max_pred.present? and max_pred.tier >= self.tier
+      errors.add(:base, "Tier may not be lower than or equal to predecessor's tier")
+    end
+  end
+
+  def validate_predecessors
+    invalid = self.predecessors.to_a - valid_predecessors.to_a
+    if invalid.present?
+      errors.add(:base, "contains invalid activities")
+    end
+  end
+
+  def assign_tier
+    if self.tier.present?
+      return
+    end
+    max_pred = self.predecessors.order(tier: :desc).first
+    if !max_pred.nil?
+      if max_pred.tier.present?
+        self.tier = max_pred.tier + 1
+      end
+    end
+  end
+
 end

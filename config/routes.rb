@@ -38,7 +38,7 @@
   namespace :instructor do
     # index shows all courses the current user can modify
     resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html]
-    resources :chapters, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
+    resources :chapters, only: [:edit, :destroy, :update, :new, :create], format: [:html]
     resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html] do
       collection do
         post 'markdown'
