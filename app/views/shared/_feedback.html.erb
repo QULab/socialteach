@@ -8,9 +8,9 @@ unless feedback.nil?
 
   <div class="feedback-container">
     <% question.answers.each_with_index do |answer, i| %>
-      <button type="button" <%= 'disabled' unless fresh %>
+      <button type="button" <%= 'disabled' unless fresh %>,
               class="btn btn-primary <%='btn-success' if (given_answer == answer) %>"
-              value="<%= answer.id %>">
+              value="<%= answer.id %>" action="feedback" method="post">
         <%= fa_icon icons[i], text: answer.text %>
       </button>
     <% end %>

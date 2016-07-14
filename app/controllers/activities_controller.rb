@@ -52,6 +52,10 @@ class ActivitiesController < ApplicationController
   def feedback
     questionnaire = @activity.feedback.questionnaire
     user_id = current_user.id
+
+    logger.debug "FEEDBACK"
+    feedback_processing(questionnaire)
+  
     CompletedMQuestion.create(m_question_id: questionnaire.m_questions.first.id,
                               user_id: user_id,
                               answer_id: params[:answer])

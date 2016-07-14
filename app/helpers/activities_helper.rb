@@ -66,15 +66,10 @@ module ActivitiesHelper
     end
     
     
-    
-    
-    
 =begin
     course_enrollment and activity have an difficulty level.
-    An course_enrollment has the default difficulty level of 3
-    The difficulty scala starts from 0 and goes up to 5.
-    the difficulty level 0 can be compared to the diffidulty "very easy"
-    and the difficulty level 5 can be compared to "very difficult" tasks.
+    An chapter-status has the default difficulty adaption level of 0
+    According to the correct answer ratio, the difficulty_adaption value will increase or decrease
 =end
     
     # ratio - percentage of correct answers
@@ -109,5 +104,29 @@ module ActivitiesHelper
         
         logger.debug "Difficulty-Adaption-Value: #{difficulty_adaption}"
         difficulty_adaption
+    end
+    
+          
+    #Too Easy
+    #Perfect Difficulty
+    #Too Hard  
+    def feedback_processing(questionnaire)
+        
+      difficulty_adaption = 0.0
+        
+      questionnaire.m_questions.each_with_index do |question, i|
+          
+          if question.text == "Too Easy"
+            difficulty_adaption = 1
+              
+          elsif question.text == "Perfect Difficulty"
+            difficulty_adaption = 0
+              
+          elsif questoin.text = "Too Hard"
+            difficulty_adaption = -1
+          end
+      end           
+      logger.debug "Difficulty-Adaption by Feedback: #{difficulty_adaption}"
+      difficulty_adaption
     end
 end

@@ -32,8 +32,7 @@
     end
   end
   get 'my_courses' => 'courses#index_enrolled', format: [:html]
-
-
+ 
   # Routes that are only for instructors
   namespace :instructor do
     # index shows all courses the current user can modify
