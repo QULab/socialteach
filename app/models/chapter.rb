@@ -26,6 +26,10 @@ class Chapter < ActiveRecord::Base
   # returns a list of all chapters, that are valid predecessors for this chapter
   def valid_predecessors
     course_chapters = self.course.chapters.where.not(id: self.id).to_a
+    course_chapters.select! do |chapter|
+      chapter.tier.present?
+    end
+
     unless self.tier.present?
       return course_chapters
     end
@@ -34,7 +38,7 @@ class Chapter < ActiveRecord::Base
 
     unless succ_min.nil?
       course_chapters.select! do |chapter|
-        chapter.tier.present? && chapter.tier < succ_min.tier - 1
+        chapter.tier < succ_min.tier - 1
       end
     end
     course_chapters

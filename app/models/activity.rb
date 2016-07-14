@@ -34,6 +34,10 @@ class Activity < ActiveRecord::Base
 
   def valid_predecessors
     chapter_activities = self.chapter.activities.where.not(id: self.id).to_a
+    chapter_activities.select! do |activity|
+      activity.tier.present?
+    end
+
     unless self.tier.present?
       return chapter_activities
     end
@@ -42,7 +46,7 @@ class Activity < ActiveRecord::Base
 
     unless succ_min.nil?
       chapter_activities.select! do |activity|
-        activity.tier.present? && activity.tier < succ_min.tier - 1
+        activity.tier < succ_min.tier - 1
       end
     end
     chapter_activities
