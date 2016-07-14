@@ -35,16 +35,17 @@ class CoursesController < BaseController
     set_enrollment(current_user)
   end
 
-  # POST /activities/1/feedback
+  # POST /courses/1/feedback
   def feedback
     questionnaire = @course.feedback.questionnaire
     user_id = current_user.id
-    CompletedMQuestion.create(m_question_id: questionnaire.m_questions.first.id,
-                              user_id: user_id,
-                              answer_id: params[:answer])
-
-    CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
+    cquestionnaire = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
                                   user_id: user_id)
+
+    CompletedMQuestion.create!(m_question_id: questionnaire.m_questions.first.id,
+                              completed_questionnaire_id: cquestionnaire.id,
+                              user_id: user_id).answers << Answer.find(params[:answer])
+
     head :no_content
   end
 

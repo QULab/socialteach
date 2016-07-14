@@ -8,6 +8,9 @@ gem 'mysql2', '~> 0.3.21'
 gem 'devise', '~> 3.2'
 gem 'activeadmin', '~> 1.0.0.pre2'
 gem 'puma'
+# Use exact version for nokogiri
+# Do not change this Version
+gem 'nokogiri', '1.6.8'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3'
@@ -46,12 +49,19 @@ gem "mini_magick"
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+# using chartkick for point charts and some helper gems
+gem 'chartkick', '~> 1.2.4'
+gem 'dateslices', '~> 0.0.3'
+gem 'active_median', '~> 0.1.0'
+
 #for scheduling tasks like update emails every week
 gem 'sidekiq'
 gem 'sidetiq'
 gem 'sinatra', :require => false
 
+
 gem 'carrierwave'
+
 #omniauth
 gem 'omniauth-facebook'
 
@@ -62,7 +72,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.4'
   gem "factory_girl_rails"
 end
-
 
 group :development do
   gem 'byebug'
