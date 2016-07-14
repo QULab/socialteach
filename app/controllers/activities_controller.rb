@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_activity, only: [:show, :complete, :feedback]
+  before_action :set_activity, only: [:show, :complete, :feedback, :result]
 
 
   # GET /activities/1
@@ -10,35 +10,13 @@ class ActivitiesController < ApplicationController
   end
 
   def complete
-    # unless current_user.completed?(@activity)
-
       success_status = ActivityStatus.successfull
 
       if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)
         questionnaire = @activity.content.questionnaire
         user_id = current_user.id
-	
-	# Chapter Status and Difficulty Fit
-        @chapter_of_activity = @activity.chapter
-          
-        # retrieve chapterStatus of chapter
-        #@chapter_status = ChapterStatus.where(chapter_id: @chapter_of_activity.id)
-        @chapter_status = ChapterStatus.find_by(chapter_id: @chapter_of_activity.id)
-          
-        # calculating difficulty (ActivitiesHelper)
-        ratio = calc_ratio_of_correct_answers(questionnaire)
-          
-        # returns a value according to the ruleset (ActivitiesHelper)
-        adaption_value = difficulty_adaption_ruleset(ratio)
-          
-        # assign calculated adaption value to chapterStatus
-        old_adaption_value = @chapter_status.difficultyFit
-        new_adaption_value = old_adaption_value + adaption_value
-        logger.debug "New difficulty adaption value: #{new_adaption_value}"
-        @chapter_status.difficultyFit = new_adaption_value
-        @chapter_status.save
 
-	# Completed Questionnaire and Answers
+	      # Completed Questionnaire and Answers
         cquestionnaire = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user_id)
 
         questionnaire.m_questions.each_with_index do |question, i|
@@ -55,7 +33,24 @@ class ActivitiesController < ApplicationController
 
         end
         success_status = ActivityStatus.failed unless cquestionnaire.passed? || @activity.content.is_a?(ActivityAssessment)
+
+        # Chapter Status and Difficulty Fit
+        @chapter_of_activity = @activity.chapter
+
+        # retrieve chapterStatus of chapter
+        @chapter_status = ChapterStatus.find_by(chapter_id: @chapter_of_activity.id)
+
+        # returns a value according to the ruleset
+        adaption_value = difficulty_adaption_ruleset(cquestionnaire.score)
+
+        # assign calculated adaption value to chapterStatus
+        old_adaption_value = @chapter_status.difficultyFit
+        new_adaption_value = old_adaption_value + adaption_value
+        logger.debug "New difficulty adaption value: #{new_adaption_value}"
+        @chapter_status.difficultyFit = new_adaption_value
+        @chapter_status.save
       end
+
       enrollment = current_user.get_enrollment(@activity.course)
       status = ActivityStatus.new(is_completed: true, course_enrollment: enrollment, activity: @activity, status: success_status)
       status.save
@@ -92,5 +87,20 @@ class ActivitiesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_activity
       @activity = Activity.find(params[:id])
+    end
+
+    def difficulty_adaption_ruleset(ratio)
+      case ratio
+      when 0.9..Float::INFINITY
+        2
+      when 0.6...0.9
+        1
+      when 0.3...0.6
+        0
+      when 0.1...0.3
+        -1
+      when 0...0.1
+        -2
+      end
     end
 end

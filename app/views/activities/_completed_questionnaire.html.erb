@@ -2,11 +2,11 @@
   <div class="panel-body">
     <legend>
       <% if completed_questionnaire.questionnaire.qu_container.is_a?(ActivityAssessment) %>
-        <span class="label label-warning label-pill pull-right">Completed with <%= completed_questionnaire.score%>%</span>
+        <span class="label label-warning label-pill pull-right">Completed with <%= calc_rounded_percentage(completed_questionnaire.score) %>%</span>
       <% elsif completed_questionnaire.passed? %>
-        <span class="label label-success label-pill pull-right">Passed with <%= completed_questionnaire.score%>%</span>
+        <span class="label label-success label-pill pull-right">Passed with <%= calc_rounded_percentage(completed_questionnaire.score) %>%</span>
       <% else %>
-        <span class="label label-danger label-pill pull-right">Failed with <%= completed_questionnaire.score %>%</span>
+        <span class="label label-danger label-pill pull-right">Failed with <%= calc_rounded_percentage(completed_questionnaire.score) %>%</span>
       <% end %>
       Your Last Results
     </legend>
