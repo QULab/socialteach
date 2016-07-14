@@ -75,6 +75,8 @@ class ActivitiesController < ApplicationController
                               completed_questionnaire_id: cquestionnaire.id,
                               user_id: user_id).answers << Answer.find(params[:answer])
 
+    logger.debug "\nFeedback adjustment: #{feedback_processing(cquestionnaire)}\n"
+
     head :no_content
   end
 
@@ -103,4 +105,19 @@ class ActivitiesController < ApplicationController
         -2
       end
     end
+
+    def feedback_processing(cquestionnaire)
+      difficulty_adaption = 0
+      cquestion = cquestionnaire.completed_m_questions.first
+
+      case cquestion.answers.first.text
+      when 'Too Easy'
+        1
+      when 'Perfect Difficulty'
+        0
+      when 'Too Hard'
+        -1
+      end
+    end
+
 end
