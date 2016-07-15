@@ -34,6 +34,8 @@ class ActivitiesController < ApplicationController
         end
         success_status = ActivityStatus.failed unless cquestionnaire.passed? || @activity.content.is_a?(ActivityAssessment)
 
+          
+          
         # Chapter Status and Difficulty Fit
         @chapter_of_activity = @activity.chapter
 
@@ -52,6 +54,9 @@ class ActivitiesController < ApplicationController
       end
 
       enrollment = current_user.get_enrollment(@activity.course)
+      enrollment.current_chapter = @chapter_of_activity.id
+      enrollment.save
+      
       status = ActivityStatus.new(is_completed: true, course_enrollment: enrollment, activity: @activity, status: success_status)
       status.save
       if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)

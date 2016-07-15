@@ -24,7 +24,7 @@ class Activity < ActiveRecord::Base
     association_foreign_key: :tail_id,
     uniq: true
 
-  validates :name, :shortname, :chapter, presence: true
+  validates :name, :shortname, :difficulty, :chapter, presence: true
   validates :levelpoints, numericality: {greater_than_or_equal_to: 0}
 
   validate :validate_tier

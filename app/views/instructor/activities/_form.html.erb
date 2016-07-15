@@ -28,6 +28,11 @@
         <%= f.label :levelpoints %><br>
         <%= f.number_field :levelpoints, class: "form-control" %>
       </div>
+      <div class="form-group">
+        <%= f.label :difficulty %><br>
+        <%= f.number_field :difficulty, class: "form-control" %>
+      </div>
+
 
       <%= f.fields_for :content do |content_form| %>
         <% case @activity.content_type %>
