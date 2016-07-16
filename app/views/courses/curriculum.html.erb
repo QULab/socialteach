@@ -15,7 +15,9 @@
   <div class="row">
     <div class="col-md-3">
       <%- @course.chapters.each do |chapter| %>
-        <%= link_to curriculum_course_path(@course, chapter: chapter.id), class: ["thumbnail", ("alert-info" if chapter == @active_chapter)] do %>
+        <%= link_to curriculum_course_path(@course, chapter: chapter.id),
+                    class: ["thumbnail ", ("alert-info" if chapter == @active_chapter),
+                                          ("alert-success" if chapter.completed?(current_user))] do %>
           <i class="fa fa-3x fa-check-circle"></i>
           <i class="fa fa-3x fa-question-circle"></i>
           <i class="fa fa-3x fa-times-circle"></i>
