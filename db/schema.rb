@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(version: 20160715192611) do
     t.integer  "sash_id"
     t.integer  "level",              default: 0
     t.integer  "level_id"
-    t.integer  "current_chapter"
+    t.integer  "current_chapter_id"
   end
 
   add_index "course_enrollments", ["course_id"], name: "index_course_enrollments_on_course_id"
