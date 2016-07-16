@@ -4,6 +4,7 @@ class CourseEnrollment < ActiveRecord::Base
   belongs_to :user
   belongs_to :course
   has_many :activity_statuses
+  has_many :chapter_statuses
   belongs_to :current_chapter, class_name: 'Chapter', foreign_key: 'current_chapter_id'
 
   belongs_to :level

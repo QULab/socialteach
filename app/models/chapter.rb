@@ -3,6 +3,7 @@ class Chapter < ActiveRecord::Base
   belongs_to :course
   has_many :activities
   has_many :course_enrollments, foreign_key: "current_chapter_id"
+  has_many :chapter_statuses
 
   has_and_belongs_to_many :successors,
     class_name: 'Chapter',

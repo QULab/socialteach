@@ -12,6 +12,8 @@ class ActivitiesController < ApplicationController
   def complete
       success_status = ActivityStatus.successfull
 
+      enrollment = current_user.get_enrollment(@activity.course)
+
       if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)
         questionnaire = @activity.content.questionnaire
         user_id = current_user.id
@@ -34,27 +36,24 @@ class ActivitiesController < ApplicationController
         end
         success_status = ActivityStatus.failed unless cquestionnaire.passed? || @activity.content.is_a?(ActivityAssessment)
 
-
-
         # Chapter Status and Difficulty Fit
-        @chapter_of_activity = @activity.chapter
+        activity_chapter = @activity.chapter
 
         # retrieve chapterStatus of chapter
-        @chapter_status = ChapterStatus.find_by(chapter_id: @chapter_of_activity.id)
+        chapter_status = enrollment.chapter_statuses.find_by(chapter: activity_chapter)
 
         # returns a value according to the ruleset
         adaption_value = difficulty_adaption_ruleset(cquestionnaire.score)
 
         # assign calculated adaption value to chapterStatus
-        old_adaption_value = @chapter_status.difficultyFit
+        old_adaption_value = chapter_status.difficultyFit
         new_adaption_value = old_adaption_value + adaption_value
         logger.debug "New difficulty adaption value: #{new_adaption_value}"
-        @chapter_status.difficultyFit = new_adaption_value
-        @chapter_status.save
+        chapter_status.difficultyFit = new_adaption_value
+        chapter_status.save
       end
 
-      enrollment = current_user.get_enrollment(@activity.course)
-      enrollment.current_chapter = @chapter_of_activity
+      enrollment.current_chapter = activity_chapter
       enrollment.save
 
       status = ActivityStatus.new(is_completed: true, course_enrollment: enrollment, activity: @activity, status: success_status)

@@ -148,9 +148,10 @@ ActiveRecord::Schema.define(version: 20160715192611) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.float    "difficultyFit",        default: 0.0
-    t.integer  "chapter_id",           default: 0
+    t.integer  "chapter_id"
   end
 
+  add_index "chapter_statuses", ["chapter_id"], name: "index_chapter_statuses_on_chapter_id"
   add_index "chapter_statuses", ["course_enrollment_id"], name: "index_chapter_statuses_on_course_enrollment_id"
 
   create_table "chapters", force: :cascade do |t|
