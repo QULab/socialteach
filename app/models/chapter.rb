@@ -46,6 +46,16 @@ class Chapter < ActiveRecord::Base
     course_chapters
   end
 
+  # whether the given user completed all actvities of the chapter
+  def completed?(user)
+    course_enrollment = self.course.course_enrollments.find_by(user: user)
+
+    self.activities.all? do |activity|
+      statuses = activity.activity_statuses
+      statuses.exists?(course_enrollment: course_enrollment) &&
+        statuses.find_by(course_enrollment: course_enrollment).is_completed
+    end
+  end
 
   private
 
@@ -77,5 +87,4 @@ class Chapter < ActiveRecord::Base
       end
     end
   end
-
 end
