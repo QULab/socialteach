@@ -25,6 +25,8 @@ set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
 set :keep_assets, 2
 
+set :sidekiq_queue, ['weeklymailer', 'remindermailer']
+
 ## Defaults:
 # set :scm,           :git
 set :branch,        ENV['BRANCH'] || :master
