@@ -14,23 +14,26 @@
 
   <div class="row">
     <div class="col-md-3">
-      <%- @course.chapters.each do |chapter| %>
-        <%= link_to curriculum_course_path(@course, chapter: chapter.id),
-                    class: ["thumbnail ", ("alert-info" if chapter == @active_chapter),
-                                          ("alert-success" if chapter.completed?(current_user))] do %>
-          <% if chapter.completed?(current_user) %>
-            <i class="fa fa-3x fa-check" style="float: right"></i>
-          <% end %>
-          <div class="caption">
-            <h3>
-              <%= chapter.name %>
-            </h3>
-            <p>
-              <%= chapter.description %>
-            </p>
-          </div>
+      <div class="list-group">
+        <%- @course.chapters.each do |chapter| %>
+          <%= link_to curriculum_course_path(@course, chapter: chapter.id),
+                      class: ["list-group-item ", ("list-group-item-info" if chapter == @active_chapter),
+                                                  ("list-group-item-success" if chapter.completed?(current_user))] do %>
+            <% if chapter.completed?(current_user) %>
+              <i class="fa fa-3x fa-check" style="float: right"></i>
+            <% end %>
+            <div class="caption">
+              <h3>
+                <%= chapter.name %>
+              </h3>
+              <p>
+                <%= chapter.description %>
+              </p>
+            </div>
+          <%- end %>
+          <br />
         <%- end %>
-      <%- end %>
+      </div>
     </div>
 
     <div class="col-md-9">
