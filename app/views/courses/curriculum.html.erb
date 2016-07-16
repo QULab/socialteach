@@ -18,6 +18,9 @@
         <%= link_to curriculum_course_path(@course, chapter: chapter.id),
                     class: ["thumbnail ", ("alert-info" if chapter == @active_chapter),
                                           ("alert-success" if chapter.completed?(current_user))] do %>
+          <% if chapter.completed?(current_user) %>
+            <i class="fa fa-3x fa-check" style="float: right"></i>
+          <% end %>
           <i class="fa fa-3x fa-check-circle"></i>
           <i class="fa fa-3x fa-question-circle"></i>
           <i class="fa fa-3x fa-times-circle"></i>
