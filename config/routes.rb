@@ -1,5 +1,9 @@
   Rails.application.routes.draw do
 
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+
+
   resources :friendships
 
   resources :levels
@@ -15,6 +19,7 @@
 
   # resources :chapters, only: [:show]
 
+  get 'activities/:id/result' => 'activities#result', format: [:html], as: 'activity_result'
   resources :activities, only: [:show] do
     member do
       post 'complete'
@@ -33,7 +38,7 @@
   namespace :instructor do
     # index shows all courses the current user can modify
     resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html]
-    resources :chapters, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
+    resources :chapters, only: [:edit, :destroy, :update, :new, :create], format: [:html]
     resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html] do
       collection do
         post 'markdown'
