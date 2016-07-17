@@ -1,6 +1,7 @@
 class Course < ActiveRecord::Base
 
-  after_save :create_default_feedback, :create_default_chapter_and_assessment
+  after_save :create_default_feedback
+  after_create :create_default_chapter_and_assessment
 
   validate :cannot_unpublish_if_users_enrolled
 
