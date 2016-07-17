@@ -13,6 +13,10 @@ class ActivitiesController < ApplicationController
   def complete
       success_status = ActivityStatus.successfull
 
+      activity_chapter = @activity.chapter
+      # retrieve chapterStatus of chapter
+      chapter_status = @enrollment.chapter_statuses.find_by(chapter: activity_chapter)
+
       if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)
         questionnaire = @activity.content.questionnaire
         user_id = current_user.id
@@ -36,11 +40,6 @@ class ActivitiesController < ApplicationController
         success_status = ActivityStatus.failed unless cquestionnaire.passed? || @activity.content.is_a?(ActivityAssessment)
 
         # Chapter Status and Difficulty Fit
-        activity_chapter = @activity.chapter
-
-        # retrieve chapterStatus of chapter
-        chapter_status = @enrollment.chapter_statuses.find_by(chapter: activity_chapter)
-
         # returns a value according to the ruleset
         adaption_value = difficulty_adaption_ruleset(cquestionnaire.score)
 
@@ -56,6 +55,13 @@ class ActivitiesController < ApplicationController
 
       status = ActivityStatus.new(is_completed: true, course_enrollment: @enrollment, activity: @activity, status: success_status)
       status.save
+
+      # Complete Chapter if all activities where completed
+      if activity_chapter.completed?(current_user)
+        chapter_status.finished = true
+        chapter_status.save
+      end
+
       if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)
         redirect_to activity_result_path(@activity) , notice: 'Congratulations, you finished this Activity!'
       else
