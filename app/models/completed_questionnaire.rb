@@ -17,4 +17,8 @@ class CompletedQuestionnaire < ActiveRecord::Base
   def passed?
     self.score > 0.5
   end
+
+  def propose_chapter_skip?
+    self.score > 0.95
+  end
 end
