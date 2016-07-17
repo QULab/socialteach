@@ -1,5 +1,7 @@
 class Chapter < ActiveRecord::Base
 
+  after_create :create_chapter_statuses
+
   belongs_to :course
   has_many :activities
   has_many :course_enrollments, foreign_key: "current_chapter_id"
@@ -76,7 +78,6 @@ class Chapter < ActiveRecord::Base
     end
   end
 
-
   private
 
   def validate_predecessors
@@ -107,4 +108,14 @@ class Chapter < ActiveRecord::Base
       end
     end
   end
+
+  def create_chapter_statuses
+    course = self.course
+    if course.published
+      course.course_enrollments.each do |enrollment|
+        ChapterStatus.create(course_enrollment: enrollment, chapter: self)
+      end
+    end
+  end
+
 end
