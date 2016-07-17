@@ -62,6 +62,22 @@ class Chapter < ActiveRecord::Base
     self.chapter_statuses.find_by(course_enrollment: course_enrollment)
   end
 
+  ##
+  # checks if this chapter is locked for the given user
+  # locked chapters are those, where the user has not completed the necessary requirements
+  def locked?(user)
+    predecessors = self.predecessors.to_a
+    enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", user.id, self.course.id).first
+    # if there are no predecessors, the chapter is not locked
+    locked = predecessors.present?
+    completed_predecessors = enrollment.chapter_statuses.where("finished = ? OR skip = ?", true, true).count
+    if completed_predecessors == predecessors.size
+      locked = false
+    end
+    locked
+  end
+
+
   private
 
   def validate_predecessors

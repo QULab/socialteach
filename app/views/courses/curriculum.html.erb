@@ -17,8 +17,10 @@
       <div class="list-group">
         <%- @course.chapters.each do |chapter| %>
           <% status = chapter.get_status(current_user) %>
+          <% locked = status.finished || status.skip ? false : chapter.locked?(current_user) %>
           <%= link_to curriculum_course_path(@course, chapter: chapter.id),
                       class: ["list-group-item ", ("list-group-item-info" if chapter == @active_chapter),
+                                                  ("disabled" if locked),
                                                   ("list-group-item-success" if status.finished || status.skip)] do %>
             <% if status.finished %>
               <i class="fa fa-3x fa-check" style="float: right"></i>
