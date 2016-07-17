@@ -83,6 +83,7 @@ group :development do
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
+  gem 'capistrano-sidekiq', require: false
 
 end
 
@@ -90,4 +91,8 @@ group :test do
     gem 'minitest-reporters'
     gem 'minitest'
 
+end
+
+group :production do
+  gem 'skylight', '0.10.5'
 end

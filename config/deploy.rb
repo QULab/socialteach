@@ -18,10 +18,14 @@ set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
 set :puma_pid,        "#{shared_path}/tmp/pids/puma.pid"
 set :puma_access_log, "#{release_path}/log/puma.error.log"
 set :puma_error_log,  "#{release_path}/log/puma.access.log"
+set :puma_threads,    [0, 16]
 set :ssh_options,     { forward_agent: true, user: fetch(:user) }
 set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true  # Change to false when not using ActiveRecord
+set :keep_assets, 2
+
+set :sidekiq_queue, ['weeklymailer', 'remindermailer']
 
 ## Defaults:
 # set :scm,           :git
