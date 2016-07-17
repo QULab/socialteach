@@ -69,12 +69,11 @@ class Chapter < ActiveRecord::Base
     predecessors = self.predecessors.to_a
     enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", user.id, self.course.id).first
     # if there are no predecessors, the chapter is not locked
-    locked = predecessors.present?
-    completed_predecessors = enrollment.chapter_statuses.where("finished = ? OR skip = ?", true, true).count
-    if completed_predecessors == predecessors.size
-      locked = false
+    return false unless predecessors.present?
+    predecessors.none? do |predecessor|
+      status = predecessor.get_status(user)
+      status.finished || status.skip
     end
-    locked
   end
 
 
