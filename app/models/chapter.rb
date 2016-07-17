@@ -57,6 +57,11 @@ class Chapter < ActiveRecord::Base
     end
   end
 
+  def get_status(user)
+    course_enrollment = self.course.course_enrollments.find_by(user: user)
+    self.chapter_statuses.find_by(course_enrollment: course_enrollment)
+  end
+
   private
 
   def validate_predecessors
