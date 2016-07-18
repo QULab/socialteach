@@ -12,6 +12,12 @@ class Course < ActiveRecord::Base
 
     has_many :activities, through: :chapters
 
+    ##
+    # returns the user who created this course as object
+    def creator
+      creator = User.find_by_id(self.creator_id)
+    end
+
     # returns the number of enrollments for this course
     def get_number_of_enrollments
       CourseEnrollment.where("course_id = ?", self.id).count

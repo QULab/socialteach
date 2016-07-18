@@ -1,14 +1,101 @@
 <% #This part is for people not enrolled in the course %>
 <% if (not user_signed_in?) or (not current_user.is_enrolled?(@course)) %>
-  <p>
-    <strong>Name:</strong>
-    <%= @course.name %>
-  </p>
 
-  <p>
-    <strong>Description:</strong>
-    <%= @course.description %>
-  </p>
+<div class="container">
+  <div class="row">
+    <div class="page-header">
+      <h1>
+        <%= @course.name %>
+        <small> Created by <%= @course.creator.username %> </small>
+      </h1>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <%= @course.description%>
+        </div>
+      </div>
+      <%= link_to "Take This Course", course_enrollments_path(:course_enrollment =>
+                                                              {:user_id => current_user.id,
+                                                               :course_id => @course.id ,
+                                                               :is_visible => true,
+                                                               :is_visible_friends => true}),
+                                                               :method => :post,
+                                                               class: "btn btn-primary btn-lg" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="page-header">
+        <h3>
+          <i class="fa fa-1x fa-book"></i>
+          Course Content
+        </h3>
+      </div>
+        <ul class="list-group">
+          <%- chapters = @course.chapters.order("tier ASC") %>
+          <%- chapters.each do |chapter| %>
+            <li class="list-group-item">
+              <%= chapter.name %>
+          </li>
+          <%- end %>
+        </ul>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            Author
+          </h3>
+        </div>
+        <div class="panel-body">
+          <h5>
+            <%= @course.creator.username %>
+          </h5>
+          <div class="media">
+            <div class="media-middle">
+              <%= avatar_for(@course.creator, {size: 200}) %>
+            </div>
+          </div>
+          <%= link_to "View Profile", user_path(@course.creator), class: "btn btn-primary", style: "margin-top: 5px" %>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            Statistics
+          </h3>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <span class="badge">
+                <%= @course.get_number_of_enrollments %>
+              </span>
+              Enrolled Users
+            </li>
+            <li class="list-group-item">
+              <span class="badge">
+                <%= @course.get_number_of_completed_enrollments %>
+              </span>
+              Users who finished this Course
+            </li>
+            <li class="list-group-item">
+              <span class="badge">
+                <%= @course.get_number_of_new_enrollments(30) %>
+              </span>
+              New Users in the last 30 days
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <%= render 'shared/comments', commentable: @course %>
+  </div>
+</div>
+
 <%- else %>
   <%= render 'show_enrolled', course: @course %>
 <% end -%>
