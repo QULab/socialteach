@@ -31,6 +31,11 @@ class CoursesController < BaseController
 
   def curriculum
     authenticate_user!
+    # check for enrollment
+    unless current_user.is_enrolled?(@course)
+      redirect_to courses_path, notice: 'You are not enrolled in this course.'
+    end
+
     @active_chapter = Chapter.find_by_id(params[:chapter]) || @course.chapters.first
     set_enrollment(current_user)
   end
