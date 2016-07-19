@@ -5,7 +5,8 @@ class CourseBadgesController < ApplicationController
   # GET /course_badges
   # GET /course_badges.json
   def index
-    @course_badges = CourseBadge.where(course_id: params[:course_id])
+    @course_badges_finished = current_user.get_enrollment(Course.where(id: params[:course_id]).first).course_badges
+    @course_badges_unfinished = CourseBadge.where(course_id: params[:course_id]) - @course_badges_finished
   end
 
   # GET /course_badges/1
