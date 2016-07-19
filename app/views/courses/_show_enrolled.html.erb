@@ -34,7 +34,7 @@
     </h4>
     <div class="list-group">
       <%- #TODO use a real function to get recommended activities %>
-      <%- course.chapters.first.activities.each do |act| %>
+      <%- enrollment.recommended_activities.each do |act| %>
         <%= link_to activity_path(act), class: "list-group-item" do %>
           <h4 class="list-group-item-heading">
             <i class="fa <%= activity_icon(act) =%>"></i>
