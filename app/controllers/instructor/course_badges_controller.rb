@@ -78,6 +78,6 @@ class Instructor::CourseBadgesController < Instructor::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_badge_params
-      params.require(:course_badge).permit(:badge, :description, :course_id, unlock_course_badges_attributes: [:activity])
+      params.require(:course_badge).permit(:badge, :description, :course_id, unlock_course_badges_attributes: [:_destroy, :activity_id, :id])
     end
 end

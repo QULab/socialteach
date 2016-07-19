@@ -2,6 +2,7 @@ class Activity < ActiveRecord::Base
 	belongs_to :chapter
 	has_many :activity_statuses
   belongs_to :level
+  has_many :unlock_course_badges, :dependent => :delete_all
 
   belongs_to :content, polymorphic: true
   accepts_nested_attributes_for :content

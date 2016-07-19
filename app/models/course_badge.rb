@@ -1,8 +1,8 @@
 class CourseBadge < ActiveRecord::Base
 	belongs_to :course
 	belongs_to :creator, :class_name => 'User', :foreign_key => 'user_id'
-	has_many :unlock_course_badges
-	has_many :owned_badges
+	has_many :unlock_course_badges, :dependent => :delete_all
+	has_many :owned_badges, :dependent => :delete_all
 	has_many :activities, through: :unlock_course_badges
 	has_many :users, through: :owned_badges
 

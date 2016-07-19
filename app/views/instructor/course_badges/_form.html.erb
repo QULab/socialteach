@@ -20,6 +20,7 @@
     <%= f.label :Description %><br>
     <%= f.text_field :description , class: "form-control"%>
   </div>
+  <%= f.label :Activities_needed_for_unlocking_badge %><br>
   <%= f.fields_for :unlock_course_badges do |ff| %>
     <div>
       <%= ff.check_box :_destroy,

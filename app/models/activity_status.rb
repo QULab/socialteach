@@ -4,19 +4,34 @@ class ActivityStatus < ActiveRecord::Base
 	belongs_to :learningpoints, :class_name => "Merit::Score::Point"
 	belongs_to :levelpoints, :class_name => "Merit::Score::Point"
 
-	after_save :create_points
-	after_update :create_points
+	after_save :create_points_badges
+	after_update :create_points_badges
 
-	def create_points
+	def create_points_badges
 		if self.is_completed?
 			if self.learningpoints_id == nil
+				user = self.course_enrollment.user
 				if self.status == 1
 					points = (self.activity.level.level.to_f/self.course_enrollment.level.level.to_f * self.activity.levelpoints).to_i
 					levelpoints = self.course_enrollment.add_points(points, category: "Levelpoints")
+					self.activity.unlock_course_badges.each do |badge|
+						course_badge = badge.course_badge
+						if self.course_enrollment.course_badges.exclude?(course_badge)
+							all_completed = true
+							course_badge.unlock_course_badges.each do |unlock|
+								if !unlock.activity.activity_statuses.exists?(course_enrollment: self.course_enrollment)
+									all_completed = false
+								end
+							end
+							if all_completed
+								OwnedBadge.create(course_enrollment: self.course_enrollment, course_badge: course_badge)
+							end
+						end
+					end
 				else
 					levelpoints = self.course_enrollment.add_points(0, category: "Levelpoints")
 				end
-				learningpoints = self.course_enrollment.user.add_points(1,category: "Learningpoints")
+				learningpoints = user.add_points(1,category: "Learningpoints")
 				self.update(learningpoints: learningpoints, levelpoints: levelpoints)
 
 				self.course_enrollment.set_level
