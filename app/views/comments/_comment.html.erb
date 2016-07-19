@@ -2,6 +2,21 @@
   <h2><%= comment.title %></h2>
   <p class="text-muted"><%= comment.root? ? "Started by" : "Replied by" %> <strong><%= comment.author %></strong> on
     <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %></p>
+  <p>
+    <%= link_to like_comment_path(comment), method: :put do %>
+      <button type="button" class="btn btn-info" aria-label="Left Align">
+        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+        <span class="badge"><%= comment.get_upvotes.size %></span>
+      </button>
+    <% end %>
+
+    <%= link_to unlike_comment_path(comment), class: "like", method: :put do %>
+      <button type="button" class="btn btn-info" aria-label="Left Align">
+        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+        <span class="badge"><%= comment.get_downvotes.size %></span>
+      </button>
+    <% end %>
+  </p>
 
   <blockquote>
     <p><%= comment.body %></p>

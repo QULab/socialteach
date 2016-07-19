@@ -49,6 +49,9 @@ gem "mini_magick"
 #gem for nested comments
 gem 'closure_tree'
 
+#gem for votes
+gem 'acts_as_votable', '~> 0.10.0'
+
 #for scheduling tasks like update emails every week
 gem 'rufus-scheduler', '~> 3.2'
 

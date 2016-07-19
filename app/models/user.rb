@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  acts_as_voter
+
   has_merit
 
   # Include default devise modules. Others available are:

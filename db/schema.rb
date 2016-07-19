@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712170749) do
+ActiveRecord::Schema.define(version: 20160718234606) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -165,15 +165,29 @@ ActiveRecord::Schema.define(version: 20160712170749) do
     t.string   "title"
     t.string   "author"
     t.text     "body"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.integer  "parent_id"
     t.integer  "author_id"
     t.integer  "course_id"
     t.integer  "activity_id"
+    t.integer  "cached_votes_total",      default: 0
+    t.integer  "cached_votes_score",      default: 0
+    t.integer  "cached_votes_up",         default: 0
+    t.integer  "cached_votes_down",       default: 0
+    t.integer  "cached_weighted_score",   default: 0
+    t.integer  "cached_weighted_total",   default: 0
+    t.float    "cached_weighted_average", default: 0.0
   end
 
   add_index "comments", ["activity_id"], name: "index_comments_on_activity_id"
+  add_index "comments", ["cached_votes_down"], name: "index_comments_on_cached_votes_down"
+  add_index "comments", ["cached_votes_score"], name: "index_comments_on_cached_votes_score"
+  add_index "comments", ["cached_votes_total"], name: "index_comments_on_cached_votes_total"
+  add_index "comments", ["cached_votes_up"], name: "index_comments_on_cached_votes_up"
+  add_index "comments", ["cached_weighted_average"], name: "index_comments_on_cached_weighted_average"
+  add_index "comments", ["cached_weighted_score"], name: "index_comments_on_cached_weighted_score"
+  add_index "comments", ["cached_weighted_total"], name: "index_comments_on_cached_weighted_total"
   add_index "comments", ["course_id"], name: "index_comments_on_course_id"
 
   create_table "completed_m_questions", force: :cascade do |t|
@@ -338,5 +352,20 @@ ActiveRecord::Schema.define(version: 20160712170749) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["username"], name: "index_users_on_username", unique: true
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "votable_id"
+    t.string   "votable_type"
+    t.integer  "voter_id"
+    t.string   "voter_type"
+    t.boolean  "vote_flag"
+    t.string   "vote_scope"
+    t.integer  "vote_weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "votes", ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
+  add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
 
 end

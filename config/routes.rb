@@ -1,6 +1,12 @@
   Rails.application.routes.draw do
 
-  resources :comments, only: [:index, :create]
+  resources :comments, only: [:index, :create] do
+    member do
+      put "like" => "comments#upvote"
+      put "unlike" => "comments#downvote"
+    end
+  end
+
   get '/comments/new/(:parent_id)', to: 'comments#new', as: :new_comment
   get 'comments' => 'comments#index'
 

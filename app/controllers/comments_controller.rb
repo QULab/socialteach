@@ -1,4 +1,7 @@
 class CommentsController < ApplicationController
+
+	before_action :set_comment, only:[:upvote, :downvote]
+
   def index
     @comments = Comment.hash_tree
   end
@@ -23,7 +26,24 @@ class CommentsController < ApplicationController
 	end
   end
 
+  #upvote_from user
+  #downvote_from user
+
+  def upvote
+  	@votingcomment.upvote_from current_user
+  	redirect_to comments_path
+  end
+
+  def downvote
+  	@votingcomment.downvote_from current_user
+  	redirect_to comments_path
+  end
+
   private
+
+  def set_comment
+  	@votingcomment = Comment.find(params[:id])
+  end
 
   def comment_params
     params.require(:comment).permit(:title, :body, :author, :author_id, :course_id, :activity_id)
