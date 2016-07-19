@@ -1,5 +1,5 @@
 <div class="well">
-<%= form_for(@path) do |f| %>
+<%= form_for(setup_course_badge(@path)) do |f| %>
   <% if @course_badge.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@course_badge.errors.count, "error") %> prohibited this course_badge from being saved:</h2>
@@ -20,6 +20,16 @@
     <%= f.label :Description %><br>
     <%= f.text_field :description , class: "form-control"%>
   </div>
+  <%= f.fields_for :unlock_course_badges do |ff| %>
+    <div>
+      <%= ff.check_box :_destroy,
+            {:checked => ff.object.persisted?},
+            '0', '1'
+      %>
+      <%= ff.label :_destroy, ff.object.activity.name %>
+      <%= ff.hidden_field :activity_id %>
+    </div>
+  <% end %>
   <div class="actions">
     <%= f.submit class: "btn btn-primary" %>
   </div>

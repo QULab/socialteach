@@ -16,6 +16,7 @@ class Instructor::CourseBadgesController < Instructor::BaseController
   def new
     @course_badge = Course.find(params[:course_id]).course_badges.build
     @path = [:instructor, @course_badge.course, @course_badge]
+    #puts @path
   end
 
   # GET /course_badges/1/edit
@@ -28,7 +29,8 @@ class Instructor::CourseBadgesController < Instructor::BaseController
   def create
     require_permission(Course.find(params[:course_id]))
     @course_badge = Course.find(params[:course_id]).course_badges.build(course_badge_params)
-    puts @course_badge.course_id
+    puts params
+    @path = [:instructor, @course_badge.course, @course_badge]
     respond_to do |format|
       if @course_badge.save
         format.html { redirect_to instructor_course_course_badges_path(@course_badge.course_id), notice: 'Course badge was successfully created.' }
@@ -44,6 +46,7 @@ class Instructor::CourseBadgesController < Instructor::BaseController
   # PATCH/PUT /course_badges/1.json
   def update
     require_permission(@course_badge.course)
+    @path = [:instructor, @course_badge]
     respond_to do |format|
       if @course_badge.update(course_badge_params)
         format.html { redirect_to instructor_course_course_badges_path(@course_badge.course_id), notice: 'Course badge was successfully updated.' }
@@ -75,6 +78,6 @@ class Instructor::CourseBadgesController < Instructor::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_badge_params
-      params.require(:course_badge).permit(:badge, :description, :course_id)
+      params.require(:course_badge).permit(:badge, :description, :course_id, unlock_course_badges_attributes: [:activity])
     end
 end
