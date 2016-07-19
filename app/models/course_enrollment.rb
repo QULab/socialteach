@@ -132,10 +132,11 @@ class CourseEnrollment < ActiveRecord::Base
                                                -activitiy.difficulty]}
   end
 
-  # activities of successors sorted by tier, difficulty
+  # activities of unlocked successors sorted by tier, difficulty
   def successor_activities(chapter)
     successor_activities = []
     chapter.successors.each do |successor|
+      next if successor.locked?(self.user)
       successor_activities += successor.activities
     end
     successor_activities.sort_by{|activity| [activity.tier, activity.difficulty]}
