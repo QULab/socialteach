@@ -1,7 +1,11 @@
 class Chapter < ActiveRecord::Base
 
+  after_create :create_chapter_statuses
+
   belongs_to :course
   has_many :activities
+  has_many :course_enrollments, foreign_key: "current_chapter_id"
+  has_many :chapter_statuses
 
   has_and_belongs_to_many :successors,
     class_name: 'Chapter',
@@ -44,6 +48,35 @@ class Chapter < ActiveRecord::Base
     course_chapters
   end
 
+  # whether the given user completed all actvities of the chapter
+  def completed?(user)
+    course_enrollment = self.course.course_enrollments.find_by(user: user)
+
+    self.activities.all? do |activity|
+      statuses = activity.activity_statuses
+      statuses.exists?(course_enrollment: course_enrollment) &&
+        statuses.find_by(course_enrollment: course_enrollment).is_completed
+    end
+  end
+
+  def get_status(user)
+    course_enrollment = self.course.course_enrollments.find_by(user: user)
+    self.chapter_statuses.find_by(course_enrollment: course_enrollment)
+  end
+
+  ##
+  # checks if this chapter is locked for the given user
+  # locked chapters are those, where the user has not completed the necessary requirements
+  def locked?(user)
+    predecessors = self.predecessors.to_a
+    enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", user.id, self.course.id).first
+    # if there are no predecessors, the chapter is not locked
+    return false unless predecessors.present?
+    predecessors.none? do |predecessor|
+      status = predecessor.get_status(user)
+      status.finished || status.skip
+    end
+  end
 
   private
 
@@ -72,6 +105,15 @@ class Chapter < ActiveRecord::Base
     if !max_pred.nil?
       if max_pred.tier.present?
         self.tier = max_pred.tier + 1
+      end
+    end
+  end
+
+  def create_chapter_statuses
+    course = self.course
+    if course.published
+      course.course_enrollments.each do |enrollment|
+        ChapterStatus.create(course_enrollment: enrollment, chapter: self)
       end
     end
   end

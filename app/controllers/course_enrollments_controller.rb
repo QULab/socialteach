@@ -26,8 +26,17 @@ class CourseEnrollmentsController < ApplicationController
   # Create a new enrollment, if the user is not already enrolled in that course
   def create
     course_id = course_enrollment_params[:course_id]
+
     unless current_user.is_enrolled?(course_id)
       @course_enrollment = CourseEnrollment.new(course_enrollment_params)
+
+      @course = Course.where(id: course_id).first
+      course_chapters = @course.chapters
+
+      course_chapters.each do |chapter|
+        ChapterStatus.create(course_enrollment: @course_enrollment, chapter: chapter)
+      end
+
       respond_to do |format|
         if @course_enrollment.save
           format.html { redirect_to course_path(course_id), notice: 'Congratulations, you are now enrolled in this Course' }

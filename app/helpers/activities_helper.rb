@@ -40,4 +40,8 @@ module ActivitiesHelper
   def given_answer?(completed_question, answer)
     completed_question.answers.include?(answer)
   end
+
+  def calc_rounded_percentage(score)
+    (score * 100).round(2)
+  end
 end

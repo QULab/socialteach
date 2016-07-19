@@ -6,14 +6,19 @@ class CompletedQuestionnaire < ActiveRecord::Base
 
   def score
     count = self.completed_m_questions.count
+    return 1 if count == 0
     correct = 0
     self.completed_m_questions.each do |question|
       correct += 1 if question.correct?
     end
-    100 * correct / count
+    correct.to_f / count.to_f
   end
 
   def passed?
-    self.score > 50
+    self.score > 0.5
+  end
+
+  def propose_chapter_skip?
+    self.score > 0.95
   end
 end

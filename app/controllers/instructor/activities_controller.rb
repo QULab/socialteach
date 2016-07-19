@@ -117,7 +117,7 @@ class Instructor::ActivitiesController < Instructor::BaseController
 
     def activity_params
       #params.require(:activity).permit!
-      params.require(:activity).permit(:name, :levelpoints, :shortname, :tier, :chapter_id, :question, :content_type, :predecessor_ids => [])
+      params.require(:activity).permit(:name, :levelpoints, :shortname, :tier, :chapter_id, :question, :content_type, :difficulty, :predecessor_ids => [])
     end
 
     def content_params

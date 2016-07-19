@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708164054) do
+ActiveRecord::Schema.define(version: 20160715192611) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -32,13 +32,14 @@ ActiveRecord::Schema.define(version: 20160708164054) do
     t.string   "name"
     t.integer  "levelpoints"
     t.integer  "chapter_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "tier"
     t.text     "shortname"
-    t.integer  "content_id",   null: false
-    t.string   "content_type", null: false
+    t.integer  "content_id",               null: false
+    t.string   "content_type",             null: false
     t.integer  "level_id"
+    t.integer  "difficulty",   default: 0, null: false
   end
 
   add_index "activities", ["chapter_id"], name: "index_activities_on_chapter_id"
@@ -140,6 +141,19 @@ ActiveRecord::Schema.define(version: 20160708164054) do
   add_index "chapter_edges", ["head_id"], name: "index_chapter_edges_on_head_id"
   add_index "chapter_edges", ["tail_id"], name: "index_chapter_edges_on_tail_id"
 
+  create_table "chapter_statuses", force: :cascade do |t|
+    t.boolean  "skip",                 default: false
+    t.boolean  "finished",             default: false
+    t.integer  "course_enrollment_id"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.float    "difficultyFit",        default: 0.0
+    t.integer  "chapter_id"
+  end
+
+  add_index "chapter_statuses", ["chapter_id"], name: "index_chapter_statuses_on_chapter_id"
+  add_index "chapter_statuses", ["course_enrollment_id"], name: "index_chapter_statuses_on_course_enrollment_id"
+
   create_table "chapters", force: :cascade do |t|
     t.string   "name"
     t.string   "shortname"
@@ -185,6 +199,7 @@ ActiveRecord::Schema.define(version: 20160708164054) do
     t.integer  "sash_id"
     t.integer  "level",              default: 0
     t.integer  "level_id"
+    t.integer  "current_chapter_id"
   end
 
   add_index "course_enrollments", ["course_id"], name: "index_course_enrollments_on_course_id"

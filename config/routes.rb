@@ -1,5 +1,7 @@
   Rails.application.routes.draw do
 
+  resources :chapter_statuses
+
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
 
@@ -33,7 +35,6 @@
   end
   get 'my_courses' => 'courses#index_enrolled', format: [:html]
 
-
   # Routes that are only for instructors
   namespace :instructor do
     # index shows all courses the current user can modify
@@ -66,6 +67,7 @@
 
   post 'activities/:id/feedback' => 'activities#feedback', format: [:json]
   post 'courses/:id/feedback' => 'courses#feedback', format: [:json]
+  put 'chapters/:id/skip' => 'chapters#skip', format: [:html], as: 'chapter_skip'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

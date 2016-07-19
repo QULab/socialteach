@@ -2,11 +2,11 @@
   <div class="panel-body">
     <legend>
       <% if completed_questionnaire.questionnaire.qu_container.is_a?(ActivityAssessment) %>
-        <span class="label label-warning label-pill pull-right">Completed with <%= completed_questionnaire.score%>%</span>
+        <span class="label label-warning label-pill pull-right">Completed with <%= calc_rounded_percentage(completed_questionnaire.score) %>%</span>
       <% elsif completed_questionnaire.passed? %>
-        <span class="label label-success label-pill pull-right">Passed with <%= completed_questionnaire.score%>%</span>
+        <span class="label label-success label-pill pull-right">Passed with <%= calc_rounded_percentage(completed_questionnaire.score) %>%</span>
       <% else %>
-        <span class="label label-danger label-pill pull-right">Failed with <%= completed_questionnaire.score %>%</span>
+        <span class="label label-danger label-pill pull-right">Failed with <%= calc_rounded_percentage(completed_questionnaire.score) %>%</span>
       <% end %>
       Your Last Results
     </legend>
@@ -47,4 +47,12 @@
     <% end %>
   </div>
 </div>
+<% if completed_questionnaire.questionnaire.qu_container.is_a?(ActivityAssessment) && completed_questionnaire.propose_chapter_skip? %>
+  <div class="panel panel-warning">
+    <div class="panel-body bg-warning text-warning">
+      You answered 95% or more questions correctly. Looks like you already know what will be teached in this chapter.
+      <%= link_to 'Skip Chapter', chapter_skip_path(@activity.chapter), method: :put, class: "btn btn-danger pull-right"%><br />
+    </div>
+  </div>
+<% end %>
 <%= link_to 'Try Again', activity_path(@activity), class: "btn btn-primary" %>

@@ -36,8 +36,9 @@ class CoursesController < BaseController
       redirect_to courses_path, notice: 'You are not enrolled in this course.'
     end
 
-    @active_chapter = Chapter.find_by_id(params[:chapter]) || @course.chapters.first
     set_enrollment(current_user)
+    current_chapter = Chapter.find_by_id(@enrollment[:current_chapter_id])
+    @active_chapter = Chapter.find_by_id(params[:chapter]) || current_chapter || @course.chapters.first
   end
 
   # POST /courses/1/feedback
