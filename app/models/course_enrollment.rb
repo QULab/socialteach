@@ -27,6 +27,7 @@ class CourseEnrollment < ActiveRecord::Base
   end
 
   def recommended_activities
+    recommendation_num = 5
 
     chapter = unless self.current_chapter.nil?
                 self.current_chapter
@@ -46,9 +47,9 @@ class CourseEnrollment < ActiveRecord::Base
       recommended += unfinished_activities(chapter)
 
       # additionally recommend activities of following chapter(s) if not enough activities
-      recommended += successor_activities(chapter) if recommended.length < 5
+      recommended += successor_activities(chapter) if recommended.length < recommendation_num
       successors = chapter.successors
-      while recommended.length < 5 && !successors.empty? do
+      while recommended.length < recommendation_num && !successors.empty? do
         next_successors = []
         successors.each do |successor|
           recommended += successor_activities(successor)
@@ -62,7 +63,7 @@ class CourseEnrollment < ActiveRecord::Base
       recommended += repeatable_activities(chapter)
       # Recommend from earlier chapters if not enough activities
       predecessors = chapter.predecessors
-        while recommended.length < 5 && !predecessors.empty?
+        while recommended.length < recommendation_num && !predecessors.empty?
           next_predecessors = []
           predecessors.each do |predecessor|
             recommended += unfinished_activities(predecessor)
@@ -78,7 +79,7 @@ class CourseEnrollment < ActiveRecord::Base
     when 0.9..Float::INFINITY
       recommended += successor_activities(chapter)
       successors = chapter.successors
-      while recommended.length < 5 && !successors.empty?
+      while recommended.length < recommendation_num && !successors.empty?
         next_successors = []
         successors.each do |successor|
           recommended += successor_activities(successor)
@@ -87,7 +88,7 @@ class CourseEnrollment < ActiveRecord::Base
         successors = next_successors
       end
     end
-    recommended
+    recommended.slice(0, recommendation_num).uniq
   end
 
   private
