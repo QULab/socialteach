@@ -1,4 +1,4 @@
-<%= form_for(@comment) do |f| %>
+<%= form_for([@course,@comment]) do |f| %>
   <% if @comment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
@@ -12,6 +12,7 @@
   <% end %>
 
   <%= f.hidden_field :parent_id %>
+  <%= f.hidden_field :course_id %>
 
   <div class="form-group">
     <%= f.label :title %>

@@ -6,6 +6,7 @@ class Course < ActiveRecord::Base
   has_many :course_enrollments
   belongs_to :users
   has_one :feedback, as: :commentable
+  has_many :comments, dependent: :destroy
 
     has_many :activities, through: :chapters
 
