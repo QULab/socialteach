@@ -18,6 +18,7 @@ class CommentsController < ApplicationController
 	end
 
 	if @comment.save
+		current_user.add_points(1,category: "Socialpoints")
 		flash[:success] = 'Your comment was successfully added!'
 		redirect_to course_path(Course.find(params[:course_id]))
 	else
