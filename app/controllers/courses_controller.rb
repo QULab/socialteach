@@ -11,7 +11,6 @@ class CoursesController < BaseController
   # GET /courses/1.json
   def show
     if @course.published
-      @comments = Comment.hash_tree
       render :show
     else
       redirect_to courses_path

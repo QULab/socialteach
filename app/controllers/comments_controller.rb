@@ -3,14 +3,16 @@ class CommentsController < ApplicationController
 	before_action :set_comment, only:[:upvote, :downvote]
 
   def index
-    @comments = Comment.hash_tree
+    @comments = Comment.where(course_id: params[:course_id]).hash_tree
   end
 
   def new
-  	@comment = Comment.new(parent_id: params[:parent_id])
+  	@comment = Comment.new(parent_id: params[:parent_id], course_id: params[:course_id])
+  	@course = Course.find(params[:course_id])
   end
 
   def create
+  	puts params
 	if params[:comment][:parent_id].to_i > 0
 		parent = Comment.find_by_id(params[:comment].delete(:parent_id))
 		@comment = parent.children.build(comment_params)
@@ -19,8 +21,9 @@ class CommentsController < ApplicationController
 	end
 
 	if @comment.save
+		current_user.add_points(1,category: "Socialpoints")
 		flash[:success] = 'Your comment was successfully added!'
-		redirect_to comments_path
+		redirect_to course_path(Course.find(params[:course_id]))
 	else
 		render 'new'
 	end

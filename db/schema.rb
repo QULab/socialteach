@@ -106,20 +106,11 @@ ActiveRecord::Schema.define(version: 20160718234606) do
   create_table "answers", force: :cascade do |t|
     t.integer  "m_question_id"
     t.text     "text"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.boolean  "correct",       default: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "answers", ["m_question_id"], name: "index_answers_on_m_question_id"
-
-  create_table "answers_completed_m_questions", id: false, force: :cascade do |t|
-    t.integer "completed_m_question_id", null: false
-    t.integer "answer_id",               null: false
-  end
-
-  add_index "answers_completed_m_questions", ["answer_id", "completed_m_question_id"], name: "i_answers_c_questions_on_answer_id_and_c_question_id"
-  add_index "answers_completed_m_questions", ["completed_m_question_id", "answer_id"], name: "i_answers_c_questions_on_c_question_id_and_answer_id"
 
   create_table "badges_sashes", force: :cascade do |t|
     t.integer  "badge_id"
@@ -192,12 +183,13 @@ ActiveRecord::Schema.define(version: 20160718234606) do
 
   create_table "completed_m_questions", force: :cascade do |t|
     t.integer  "m_question_id"
+    t.integer  "answer_id"
     t.integer  "user_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.integer  "completed_questionnaire_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
+  add_index "completed_m_questions", ["answer_id"], name: "index_completed_m_questions_on_answer_id"
   add_index "completed_m_questions", ["m_question_id"], name: "index_completed_m_questions_on_m_question_id"
   add_index "completed_m_questions", ["user_id"], name: "index_completed_m_questions_on_user_id"
 
@@ -210,6 +202,20 @@ ActiveRecord::Schema.define(version: 20160718234606) do
 
   add_index "completed_questionnaires", ["questionnaire_id"], name: "index_completed_questionnaires_on_questionnaire_id"
   add_index "completed_questionnaires", ["user_id"], name: "index_completed_questionnaires_on_user_id"
+
+  create_table "course_badges", force: :cascade do |t|
+    t.string   "badge"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "course_id"
+    t.integer  "user_id"
+  end
+
+  add_index "course_badges", ["course_id"], name: "index_course_badges_on_course_id"
+  add_index "course_badges", ["user_id"], name: "index_course_badges_on_user_id"
 
   create_table "course_enrollments", force: :cascade do |t|
     t.boolean  "active",             default: true
@@ -263,9 +269,10 @@ ActiveRecord::Schema.define(version: 20160718234606) do
 
   create_table "m_questions", force: :cascade do |t|
     t.integer  "questionnaire_id"
+    t.integer  "correct_answer_id"
     t.text     "text"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   add_index "m_questions", ["questionnaire_id"], name: "index_m_questions_on_questionnaire_id"
@@ -303,13 +310,15 @@ ActiveRecord::Schema.define(version: 20160718234606) do
     t.string  "category", default: "default"
   end
 
-  create_table "merits", force: :cascade do |t|
-    t.string   "course"
-    t.float    "points"
-    t.datetime "earned_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "owned_badges", force: :cascade do |t|
+    t.integer  "course_badge_id"
+    t.integer  "course_enrollment_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
+
+  add_index "owned_badges", ["course_badge_id"], name: "index_owned_badges_on_course_badge_id"
+  add_index "owned_badges", ["course_enrollment_id"], name: "index_owned_badges_on_course_enrollment_id"
 
   create_table "questionnaires", force: :cascade do |t|
     t.integer  "qu_container_id"
@@ -324,6 +333,16 @@ ActiveRecord::Schema.define(version: 20160718234606) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "unlock_course_badges", force: :cascade do |t|
+    t.integer  "course_badge_id"
+    t.integer  "activity_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "unlock_course_badges", ["activity_id"], name: "index_unlock_course_badges_on_activity_id"
+  add_index "unlock_course_badges", ["course_badge_id"], name: "index_unlock_course_badges_on_course_badge_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
