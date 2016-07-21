@@ -8,18 +8,18 @@ class Chapter < ActiveRecord::Base
   has_many :chapter_statuses
 
   has_and_belongs_to_many :successors,
-    class_name: 'Chapter',
-    join_table: :chapter_edges,
-    foreign_key: :tail_id,
-    association_foreign_key: :head_id,
-    uniq: true
+                          class_name: 'Chapter',
+                          join_table: :chapter_edges,
+                          foreign_key: :tail_id,
+                          association_foreign_key: :head_id,
+                          uniq: true
 
   has_and_belongs_to_many :predecessors,
-    class_name: 'Chapter',
-    join_table: :chapter_edges,
-    foreign_key: :head_id,
-    association_foreign_key: :tail_id,
-    uniq: true
+                          class_name: 'Chapter',
+                          join_table: :chapter_edges,
+                          foreign_key: :head_id,
+                          association_foreign_key: :tail_id,
+                          uniq: true
 
   validates :name, :shortname, :course, presence: true
   validate :validate_predecessors
@@ -48,6 +48,18 @@ class Chapter < ActiveRecord::Base
     course_chapters
   end
 
+  def progress(course_enrollment)
+    total_activities = self.activities.count
+    finished_activities = course_enrollment.activity_statuses.where(activity_id: self.activities.select(:id), is_completed: true, status: 1).select(:activity_id).distinct.count
+    if (total_activities > 0)
+      percent = finished_activities.to_f / total_activities.to_f * 100
+    else
+      percent = 100
+    end
+    return {:total_activities => total_activities, :finished_activities => finished_activities, :percent => percent}
+  end
+
+
   # whether the given user completed all actvities of the chapter
   def completed?(user)
     course_enrollment = self.course.course_enrollments.find_by(user: user)
@@ -55,7 +67,7 @@ class Chapter < ActiveRecord::Base
     self.activities.all? do |activity|
       statuses = activity.activity_statuses
       statuses.exists?(course_enrollment: course_enrollment) &&
-        statuses.find_by(course_enrollment: course_enrollment).is_completed
+          statuses.find_by(course_enrollment: course_enrollment).is_completed
     end
   end
 
