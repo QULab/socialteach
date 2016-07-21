@@ -17,31 +17,20 @@
       <%= f.label :name, class: "control-label" %><br>
       <%= f.text_field :name, class: "form-control" %>
     </div>
-  </div><p></p>
+  </div>
   <div class="control-group">
     <div class="controls">
       <%= f.label :shortname, class: "control-label" %><br>
       <%= f.text_field :shortname, class: "form-control" %>
     </div>
-  </div><p></p>
+  </div>
   <div class="control-group">
     <div class="controls">
       <%= f.label :description, class: "control-label" %><br>
       <%= f.text_field :description, class: "form-control" %>
     </div>
-  </div><p></p>
-  <div class="control-group">
-    <div class="controls">
-        <%= f.label :tier, class: "control-label" %><br>
-        <%= f.text_field :tier, class: "form-control" %>
-   </div>
-  </div><p></p>
-  <%= f.hidden_field :course_id, :value => params[:course_id], class: "form-control" %>
-
-  <div class="controls">
-      <%= f.label :Predecessor, class: "control-label" %><br>
-      <%= collection_select(:course, :course_id, @ordered_chapters, :id, :name, {prompt: true}, {class: "form-control"}) %>
-  </div><p></p>
+  </div>
+  <%= f.hidden_field :course_id %>
 
   <div class="form-actions">
     <%= f.submit class: "btn btn-default btn-primary btn-block btn-success" %>

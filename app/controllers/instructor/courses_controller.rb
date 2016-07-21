@@ -14,10 +14,11 @@ class Instructor::CoursesController < Instructor::BaseController
 
   def create
     @course = Course.new(course_params)
+    
 
     respond_to do |format|
       if @course.save
-        format.html { redirect_to instructor_course_path(@course), notice: 'Course was successfully created.' }
+        format.html { redirect_to edit_instructor_course_path(@course), notice: 'Course was successfully created.' }
       else
         format.html { render :new }
       end
@@ -55,6 +56,6 @@ class Instructor::CoursesController < Instructor::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
-        params.require(:course).permit(:name, :description, :creator_id)
+        params.require(:course).permit(:name, :description, :creator_id, :published)
     end
 end

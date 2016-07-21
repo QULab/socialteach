@@ -39,7 +39,11 @@
             </li>
             <% current_user.get_created_courses.each do |course|  %>
               <li>
-                <%= link_to course.name, edit_instructor_course_path(course)%>
+                <%- if course.published %>
+                  <%= link_to course.name, instructor_course_path(course)%>
+                <%- else %>
+                  <%= link_to course.name, edit_instructor_course_path(course)%>
+                <%- end %>
               </li>
             <% end %>
           </ul>

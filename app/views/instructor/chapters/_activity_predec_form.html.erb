@@ -1,0 +1,35 @@
+  <div class="row" style="margin: 5px">
+    <h4 class="list-group-item-heading">
+      <span class="label label-default label-pill pull-right activity">
+        <%= activity.shortname %>
+      </span>
+      <%= activity.name %>
+    </h4>
+  </div>
+
+  <div class='predecessors'>
+  <%= form_for([:instructor, @activity]) do |f| %>
+    <fieldset>
+      <div class="control-group">
+        <div class="controls">
+
+          <%= f.label :predecessors, class: "control-label" %>
+          <%= f.select :predecessor_ids,
+                       options_from_collection_for_select(@activity.valid_predecessors,
+                                                          'id',
+                                                          'name',
+                                                          @activity.predecessors.ids),
+                        {include_blank: true}, {multiple: true, class: "form-control"} %>
+          </select>
+        </div>
+      </div>
+      <p></p>
+      <div class= "btn-group-justified">
+        <div class="form-actions">
+          <%= f.submit "Update Predecessors", class: "btn btn-default btn-primary btn-success"%>
+          <%= link_to 'Back', edit_instructor_chapter_path(@activity.chapter), class: "btn btn-primary" %>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+<div>

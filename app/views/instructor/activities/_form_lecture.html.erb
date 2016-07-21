@@ -1,23 +1,30 @@
-<div class="row">
-  <div class="col-md-6">
-    <div class="form-group">
-      <%= f.label :text %><br>
-      <%= f.text_area :text, class: "form-control", rows: 9 %>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Markdown Cheat Sheet
-      </div>
-      <div class="panel-body">
-        *bold* <br>
-        # Heading 1 <br>
-        ## Heading 2
+<div class="form-group">
+  <%= f.label :text %><br>
+  <p> The lecture content can be formatted using markdown syntax.</p>
+  <div>
 
-        * list item
-        * list item
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#edit" aria-controls="home" role="tab" data-toggle="tab">Edit Text</a></li>
+      <li role="presentation"><a href="#preview" aria-controls="profile" role="tab" data-toggle="tab" id="toggle-preview-link">Preview</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="edit">
+        <%= f.text_area :text, id: 'lecture-text', class: "form-control", rows: 19, data: { markdown_api: markdown_instructor_activities_path } %>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="preview">
+        <div class="panel panel-default">
+          <div class="panel-body" id="preview-text">
+          </div>
+        </div>
       </div>
     </div>
+
   </div>
 </div>
+
+<%- content_for :form_right_column do %>
+  <%= render 'markdown' %>
+<% end %>

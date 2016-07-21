@@ -6,12 +6,17 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  mount_uploader :avatar, AvatarUploader 
+  mount_uploader :avatar, AvatarUploader
 
   has_many :courses
   has_many :completed_m_questions
   has_many :completed_questionnaires
   validate :username_validation
+  has_many :course_enrollments
+  has_many :friendships
+  has_many :friends, :through => :friendships
+  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+  has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
   def username_validation
     if !username.present?
@@ -75,6 +80,16 @@ class User < ActiveRecord::Base
   def completed?(activity)
     enrollment = self.get_enrollment(activity.course)
     return ActivityStatus.where(activity_id: activity.id,course_enrollment_id: enrollment.id, is_completed: true, status:1).exists?
+  end
+
+  def completed_successfull?(activity)
+    enrollment = self.get_enrollment(activity.course)
+    status = ActivityStatus.where("activity_id = ? AND course_enrollment_id = ?", activity.id, enrollment.id).order("created_at").last
+    unless status.nil?
+      status.status == ActivityStatus.successfull
+    else
+      false
+    end
   end
 
   def get_created_courses

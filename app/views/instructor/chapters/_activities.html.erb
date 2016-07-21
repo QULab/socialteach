@@ -1,9 +1,10 @@
 <div class="list-group">
+  <% activities = activities.order("tier ASC") %>
   <% activities.each do |activity| %>
     <div class="list-group-item activity" data-node-id="<%= activity.id %>">
       <div class="row" style="margin: 5px">
       <h4 class="list-group-item-heading">
-        <span class="label label-default label-pill pull-right">
+        <span class="label label-default label-pill pull-right <%= activity.content_type.underscore %>">
           <%= activity.shortname %>
         </span>
         <i class="fa <%= activity_icon(activity) =%>"></i>
@@ -14,15 +15,15 @@
       <%= link_to "<i class='fa fa-x fa-eye'></i>".html_safe, instructor_activity_path(activity) , class: "btn btn-link pull-right", title: 'Show Activity' %>
       <%= link_to "<i class='fa fa-x fa-trash'></i>".html_safe, instructor_activity_path(activity) , class: "btn btn-link pull-right", title: 'Delete Activity', data: { confirm: "Do you really want to delete this activity?", toggle: "tooltip"}, method: :delete %>
       <%= link_to "<i class='fa fa-x fa-pencil'></i>".html_safe, edit_instructor_activity_path(activity) , class: "btn btn-link pull-right", title: 'Edit Activity', data: { toggle: "tooltip"} %>
-      <%= link_to "<i class='fa fa-x fa-chevron-right'></i>".html_safe, '#' , class: "btn btn-link pull-right", title: 'Edit Successors', data: { toggle: "tooltip"} %>
-      <%= link_to "<i class='fa fa-x fa-chevron-left'></i>".html_safe, '#' , class: "btn btn-link pull-right", title: 'Edit Predecessors', data: { toggle: "tooltip"} %>
+      <%= link_to "<i class='fa fa-x fa-chevron-up'></i> Pre".html_safe, instructor_activity_predec_path(activity), remote: true, class: "btn btn-link pull-right", title: 'Edit Predecessors', data: { toggle: "tooltip"} %>
+      <%= link_to "<i class='fa fa-x fa-list'></i>  #{activity.tier}".html_safe, instructor_activity_tier_path(activity), remote: true, id: "tier-act#{activity.id}", class: "btn btn-link pull-right", title: 'Edit Tier', data: { toggle: "tooltip"} %>
     </div>
   </div>
   <% end %>
   <p></p>
   <div class="btn-group-justified">
-  <%= link_to "<i class='fa fa-x fa-plus'></i> <i class='fa fa-x fa-book'></i>".html_safe, new_instructor_activity_path(:chapter_id => @chapter.id, content_type: 'lecture') , class: "btn btn-primary", title: 'Add Lecture', data: { toggle: "tooltip"} %>
-  <%= link_to "<i class='fa fa-x fa-plus'></i> <i class='fa fa-x fa-graduation-cap'></i>".html_safe, new_instructor_activity_path(:chapter_id => @chapter.id, content_type: 'assessment') , class: "btn btn-primary", title: 'Add Assessment', data: { toggle: "tooltip"} %>
-  <%= link_to "<i class='fa fa-x fa-plus'></i> <i class='fa fa-x fa-check-square-o'></i>".html_safe, new_instructor_activity_path(:chapter_id => @chapter.id, content_type: 'exercise') , class: "btn btn-primary", title: 'Add Exercise', data: { toggle: "tooltip"} %>
+  <%= link_to "<i class='fa fa-x fa-plus'></i> <i class='fa fa-x fa-book'></i>".html_safe, new_instructor_activity_path(:chapter_id => @chapter.id, content_type: 'lecture') , class: "btn btn-success", title: 'Add Lecture', data: { toggle: "tooltip"} %>
+  <%= link_to "<i class='fa fa-x fa-plus'></i> <i class='fa fa-x fa-graduation-cap'></i>".html_safe, new_instructor_activity_path(:chapter_id => @chapter.id, content_type: 'assessment') , class: "btn btn-success", title: 'Add Assessment', data: { toggle: "tooltip"} %>
+  <%= link_to "<i class='fa fa-x fa-plus'></i> <i class='fa fa-x fa-check-square-o'></i>".html_safe, new_instructor_activity_path(:chapter_id => @chapter.id, content_type: 'exercise') , class: "btn btn-success", title: 'Add Exercise', data: { toggle: "tooltip"} %>
 </div>
 </div>

@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <% container.questionnaire.m_questions.each_with_index do |question, i| %>
+      <div class= "row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <%= question.text %>
+            </div>
+            <div class="panel-body">
+              <% question.answers.each do |answer| %>
+                <%- if answer.correct %>
+                  <i class="fa fa-check-circle text-success"></i>
+                <%- else %>
+                  <i class="fa fa-times-circle text-danger"></i>
+                <%- end %>
+                <%= answer.text %>
+                <br>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

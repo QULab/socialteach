@@ -1,12 +1,15 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h2>
-        <%= @activity.name %>
-      </h2>
-      <p>
-        <%= @activity.chapter.name %>
-      </p>
+      <div class="page-header">
+        <h2>
+          <i class="fa fa-1x <%= activity_icon(@activity) %>"></i>
+          <%= @activity.name %>
+        </h2>
+        <p>
+          From: <%= @activity.chapter.name %>
+        </p>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -25,7 +28,7 @@
         <%- end %>
       </div>
       <%= render 'shared/feedback', commentable: @activity %>
-      <%= render 'shared/comments', commentable: @activity %>
+      <% # render 'shared/comments', commentable: @activity %>
     </div>
 
     <div class="col-md-1">

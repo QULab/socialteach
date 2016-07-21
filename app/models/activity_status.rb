@@ -11,7 +11,8 @@ class ActivityStatus < ActiveRecord::Base
 		if self.is_completed?
 			if self.learningpoints_id == nil
 				if self.status == 1
-					levelpoints = self.course_enrollment.add_points(self.activity.levelpoints, category: "Levelpoints")
+					points = (self.activity.level.level.to_f/self.course_enrollment.level.level.to_f * self.activity.levelpoints).to_i
+					levelpoints = self.course_enrollment.add_points(points, category: "Levelpoints")
 				else
 					levelpoints = self.course_enrollment.add_points(0, category: "Levelpoints")
 				end
@@ -21,5 +22,13 @@ class ActivityStatus < ActiveRecord::Base
 				self.course_enrollment.set_level
 			end
 		end
+	end
+
+	def self.successfull
+		2
+	end
+
+	def self.failed
+		-1
 	end
 end

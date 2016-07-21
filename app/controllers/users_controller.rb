@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
 	before_action :authenticate_user!, only: [:edit_profil, :update]
-  	before_action :check_authorization, only: [:edit_profil, :update]
+  before_action :check_authorization, only: [:edit_profil, :update]
  	before_action :set_user, only: [:show]
 
   add_breadcrumb "Home", :root_path
-  
+
   def show
     add_breadcrumb "Profil", user_path()
   end
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   	end
   end
 
-  private 
+  private
 
   	def check_authorization
   		unless current_user.id == params[:id].to_i
