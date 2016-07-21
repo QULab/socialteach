@@ -1,0 +1,15 @@
+<div class="well fields">
+  <div class="row">
+    <div class="col-md-12">
+  <%= f.label :text, "Question" %>
+  <%= f.hidden_field :_destroy %>
+  <%= button_tag "<i class='fa fa-x fa-trash'></i>".html_safe, onclick: "remove_fields(this);", class: "pull-right btn-link", type: 'button' %>
+  <%= f.text_area :text, rows: 3, class: "form-control" %><br \>
+</div>
+</div>
+
+  <%= f.fields_for :answers do |answers_form| %>
+    <%= render "answer_fields", f: answers_form %>
+  <% end %>
+  <%= link_to_add_fields "<i class='fa fa-x fa-plus'></i> Answer".html_safe, f, :answers %>
+</div>

@@ -2,6 +2,12 @@
 
   #resources :course_badges
 
+  resources :chapter_statuses
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
+
+
   resources :friendships
 
   resources :levels
@@ -17,6 +23,7 @@
 
   # resources :chapters, only: [:show]
 
+  get 'activities/:id/result' => 'activities#result', format: [:html], as: 'activity_result'
   resources :activities, only: [:show] do
     member do
       post 'complete'
@@ -31,13 +38,13 @@
   end
   get 'my_courses' => 'courses#index_enrolled', format: [:html]
 
-
   # Routes that are only for instructors
   namespace :instructor do
     # index shows all courses the current user can modify
     resources :courses, only: [:edit, :destroy, :update, :new, :create, :show, :index], format: [:html] do
       resources :course_badges, shallow: true
     end
+
     resources :chapters, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html]
     resources :activities, only: [:edit, :destroy, :update, :new, :create, :show], format: [:html] do
       collection do
@@ -67,6 +74,7 @@
 
   post 'activities/:id/feedback' => 'activities#feedback', format: [:json]
   post 'courses/:id/feedback' => 'courses#feedback', format: [:json]
+  put 'chapters/:id/skip' => 'chapters#skip', format: [:html], as: 'chapter_skip'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

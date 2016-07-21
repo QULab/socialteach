@@ -1,5 +1,5 @@
 class ChaptersController < ApplicationController
-  before_action :set_chapter, only: [:show]
+  before_action :set_chapter, only: [:show, :skip]
 
   # GET /chapters
   # GET /chapters.json
@@ -64,6 +64,14 @@ class ChaptersController < ApplicationController
       format.html { redirect_to chapters_url, notice: 'Chapter was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  # PUT /chapters/1/skip
+  def skip
+    @chapter.chapter_statuses
+      .find_by(course_enrollment: @chapter.course.course_enrollments.find_by(user: current_user))
+      .update(skip: true)
+      redirect_to curriculum_course_path(@chapter.course) , notice: "You skipped chapter '#{@chapter.name}'!"
   end
 
   private

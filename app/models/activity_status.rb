@@ -38,4 +38,12 @@ class ActivityStatus < ActiveRecord::Base
 			end
 		end
 	end
+
+	def self.successfull
+		2
+	end
+
+	def self.failed
+		-1
+	end
 end

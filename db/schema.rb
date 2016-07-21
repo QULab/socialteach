@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706065243) do
+ActiveRecord::Schema.define(version: 20160715192611) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -32,13 +32,14 @@ ActiveRecord::Schema.define(version: 20160706065243) do
     t.string   "name"
     t.integer  "levelpoints"
     t.integer  "chapter_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "tier"
     t.text     "shortname"
-    t.integer  "content_id",   null: false
-    t.string   "content_type", null: false
+    t.integer  "content_id",               null: false
+    t.string   "content_type",             null: false
     t.integer  "level_id"
+    t.integer  "difficulty",   default: 0, null: false
   end
 
   add_index "activities", ["chapter_id"], name: "index_activities_on_chapter_id"
@@ -106,11 +107,20 @@ ActiveRecord::Schema.define(version: 20160706065243) do
   create_table "answers", force: :cascade do |t|
     t.integer  "m_question_id"
     t.text     "text"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.boolean  "correct",       default: false
   end
 
   add_index "answers", ["m_question_id"], name: "index_answers_on_m_question_id"
+
+  create_table "answers_completed_m_questions", id: false, force: :cascade do |t|
+    t.integer "completed_m_question_id", null: false
+    t.integer "answer_id",               null: false
+  end
+
+  add_index "answers_completed_m_questions", ["answer_id", "completed_m_question_id"], name: "i_answers_c_questions_on_answer_id_and_c_question_id"
+  add_index "answers_completed_m_questions", ["completed_m_question_id", "answer_id"], name: "i_answers_c_questions_on_c_question_id_and_answer_id"
 
   create_table "badges_sashes", force: :cascade do |t|
     t.integer  "badge_id"
@@ -131,6 +141,19 @@ ActiveRecord::Schema.define(version: 20160706065243) do
   add_index "chapter_edges", ["head_id"], name: "index_chapter_edges_on_head_id"
   add_index "chapter_edges", ["tail_id"], name: "index_chapter_edges_on_tail_id"
 
+  create_table "chapter_statuses", force: :cascade do |t|
+    t.boolean  "skip",                 default: false
+    t.boolean  "finished",             default: false
+    t.integer  "course_enrollment_id"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.float    "difficultyFit",        default: 0.0
+    t.integer  "chapter_id"
+  end
+
+  add_index "chapter_statuses", ["chapter_id"], name: "index_chapter_statuses_on_chapter_id"
+  add_index "chapter_statuses", ["course_enrollment_id"], name: "index_chapter_statuses_on_course_enrollment_id"
+
   create_table "chapters", force: :cascade do |t|
     t.string   "name"
     t.string   "shortname"
@@ -145,13 +168,12 @@ ActiveRecord::Schema.define(version: 20160706065243) do
 
   create_table "completed_m_questions", force: :cascade do |t|
     t.integer  "m_question_id"
-    t.integer  "answer_id"
     t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "completed_questionnaire_id"
   end
 
-  add_index "completed_m_questions", ["answer_id"], name: "index_completed_m_questions_on_answer_id"
   add_index "completed_m_questions", ["m_question_id"], name: "index_completed_m_questions_on_m_question_id"
   add_index "completed_m_questions", ["user_id"], name: "index_completed_m_questions_on_user_id"
 
@@ -191,6 +213,7 @@ ActiveRecord::Schema.define(version: 20160706065243) do
     t.integer  "sash_id"
     t.integer  "level",              default: 0
     t.integer  "level_id"
+    t.integer  "current_chapter_id"
   end
 
   add_index "course_enrollments", ["course_id"], name: "index_course_enrollments_on_course_id"
@@ -231,10 +254,9 @@ ActiveRecord::Schema.define(version: 20160706065243) do
 
   create_table "m_questions", force: :cascade do |t|
     t.integer  "questionnaire_id"
-    t.integer  "correct_answer_id"
     t.text     "text"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   add_index "m_questions", ["questionnaire_id"], name: "index_m_questions_on_questionnaire_id"
@@ -270,6 +292,14 @@ ActiveRecord::Schema.define(version: 20160706065243) do
   create_table "merit_scores", force: :cascade do |t|
     t.integer "sash_id"
     t.string  "category", default: "default"
+  end
+
+  create_table "merits", force: :cascade do |t|
+    t.string   "course"
+    t.float    "points"
+    t.datetime "earned_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "owned_badges", force: :cascade do |t|
