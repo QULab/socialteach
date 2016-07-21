@@ -1,9 +1,12 @@
 class CourseEnrollmentsController < ApplicationController
   before_action :set_course_enrollment, only: [:show, :edit, :update, :destroy]
 
+
   # GET /course_enrollments
   # GET /course_enrollments.json
   def index
+    @course_enrollments = CourseEnrollment.all
+    add_breadcrumb "MyCourses", my_courses_path()
   end
 
   # GET /course_enrollments/1

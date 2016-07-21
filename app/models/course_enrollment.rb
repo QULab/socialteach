@@ -27,4 +27,10 @@ class CourseEnrollment < ActiveRecord::Base
   	total_activities = self.course.activities.distinct.count
   	return {:finished_activities => finished_activities, :total_activities => total_activities, :percent => finished_activities.to_f/total_activities.to_f}
   end
+
+  def next_level
+    next_pass = Level.where("level_pass > ?", self.level.level_pass).order(:level_pass).first.level_pass
+    percent = ((self.points(category: "Levelpoints") - self.level.level_pass ).to_f/(next_pass - self.level.level_pass).to_f * 100).to_i
+    return {:next_pass => next_pass, :percent => percent}
+  end
 end

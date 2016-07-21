@@ -68,6 +68,9 @@ gem 'omniauth-facebook'
 #for setting the env variables
 gem 'figaro'
 
+#navigation tree
+gem 'breadcrumbs_on_rails'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.4'
   gem "factory_girl_rails"
