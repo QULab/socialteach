@@ -1,17 +1,24 @@
+<div style="flex-flow: row wrap; display: flex">
+  <div style="flex:1 0 40%;">
+    <%= @user.username %>'s learning points:
 
+    <%= line_chart @user.score_points(category: "Learningpoints").group_by_day(:created_at, "sum", "num_points") %>
+  </div>
 
-<%= @user.username %>'s learningpoint:
-<div>
-	<%= line_chart @user.score_points(category: "Learningpoints").group_by_day(:created_at, "sum", "num_points") %>
+  <div style="flex:1 0 40%;">
+  <%= @user.username %>'s social points:
+
+    <%= line_chart @user.score_points(category: "Socialpoints").group_by_day(:created_at, "sum", "num_points") %>
+  </div>
 </div>
 
-<%= @user.username %>'s socialpoint:
-<div>
-	<%= line_chart @user.score_points(category: "Socialpoints").group_by_day(:created_at, "sum", "num_points") %>
-</div>
-
+<div style="flex-flow: row wrap; display: flex">
 <% @user.course_enrollments.each do |enrollment| %>
-	<%= enrollment.course.name %> - Course: <%= enrollment.points(category: "Levelpoints") %><br>
-	Your current progress in <%= enrollment.course.name %><br>
-	<%= line_chart enrollment.score_points(category: "Levelpoints").group_by_day(:created_at, "sum", "num_points") %><br>
+    <div style="flex:1 0 50%">
+      <%= enrollment.course.name %> - Course: <%= enrollment.points(category: "Levelpoints") %><br>
+    Your current progress in <%= enrollment.course.name %><br>
+    <%= line_chart enrollment.score_points(category: "Levelpoints").group_by_day(:created_at, "sum", "num_points") %>
+    <br>
+    </div>
 <% end %>
+</div>

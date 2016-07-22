@@ -38,7 +38,8 @@
       <%- course.chapters.first.activities.each do |act| %>
         <%= link_to activity_path(act), class: "list-group-item" do %>
           <h4 class="list-group-item-heading">
-            <i class="fa <%= activity_icon(act) =%>"></i>
+            <i class="fa <%= activity_icon(act) =%>">
+            </i>
             <%= act.name %>
           </h4>
           <p class="list-group-item-text">
