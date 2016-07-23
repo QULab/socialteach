@@ -12,6 +12,8 @@ class CourseEnrollment < ActiveRecord::Base
   after_save :set_level
   after_update :set_level
 
+  RECOMMENDATION_NUM = 5
+
   def set_level
   	level = Level.where("level_pass <= ?", self.points(category: "Levelpoints")).order(:level_pass).reverse.first
   	if level != self.level
@@ -27,7 +29,7 @@ class CourseEnrollment < ActiveRecord::Base
   end
 
   def recommended_activities
-    recommendation_num = 5
+
     chapters = []
 
     unless self.current_chapter.nil?
@@ -51,9 +53,9 @@ class CourseEnrollment < ActiveRecord::Base
         recommended += unfinished_activities(chapter)
 
         # additionally recommend activities of following chapter(s) if not enough activities
-        recommended += successor_activities(chapter) if recommended.length < recommendation_num
+        recommended += successor_activities(chapter) if recommended.length < RECOMMENDATION_NUM
         successors = chapter.successors
-        while recommended.length < recommendation_num && !successors.empty? do
+        while recommended.length < RECOMMENDATION_NUM && !successors.empty? do
           next_successors = []
           successors.each do |successor|
             recommended += successor_activities(successor)
@@ -67,7 +69,7 @@ class CourseEnrollment < ActiveRecord::Base
         recommended += repeatable_activities(chapter)
         # Recommend from earlier chapters if not enough activities
         predecessors = chapter.predecessors
-          while recommended.length < recommendation_num && !predecessors.empty?
+          while recommended.length < RECOMMENDATION_NUM && !predecessors.empty?
             next_predecessors = []
             predecessors.each do |predecessor|
               recommended += unfinished_activities(predecessor)
@@ -83,7 +85,7 @@ class CourseEnrollment < ActiveRecord::Base
       when 0.9..Float::INFINITY
         recommended += successor_activities(chapter)
         successors = chapter.successors
-        while recommended.length < recommendation_num && !successors.empty?
+        while recommended.length < RECOMMENDATION_NUM && !successors.empty?
           next_successors = []
           successors.each do |successor|
             recommended += successor_activities(successor)
@@ -93,7 +95,17 @@ class CourseEnrollment < ActiveRecord::Base
         end
       end
     end
-    recommended.slice(0, recommendation_num).uniq
+    recommended.slice(0, RECOMMENDATION_NUM).uniq
+  end
+
+  # fallback: recommend unfinished activities from the whole course
+  def recommend_unfinished
+    recommend = []
+    self.course.chapters.order(:tier).reverse.each do |chapter|
+      recommend += unfinished_activities(chapter)
+    end
+
+    recommend.slice(0, RECOMMENDATION_NUM).uniq
   end
 
   private
