@@ -20,16 +20,6 @@
         <li><%= link_to 'My Courses', my_courses_path %></li>
         <li><%= link_to 'All Courses', courses_path %></li>
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Leaderboards
-            <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Friends</a></li>
-            <li><a href="#">Courses</a></li>
-            <li><a href="#">Level</a></li>
-          </ul>
-        </li>
-
         <% if current_user.is_instructor %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Courses <span class="caret"></span></a>
