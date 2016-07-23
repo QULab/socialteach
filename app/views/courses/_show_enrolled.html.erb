@@ -16,6 +16,7 @@
         Show Curriculum
       <%- end %>
       <%= link_to "Leaderboard", leaderboard_path(course), class: "btn btn-primary" %>
+      <%= link_to "Course Badges", course_course_badges_path(course), class: "btn btn-primary" %>
     </div>
   </div>
 
@@ -80,6 +81,13 @@
           Badges
         </h1>
       </div>
+      <div class="page-body">
+        <% course.course_badges.take(3).each do |badge| %>
+          <div class="col-md-4">
+          <img src="<%= badge.badge %>" title="<%= badge.description %>"/>
+          </div>
+        <% end %>
+      </div>
     </div>
     <div class="col-md-4">
       <div class="page-header">
@@ -96,11 +104,58 @@
           Leaderboards
         </h1>
       </div>
+      <div class="page-body">
+        <table class="table table-hover">
+        <thead>
+          <tr>
+            <th> Position </th>
+            <th>User</th>
+            <th>Levelpoints</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <% Merit::Score.top_scored_enrolled(limit: 5).each_with_index do |enrollment, i| %>
+          <tr>
+            <td>
+              <%= (i+1) %>
+            </td>
+            <td>
+              <%= link_to(enrollment[:enrollment].user) do %>
+              <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
+              
+              <%= enrollment[:enrollment].user.username %>
+              <% end %>
+            </td>
+            <td><%= enrollment[:points] %></td>
+            
+          </tr>
+
+          <% end %>
+
+        </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <div class="row">
-    <%= render 'shared/feedback', commentable: course %>
-    <%= render 'shared/comments', commentable: course %>
+    <%= render 'shared/feedback', commentable: course %>  
+  </div>
+
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Comments
+      </div>
+      <div class="panel-body">
+        <p>
+          <%= link_to 'Add a new Comment', new_course_comment_path(course), class: 'btn btn-primary' %>
+        </p>
+        <%= comments_tree_for course.comments.hash_tree %>
+      </div>
+    </div>
   </div>
 </div>

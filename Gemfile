@@ -49,6 +49,11 @@ gem "mini_magick"
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+#gem for nested comments
+gem 'closure_tree'
+
+#gem for votes
+gem 'acts_as_votable', '~> 0.10.0'
 # using chartkick for point charts and some helper gems
 gem 'chartkick', '~> 1.2.4'
 gem 'dateslices', '~> 0.0.3'
@@ -67,6 +72,9 @@ gem 'omniauth-facebook'
 
 #for setting the env variables
 gem 'figaro'
+
+#navigation tree
+gem 'breadcrumbs_on_rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.4'

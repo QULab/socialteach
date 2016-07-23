@@ -1,0 +1,18 @@
+
+
+<div class="container">
+	<div class="well">
+	<p>
+	  <strong>Badge:</strong>
+	  <img src="<%= @course_badge.badge %>"/>
+	</p>
+
+	<p>
+	  <strong>Description:</strong>
+	  <%= @course_badge.description %>
+	</p>
+	</div>
+
+	<%= link_to 'Edit', edit_course_badge_path(@course_badge), class: "btn btn-primary"%>
+	<%= link_to 'Back', course_badges_path, class: "btn btn-primary"%>
+</div>

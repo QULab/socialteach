@@ -1,0 +1,32 @@
+<div class="well">
+  <h2><%= comment.title %></h2>
+  <p class="text-muted"><%= comment.root? ? "Started by" : "Replied by" %> <strong><%= link_to comment.author, user_path(comment.author_id) %></strong> on
+    <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %></p>
+  <p>
+    <%= link_to like_course_comment_path(@course, comment), method: :put do %>
+      <button type="button" class="btn btn-info" aria-label="Left Align">
+        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+        <span class="badge"><%= comment.get_upvotes.size %></span>
+      </button>
+    <% end %>
+
+    <%= link_to unlike_course_comment_path(@course, comment), class: "like", method: :put do %>
+      <button type="button" class="btn btn-info" aria-label="Left Align">
+        <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+        <span class="badge"><%= comment.get_downvotes.size %></span>
+      </button>
+    <% end %>
+  </p>
+
+  <blockquote>
+    <p><%= comment.body %></p>
+  </blockquote>
+
+  <% from_reply_form ||= nil %>
+	<% unless from_reply_form %>
+		<% if comment.leaf? %>
+			<small class="text-muted">There are no replies yet - be the first one to reply!</small>
+		<% end %>
+		<p><%= link_to 'reply', course_new_comment_path(@course,comment.id) %></p>
+	<% end %>
+</div>

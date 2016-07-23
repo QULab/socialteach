@@ -177,6 +177,44 @@ ActiveRecord::Schema.define(version: 20160723021622) do
 
   add_index "chapters", ["course_id"], name: "index_chapters_on_course_id"
 
+  create_table "comment_hierarchies", id: false, force: :cascade do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+  end
+
+  add_index "comment_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "comment_anc_desc_udx", unique: true
+  add_index "comment_hierarchies", ["descendant_id"], name: "comment_desc_idx"
+
+  create_table "comments", force: :cascade do |t|
+    t.string   "title"
+    t.string   "author"
+    t.text     "body"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.integer  "parent_id"
+    t.integer  "author_id"
+    t.integer  "course_id"
+    t.integer  "activity_id"
+    t.integer  "cached_votes_total",      default: 0
+    t.integer  "cached_votes_score",      default: 0
+    t.integer  "cached_votes_up",         default: 0
+    t.integer  "cached_votes_down",       default: 0
+    t.integer  "cached_weighted_score",   default: 0
+    t.integer  "cached_weighted_total",   default: 0
+    t.float    "cached_weighted_average", default: 0.0
+  end
+
+  add_index "comments", ["activity_id"], name: "index_comments_on_activity_id"
+  add_index "comments", ["cached_votes_down"], name: "index_comments_on_cached_votes_down"
+  add_index "comments", ["cached_votes_score"], name: "index_comments_on_cached_votes_score"
+  add_index "comments", ["cached_votes_total"], name: "index_comments_on_cached_votes_total"
+  add_index "comments", ["cached_votes_up"], name: "index_comments_on_cached_votes_up"
+  add_index "comments", ["cached_weighted_average"], name: "index_comments_on_cached_weighted_average"
+  add_index "comments", ["cached_weighted_score"], name: "index_comments_on_cached_weighted_score"
+  add_index "comments", ["cached_weighted_total"], name: "index_comments_on_cached_weighted_total"
+  add_index "comments", ["course_id"], name: "index_comments_on_course_id"
+
   create_table "completed_m_questions", force: :cascade do |t|
     t.integer  "m_question_id"
     t.integer  "user_id"
@@ -197,6 +235,20 @@ ActiveRecord::Schema.define(version: 20160723021622) do
 
   add_index "completed_questionnaires", ["questionnaire_id"], name: "index_completed_questionnaires_on_questionnaire_id"
   add_index "completed_questionnaires", ["user_id"], name: "index_completed_questionnaires_on_user_id"
+
+  create_table "course_badges", force: :cascade do |t|
+    t.string   "badge"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "course_id"
+    t.integer  "user_id"
+  end
+
+  add_index "course_badges", ["course_id"], name: "index_course_badges_on_course_id"
+  add_index "course_badges", ["user_id"], name: "index_course_badges_on_user_id"
 
   create_table "course_enrollments", force: :cascade do |t|
     t.boolean  "active",             default: true
@@ -299,6 +351,16 @@ ActiveRecord::Schema.define(version: 20160723021622) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "owned_badges", force: :cascade do |t|
+    t.integer  "course_badge_id"
+    t.integer  "course_enrollment_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "owned_badges", ["course_badge_id"], name: "index_owned_badges_on_course_badge_id"
+  add_index "owned_badges", ["course_enrollment_id"], name: "index_owned_badges_on_course_enrollment_id"
+
   create_table "questionnaires", force: :cascade do |t|
     t.integer  "qu_container_id"
     t.string   "qu_container_type"
@@ -312,6 +374,16 @@ ActiveRecord::Schema.define(version: 20160723021622) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "unlock_course_badges", force: :cascade do |t|
+    t.integer  "course_badge_id"
+    t.integer  "activity_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "unlock_course_badges", ["activity_id"], name: "index_unlock_course_badges_on_activity_id"
+  add_index "unlock_course_badges", ["course_badge_id"], name: "index_unlock_course_badges_on_course_badge_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -342,5 +414,20 @@ ActiveRecord::Schema.define(version: 20160723021622) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   add_index "users", ["username"], name: "index_users_on_username", unique: true
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "votable_id"
+    t.string   "votable_type"
+    t.integer  "voter_id"
+    t.string   "voter_type"
+    t.boolean  "vote_flag"
+    t.string   "vote_scope"
+    t.integer  "vote_weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "votes", ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
+  add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
 
 end

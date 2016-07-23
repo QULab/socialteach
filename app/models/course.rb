@@ -4,11 +4,13 @@ class Course < ActiveRecord::Base
   after_create :create_default_chapter_and_assessment
 
   validate :cannot_unpublish_if_users_enrolled
-
+  has_many :course_badges
   has_many :chapters
   has_many :course_enrollments
   belongs_to :users
   has_one :feedback, as: :commentable
+  has_many :comments, dependent: :destroy
+  has_one :user, as: :creator
 
     has_many :activities, through: :chapters
 

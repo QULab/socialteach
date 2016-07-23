@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  acts_as_voter
+
   has_merit
 
   # Include default devise modules. Others available are:
@@ -17,6 +19,7 @@ class User < ActiveRecord::Base
   has_many :friends, :through => :friendships
   has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
+  has_many :created_badges, :class_name => "CourseBadge", :foreign_key => "user_id"
 
   def username_validation
     if !username.present?
@@ -79,7 +82,7 @@ class User < ActiveRecord::Base
 
   def completed?(activity)
     enrollment = self.get_enrollment(activity.course)
-    return ActivityStatus.where("activity_id = ? AND course_enrollment_id = ?", activity.id, enrollment.id).exists?
+    return ActivityStatus.where(activity_id: activity.id,course_enrollment_id: enrollment.id, is_completed: true, status:1).exists?
   end
 
   def completed_successfull?(activity)
