@@ -1,14 +1,10 @@
   Rails.application.routes.draw do
 
-  resources :comments, only: [:index, :create] do
-    member do
-      put "like" => "comments#upvote"
-      put "unlike" => "comments#downvote"
-    end
-  end
 
-  get '/comments/new/(:parent_id)', to: 'comments#new', as: :new_comment
-  get 'comments' => 'comments#index'
+
+  #get '/comments/new/(:parent_id)', to: 'comments#new', as: :new_comment
+  #get 'comments' => 'comments#index'
+
 
   resources :friendships
 
@@ -32,7 +28,12 @@
   end
 
   resources :courses, only: [:show, :index] do
-    resources :comments
+    resources :comments, only: [:index, :create, :new] do
+      member do
+        put "like" => "comments#upvote"
+        put "unlike" => "comments#downvote"
+      end
+    end
     get '/comments/new/(:parent_id)', to: 'comments#new', as: :new_comment
     member do
       get 'curriculum'

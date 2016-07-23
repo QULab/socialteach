@@ -1,4 +1,4 @@
-<%= form_for(@comment) do |f| %>
+<%= form_for([@course,@comment]) do |f| %>
   <% if @comment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
@@ -12,26 +12,13 @@
   <% end %>
 
   <%= f.hidden_field :parent_id %>
+  <%= f.hidden_field :course_id %>
+  <%= f.hidden_field :author_id, value: current_user.id %>
+  <%= f.hidden_field :author, value: current_user.username %>
 
   <div class="form-group">
     <%= f.label :title %>
     <%= f.text_field :title, class: 'form-control' %>
-  </div>
-
-  <div class="row">
-    <div class = "col-md-3">
-      <div class="form-group">
-        <%= f.label :author_id, 'User ID' %>
-        <%= f.text_field :author_id, class: 'form-control', readonly: true, value: current_user.id %>
-      </div>
-    </div>
-
-    <div class ="col-md-9">
-      <div class="form-group">
-        <%= f.label :author %>
-        <%= f.text_field :author, class: 'form-control', readonly: true, value: current_user.username %>
-      </div>
-    </div>
   </div>
 
   <div class="form-group">

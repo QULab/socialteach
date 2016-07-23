@@ -76,8 +76,20 @@
   </div>
 
   <div class="row">
-    <%= render 'shared/feedback', commentable: course %>
-    <%= render 'shared/comments', commentable: course %>
+    <%= render 'shared/feedback', commentable: course %>  
   </div>
-  <%= comments_tree_for @comments %>
+
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Comments
+      </div>
+      <div class="panel-body">
+        <p>
+          <%= link_to 'Add a new Comment', new_course_comment_path(course), class: 'btn btn-primary' %>
+        </p>
+        <%= comments_tree_for course.comments.hash_tree %>
+      </div>
+    </div>
+  </div>
 </div>
