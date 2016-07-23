@@ -20,6 +20,17 @@ class ActivityStatus < ActiveRecord::Base
 				self.update(learningpoints: learningpoints, levelpoints: levelpoints)
 
 				self.course_enrollment.set_level
+				Merit::Badge.all.each do |general_badge|
+					user = self.course_enrollment.user
+					if user.badges.exclude?(general_badge)
+						fields = general_badge.custom_fields
+						if fields[:type] == :learning and fields[:condition] <= user.points(category: "Learningpoints")
+							user.add_badge(general_badge.id)
+						elsif fields[:type] == :activities and fields[:condition] <= course_enrollment.activity_statuses.where(is_completed: true, status: 1).count
+							user.add_badge(general_badge.id)
+						end
+					end
+				end
 			end
 		end
 	end
