@@ -111,3 +111,24 @@ cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: 
 CompletedMQuestion.create!(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, user_id: user9.id).answers << [answer2]
 cq = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id, user_id: user4.id)
 CompletedMQuestion.create!(completed_questionnaire_id: cq.id, m_question_id: feedback_questionId, user_id: user4.id).answers << [answer3]
+duell = ActivityDuell.create(master:true)
+act5 = Activity.create!(name: 'Compete with other Users', levelpoints: '1', tier: '1', shortname: 'Duell', chapter_id: chap1Id, content: duell, level: level1)
+# Add questionaire to act 5 
+questionnaire = Questionnaire.create(qu_container: duell)
+question1 = MQuestion.create(questionnaire_id: questionnaire.id, text: 'Do Italians eat a lot of pizza?')
+question1Id = question1.id
+answer1 = Answer.create(m_question_id: question1Id, text: 'Yes it is their traditional meal.')
+answer2 = Answer.create(m_question_id: question1Id, text: 'No, because they do not want to get fat.')
+answer3 = Answer.create(m_question_id: question1Id, text: 'Sometimes because there are so many good dishes, that they do not just eat pizza.', correct:true)
+
+question2 = MQuestion.create(questionnaire_id: questionnaire.id, text: 'What is the translation of the italian word penne? ')
+question2Id = question2.id
+answer1 = Answer.create(m_question_id: question2Id, text: 'Yellow noodle!')
+answer2 = Answer.create(m_question_id: question2Id, text: 'Google translation says pens .....')
+answer3 = Answer.create(m_question_id: question2Id, text: 'Hach trick question ! It is penne.', correct: true)
+
+question3 = MQuestion.create(questionnaire_id: questionnaire.id, text: 'Italia looks like a ......')
+question3Id = question3.id
+answer1 = Answer.create(m_question_id: question3Id, text: 'Yellow noodle!')
+answer2 = Answer.create(m_question_id: question3Id, text: 'A shoe!', correct: true)
+answer3 = Answer.create(m_question_id: question3Id, text: 'I would rather not say it.....')

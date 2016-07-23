@@ -27,14 +27,35 @@
       </div>
     </div>
   </div>
-
+   <div class="row">
+    <%- @duell.each do |duell| %>
+      <% if get_activity_status(duell) == false %>
+    <h3> <strong><%= get_username(duell) =%></strong> has challenged you, go and click on this <strong><%= link_to "link", activity_path(get_activity(duell))%></strong> and destroy him! </h3>
+     <% end %>
+    <%- end %>
+  </div>
   <div class="row">
     <h4>
       Recommended Activities
     </h4>
     <div class="list-group">
       <%- #TODO use a real function to get recommended activities %>
-      <%- course.chapters.first.activities.each do |act| %>
+      <%- course.chapters.find(2).activities.each do |act| %>
+      <% if act.content.is_a?(ActivityDuell) %>
+      <% if act.content.master == true %>
+        <%= link_to activity_path(act), class: "list-group-item" do %>
+        <h4 class="list-group-item-heading">
+            <i class="fa <%= activity_icon(act) =%>"></i>
+            <%= act.name %>
+          </h4>
+          <p class="list-group-item-text">
+            From:
+            <%= act.chapter.name %>
+            <span class="badge"><%= act.levelpoints %></span>
+          </p>
+          <% end %>
+        <%- end %>
+      <% else %>
         <%= link_to activity_path(act), class: "list-group-item" do %>
           <h4 class="list-group-item-heading">
             <i class="fa <%= activity_icon(act) =%>"></i>
@@ -46,6 +67,7 @@
             <span class="badge"><%= act.levelpoints %></span>
           </p>
         <%- end %>
+        <% end %>
       <%- end %>
     </div>
   </div>

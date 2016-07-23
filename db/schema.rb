@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715192611) do
+ActiveRecord::Schema.define(version: 20160723021622) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -49,6 +49,17 @@ ActiveRecord::Schema.define(version: 20160715192611) do
   create_table "activity_assessments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "activity_duells", force: :cascade do |t|
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "challenger_id"
+    t.integer  "enemy_id"
+    t.boolean  "enemy_bool"
+    t.boolean  "challenger_bool"
+    t.boolean  "master"
+    t.integer  "score"
   end
 
   create_table "activity_edges", id: false, force: :cascade do |t|
@@ -324,6 +335,8 @@ ActiveRecord::Schema.define(version: 20160715192611) do
     t.string   "avatar"
     t.string   "aboutme"
     t.date     "birthday"
+    t.integer  "win"
+    t.integer  "lose"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

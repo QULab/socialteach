@@ -10,6 +10,7 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.json
   def show
+    @duell = ActivityDuell.all.where(enemy_id: current_user.id)
     if @course.published
       render :show
     else

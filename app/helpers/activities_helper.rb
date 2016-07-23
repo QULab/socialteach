@@ -3,7 +3,7 @@ module ActivitiesHelper
     return "fa-book" if activity.content.is_a?(ActivityLecture)
     return "fa-graduation-cap" if activity.content.is_a?(ActivityAssessment)
     return "fa-check-square-o" if activity.content.is_a?(ActivityExercise)
-    # return "fa-users" if activity.content.is_a?(ActivityChallenge)
+    return "fa-users" if activity.content.is_a?(ActivityDuell)
     return "fa-question"
   end
 
@@ -43,5 +43,10 @@ module ActivitiesHelper
 
   def calc_rounded_percentage(score)
     (score * 100).round(2)
+  end
+
+  def get_questions(questions)
+    return questions.sample(5) if questions.size > 5
+    return questions 
   end
 end

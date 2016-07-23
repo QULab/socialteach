@@ -1,0 +1,29 @@
+<%= form_for @activity, url: complete_activity_path(@activity), method: :post do |f| %>
+  <div class="panel panel-default">
+  <h3>  You are competing with:<strong> <%= @enemy.username %></strong></h3>
+    <div class="panel-body">
+      <% get_questions(container.questionnaire.m_questions).each_with_index do |question, i| %>
+      <%= hidden_field_tag "question[#{i}[question_id]]", question.id %>
+        <div class= "row">
+          <div class="col-md-12">
+            <div class="well">
+              <div class="row">
+                <%= question.text %>
+              </div>
+              <div class="row">
+                <% question.answers.each do |answer| %>
+                  <label class="radio-inline">
+                    <%= radio_button_tag "question[#{i}[answer_id]]", answer.id %>
+                    <%= answer.text %>
+                  </label>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%= f.button :submit , name: "enemy", value: @enemy.id, class: "btn btn-success" %>
+<% end %>

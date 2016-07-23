@@ -36,6 +36,13 @@ class Instructor::ActivitiesController < Instructor::BaseController
         question = @activity.content.questionnaire.m_questions.build
         3.times { question.answers.build }
       end
+    elsif params[:content_type] == "duell"
+      @activity.content = ActivityDuell.new
+      @activity.content.questionnaire = Questionnaire.new(qu_container: @activity.content)
+      2.times do
+        question = @activity.content.questionnaire.m_questions.build
+        3.times { question.answers.build }
+      end
     else
       raise "Invalid Type Parameter"
     end
@@ -60,6 +67,10 @@ class Instructor::ActivitiesController < Instructor::BaseController
     elsif @activity.content_type == "ActivityAssessment"
       @activity.content = ActivityAssessment.new(content_params)
       @activity.content.questionnaire = Questionnaire.new(questionnaire_params)
+    elsif @activity.content_type == "ActivityDuell"
+      @activity.content = ActivityDuell.new(content_params)
+      @activity.content.questionnaire = Questionnaire.new(questionnaire_params)
+      @activity.content.master = true
     else
       raise "Invalid Type Parameter"
     end

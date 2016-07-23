@@ -15,6 +15,8 @@
     <p> My Badges :  </p>
     <p> Learning Points : <%= @user.points(category: "Learningpoints") %></p>
     <p> Social Points : <%= @user.points(category: "Socialpoints") %> </p>
+    <% if @user.win == nil %> <p> Wins : 0</p> <% else %>Wins : <%= @user.win   %> <% end %>
+    <% if @user.lose == nil %> <p> Loses : 0 </p><%else %> Loses : <%= @user.lose   %> <% end %>
 </div>
   <div class="col-xs-6 col-md-4">    
   	<h1>About me :</h1>

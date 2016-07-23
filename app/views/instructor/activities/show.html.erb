@@ -13,7 +13,7 @@
       <div class="activity-content-container">
         <%- if @activity.content.is_a? ActivityLecture %>
           <%= render 'instructor/activities/lecture', lecture: @activity.content %>
-        <% elsif @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment) %>
+        <% elsif @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)||@activity.content.is_a?(ActivityDuell)  %>
           <%= render 'instructor/activities/questionnaire', container: @activity.content %>
         <%- end %>
       </div>

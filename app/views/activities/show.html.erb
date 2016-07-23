@@ -25,6 +25,8 @@
           <%= render 'activities/lecture', lecture: @activity.content %>
         <% elsif @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment) %>
           <%= render 'activities/questionnaire', container: @activity.content %>
+        <% elsif @activity.content.is_a?(ActivityDuell) %>
+          <%= render 'activities/questionnaireDuell', container: @activity.content %>
         <%- end %>
       </div>
       <%= render 'shared/feedback', commentable: @activity %>
