@@ -1,6 +1,5 @@
 .activity-content-container {
   min-height: 200px;
-  background-color: lightgray;
   padding: 10px;
 }
 
@@ -30,4 +29,9 @@ span.label-pill.activity_lecture {
 .CodeMirror {
   border: 1px solid #eee;
   height: auto;
+}
+
+#cheatsheet {
+  max-height: 380px;
+  overflow: scroll;
 }

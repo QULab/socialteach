@@ -3,10 +3,14 @@ class UsersController < ApplicationController
   before_action :check_authorization, only: [:edit_profil, :update]
  	before_action :set_user, only: [:show]
 
+  add_breadcrumb "Home", :root_path
+
   def show
+    add_breadcrumb "Profil", user_path()
   end
 
   def edit_profil
+    add_breadcrumb "Edit", users_edit_profil_path()
     @user = User.find(id: current_user.id)
   end
 

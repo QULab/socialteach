@@ -1,9 +1,12 @@
 class CoursesController < BaseController
   before_action :set_course, only: [:show, :curriculum, :feedback]
 
+  add_breadcrumb "Home", :root_path
+
   # GET /courses
   # GET /courses.json
   def index
+    add_breadcrumb "Courses", courses_path()
     @courses = Course.all_published_courses
   end
 
@@ -22,6 +25,7 @@ class CoursesController < BaseController
     set_enrollments(current_user)
 
     unless @enrollments.empty?
+      add_breadcrumb "MyCourses", my_courses_path()
       render :index_enrolled
     else
       @courses = Course.all
@@ -31,20 +35,27 @@ class CoursesController < BaseController
 
   def curriculum
     authenticate_user!
-    @active_chapter = Chapter.find_by_id(params[:chapter]) || @course.chapters.first
+    # check for enrollment
+    unless current_user.is_enrolled?(@course)
+      redirect_to courses_path, notice: 'You are not enrolled in this course.'
+    end
+
     set_enrollment(current_user)
+    current_chapter = Chapter.find_by_id(@enrollment[:current_chapter_id])
+    @active_chapter = Chapter.find_by_id(params[:chapter]) || current_chapter || @course.chapters.first
   end
 
-  # POST /activities/1/feedback
+  # POST /courses/1/feedback
   def feedback
     questionnaire = @course.feedback.questionnaire
     user_id = current_user.id
-    CompletedMQuestion.create(m_question_id: questionnaire.m_questions.first.id,
-                              user_id: user_id,
-                              answer_id: params[:answer])
-
-    CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
+    cquestionnaire = CompletedQuestionnaire.create(questionnaire_id: questionnaire.id,
                                   user_id: user_id)
+
+    CompletedMQuestion.create!(m_question_id: questionnaire.m_questions.first.id,
+                              completed_questionnaire_id: cquestionnaire.id,
+                              user_id: user_id).answers << Answer.find(params[:answer])
+
     head :no_content
   end
 

@@ -5,12 +5,18 @@
     </h2>
     <legend>
       <small>
-        <%= @activity.chapter.name %> >
-        <%= @activity.course.name %>
+        <%= @activity.course.name %> >
+        <%= @activity.chapter.name %>
       </small>
     </legend>
     <div class="col-md-6">
-      <% # add activity content here %>
+      <div class="activity-content-container">
+        <%- if @activity.content.is_a? ActivityLecture %>
+          <%= render 'instructor/activities/lecture', lecture: @activity.content %>
+        <% elsif @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment) %>
+          <%= render 'instructor/activities/questionnaire', container: @activity.content %>
+        <%- end %>
+      </div>
     </div>
     <div class="col-md-6">
       <legend> Feedback </legend>

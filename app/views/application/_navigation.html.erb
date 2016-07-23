@@ -20,16 +20,6 @@
         <li><%= link_to 'My Courses', my_courses_path %></li>
         <li><%= link_to 'All Courses', courses_path %></li>
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Leaderboards
-            <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Friends</a></li>
-            <li><a href="#">Courses</a></li>
-            <li><a href="#">Level</a></li>
-          </ul>
-        </li>
-
         <% if current_user.is_instructor %>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Courses <span class="caret"></span></a>
@@ -39,7 +29,11 @@
             </li>
             <% current_user.get_created_courses.each do |course|  %>
               <li>
-                <%= link_to course.name, edit_instructor_course_path(course)%>
+                <%- if course.published %>
+                  <%= link_to course.name, instructor_course_path(course)%>
+                <%- else %>
+                  <%= link_to course.name, edit_instructor_course_path(course)%>
+                <%- end %>
               </li>
             <% end %>
           </ul>
@@ -62,49 +56,15 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
 <nav class="navbar">
   <div class="container">
 
 
     <div class="navbar-header">
-      <div>
-        SocialTeach > Italian 101 > Tutorial
-      </div>
+      <%= render_breadcrumbs %>
     </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          Badge Progress
-          <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
-                 aria-valuemin="0" aria-valuemax="100" style="width:20%">
-              20%
-            </div>
-          </div>
-        </li>
-        <li>
-          <div style="width:100px;"></div>
-        </li>
-        <li style="margin-left: 50px;">
-          Lesson Progress
-          <div class="progress">
-            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
-                 aria-valuemin="0" aria-valuemax="100" style="width:40%">
-              40%
-            </div>
-          </div>
-        </li>
-        <li style="margin-left: 50px;">
-          Points
-          <div>
-            300
-          </div>
-        </li>
-      </ul>
-
-    </div><!-- /.container-fluid -->
+    <% if @course %>
+      <%= render(:partial => "course_development") %>
+    <% end %>
   </div>
 </nav>

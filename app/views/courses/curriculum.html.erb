@@ -14,21 +14,30 @@
 
   <div class="row">
     <div class="col-md-3">
-      <%- @course.chapters.each do |chapter| %>
-        <%= link_to curriculum_course_path(@course, chapter: chapter.id), class: ["thumbnail", ("alert-info" if chapter == @active_chapter)] do %>
-          <i class="fa fa-3x fa-check-circle"></i>
-          <i class="fa fa-3x fa-question-circle"></i>
-          <i class="fa fa-3x fa-times-circle"></i>
-          <div class="caption">
-            <h3>
-              <%= chapter.name %>
-            </h3>
-            <p>
-              <%= chapter.description %>
-            </p>
-          </div>
+      <div class="list-group">
+        <% chapters = @course.chapters.order("tier ASC") %>
+        <%- chapters.each do |chapter| %>
+          <% status = chapter.get_status(current_user) %>
+          <% locked = status.finished || status.skip ? false : chapter.locked?(current_user) %>
+          <%= link_to curriculum_course_path(@course, chapter: chapter.id),
+                      class: ["list-group-item ", ("list-group-item-info" if chapter == @active_chapter),
+                                                  ("disabled" if locked),
+                                                  ("list-group-item-success" if status.finished || status.skip)] do %>
+            <% if status.finished %>
+              <i class="fa fa-3x fa-check" style="float: right"></i>
+            <% end %>
+            <div class="caption">
+              <h3>
+                <%= chapter.name %>
+              </h3>
+              <p>
+                <%= chapter.description %>
+              </p>
+            </div>
+          <%- end %>
+          <br />
         <%- end %>
-      <%- end %>
+      </div>
     </div>
 
     <div class="col-md-9">
@@ -43,28 +52,33 @@
             <%= @active_chapter.description %>
           </div>
           <div class="progress" style="margin: 5px">
-            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 35%">
-              35% Complete
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:  <%= @active_chapter.progress(@enrollment)[:percent].to_i %>%">
+               <%= @active_chapter.progress(@enrollment)[:percent].to_i %>% Complete
             </div>
           </div>
         </div>
       </div>
       <div class="list-group">
-        <%- @active_chapter.activities.each do |act| %>
+        <% activities = @active_chapter.activities.order("tier ASC") %>
+        <%- activities.each do |act| %>
           <% completed = current_user.completed?(act) %>
-          <%= link_to activity_path(act), class: ["list-group-item", ("list-group-item-success" if completed)] do %>
+          <% successfull = current_user.completed_successfull?(act) %>
+          <% locked = completed ? false : act.locked?(current_user) %>
+          <%= link_to activity_path(act), class: ["list-group-item",
+                                                  ("list-group-item-success" if completed && successfull),
+                                                  ("disabled" if locked),
+                                                  ("list-group-item-danger" if completed && !successfull)] do %>
 
-            <% if completed %>
+            <% if completed && successfull%>
               <i class="fa fa-3x fa-check" style="float: right"></i>
+            <% elsif completed && !successfull %>
+              <i class="fa fa-3x fa-times" style="float: right"></i>
             <% end %>
 
             <h4 class="list-group-item-heading">
               <i class="fa fa-2x <%= activity_icon(act) %>"></i>
               <%= act.name %>
             </h4>
-            <p class="list-group-item-text">
-              Nur zum Testen, hier sollten Punkte oder sowas auftauchen!
-            </p>
           <%- end %>
         <%- end %>
       </div>
@@ -72,4 +86,3 @@
   </div>
 
 </div>
-

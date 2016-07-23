@@ -1,0 +1,44 @@
+<div class="container">
+<h1>Listing Course Badges</h1>
+  <h2>Finished Badges</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Badge</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @course_badges_finished.each do |course_badge| %>
+        <tr>
+          <td><img src="<%= course_badge.badge %>"/></td>
+          <td><%= course_badge.description %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h2>Unfinished Badges</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Badge</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @course_badges_unfinished.each do |course_badge| %>
+        <tr>
+          <td><img src="<%= course_badge.badge %>"/></td>
+          <td><%= course_badge.description %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "Back", course_path(params[:course_id]), class: "btn btn-primary" %>
+
+
+</div>

@@ -8,6 +8,9 @@ gem 'mysql2', '~> 0.3.21'
 gem 'devise', '~> 3.2'
 gem 'activeadmin', '~> 1.0.0.pre2'
 gem 'puma'
+# Use exact version for nokogiri
+# Do not change this Version
+gem 'nokogiri', '1.6.8'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3'
@@ -26,7 +29,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+gem 'turbolinks', '~>2.5.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -51,22 +54,32 @@ gem 'closure_tree'
 
 #gem for votes
 gem 'acts_as_votable', '~> 0.10.0'
+# using chartkick for point charts and some helper gems
+gem 'chartkick', '~> 1.2.4'
+gem 'dateslices', '~> 0.0.3'
+gem 'active_median', '~> 0.1.0'
 
 #for scheduling tasks like update emails every week
-gem 'rufus-scheduler', '~> 3.2'
+gem 'sidekiq'
+gem 'sidetiq'
+gem 'sinatra', :require => false
+
 
 gem 'carrierwave'
+
 #omniauth
 gem 'omniauth-facebook'
 
 #for setting the env variables
 gem 'figaro'
 
+#navigation tree
+gem 'breadcrumbs_on_rails'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.4'
   gem "factory_girl_rails"
 end
-
 
 group :development do
   gem 'byebug'
@@ -78,6 +91,7 @@ group :development do
   gem 'capistrano-rails',   require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano3-puma',   require: false
+  gem 'capistrano-sidekiq', require: false
 
 end
 
@@ -85,4 +99,8 @@ group :test do
     gem 'minitest-reporters'
     gem 'minitest'
 
+end
+
+group :production do
+  gem 'skylight', '0.10.5'
 end
