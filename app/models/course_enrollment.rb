@@ -28,64 +28,69 @@ class CourseEnrollment < ActiveRecord::Base
 
   def recommended_activities
     recommendation_num = 5
+    chapters = []
 
-    chapter = unless self.current_chapter.nil?
-                self.current_chapter
-              else
-                self.course.chapters.order(:tier).first
-              end
-
-    chapter_status = self.chapter_statuses.find_by(chapter: chapter)
-    chapter_activities = chapter.activities.order(:tier)
+    unless self.current_chapter.nil?
+      chapters.push(self.current_chapter)
+    else
+      tier = self.course.chapters.order(:tier).first.tier
+      self.course.chapters.where(tier: tier).each {|chapter| chapters.push(chapter)}
+    end
 
     recommended = []
-    case chapter_status.difficultyFit
 
-    # good fit
-    when -0.9...0.9
-      # recommend activities of the current chapter
-      recommended += unfinished_activities(chapter)
+    chapters.each do |chapter|
+      chapter_status = self.chapter_statuses.find_by(chapter: chapter)
+      chapter_activities = chapter.activities.order(:tier)
 
-      # additionally recommend activities of following chapter(s) if not enough activities
-      recommended += successor_activities(chapter) if recommended.length < recommendation_num
-      successors = chapter.successors
-      while recommended.length < recommendation_num && !successors.empty? do
-        next_successors = []
-        successors.each do |successor|
-          recommended += successor_activities(successor)
-          next_successors += successor.successors
-        end
-        successors = next_successors
-      end
+      case chapter_status.difficultyFit
 
-    # too hard
-    when -Float::INFINITY...-0.9
-      recommended += repeatable_activities(chapter)
-      # Recommend from earlier chapters if not enough activities
-      predecessors = chapter.predecessors
-        while recommended.length < recommendation_num && !predecessors.empty?
-          next_predecessors = []
-          predecessors.each do |predecessor|
-            recommended += unfinished_activities(predecessor)
-            next_predecessors += predecessor.predecessors
+      # good fit
+      when -0.9...0.9
+        # recommend activities of the current chapter
+        recommended += unfinished_activities(chapter)
+
+        # additionally recommend activities of following chapter(s) if not enough activities
+        recommended += successor_activities(chapter) if recommended.length < recommendation_num
+        successors = chapter.successors
+        while recommended.length < recommendation_num && !successors.empty? do
+          next_successors = []
+          successors.each do |successor|
+            recommended += successor_activities(successor)
+            next_successors += successor.successors
           end
-          predecessors.each do |predecessor|
-            recommended += repeatable_activities(predecessor)
-          end
-          predecessors = next_predecessors
+          successors = next_successors
         end
 
-    # too easy
-    when 0.9..Float::INFINITY
-      recommended += successor_activities(chapter)
-      successors = chapter.successors
-      while recommended.length < recommendation_num && !successors.empty?
-        next_successors = []
-        successors.each do |successor|
-          recommended += successor_activities(successor)
-          next_successors += successor.successors
+      # too hard
+      when -Float::INFINITY...-0.9
+        recommended += repeatable_activities(chapter)
+        # Recommend from earlier chapters if not enough activities
+        predecessors = chapter.predecessors
+          while recommended.length < recommendation_num && !predecessors.empty?
+            next_predecessors = []
+            predecessors.each do |predecessor|
+              recommended += unfinished_activities(predecessor)
+              next_predecessors += predecessor.predecessors
+            end
+            predecessors.each do |predecessor|
+              recommended += repeatable_activities(predecessor)
+            end
+            predecessors = next_predecessors
+          end
+
+      # too easy
+      when 0.9..Float::INFINITY
+        recommended += successor_activities(chapter)
+        successors = chapter.successors
+        while recommended.length < recommendation_num && !successors.empty?
+          next_successors = []
+          successors.each do |successor|
+            recommended += successor_activities(successor)
+            next_successors += successor.successors
+          end
+          successors = next_successors
         end
-        successors = next_successors
       end
     end
     recommended.slice(0, recommendation_num).uniq
