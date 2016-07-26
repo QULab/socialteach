@@ -51,7 +51,7 @@ class ActivityStatus < ActiveRecord::Base
 	end
 
 	def self.successfull
-		2
+		1
 	end
 
 	def self.failed

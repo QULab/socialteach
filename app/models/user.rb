@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
 
   def completed?(activity)
     enrollment = self.get_enrollment(activity.course)
-    return ActivityStatus.where(activity_id: activity.id,course_enrollment_id: enrollment.id, is_completed: true, status:1).exists?
+    return ActivityStatus.where(activity_id: activity.id,course_enrollment_id: enrollment.id, is_completed: true).exists?
   end
 
   def completed_successfull?(activity)
