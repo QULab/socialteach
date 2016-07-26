@@ -218,7 +218,7 @@ class ActivitiesController < ApplicationController
           @activity.save
           redirect_to curriculum_course_path(@activity.course) , notice: 'You will have to wait for your opponent to complete this now!'
 
-        elsif @activity.content.challenger_id != nil && @activity.content.enemy_bool == false &&@activity.content.challenger_bool == true && @activity.content.enemy_id != current_user.id
+        elsif @activity.content.challenger_id != nil && @activity.content.enemy_bool == false &&@activity.content.challenger_bool == true && @activity.content.enemy_id == current_user.id
           @activity.content.enemy_bool = true
           @activity.save
           counter = 0
