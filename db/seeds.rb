@@ -30,7 +30,9 @@ user10 = User.create(email: 'user10@test.com', username: 'User 10', password: 'p
 user11 = User.create(email: 'qu.socialteach@gmail.com', username: 'Duc', password: 'password', password_confirmation: 'password')
 
 
-
+level1 = Level.create(level: 1, level_pass: 0)
+level2 = Level.create(level: 2, level_pass: 100)
+level3 = Level.create(level: 3, level_pass: 200)
 # Course with Chapters and Activities
 course = Course.create!(name: 'Italian for Beginners', published: true, description: 'A course for people with no prior knowledge of the Italian language', creator_id: instructor.id)
 courseId = course.id
@@ -41,10 +43,6 @@ chap2 = Chapter.create(name: 'Tell me who you are', shortname: 'You', descriptio
 chap3 =Chapter.create(name: 'The most important chapter: Food', shortname: 'Food', description: 'How to order delicious Italian food', tier: 2, course_id: courseId)
 chap4 =Chapter.create(name: 'Becoming a professional Tourist', shortname: 'Tourism', description: 'How to get the most out of a Merit to Italy by asking the right questions', tier: 3, course_id: courseId)
 chap5 =Chapter.create(name: 'Shopping by the Numbers', shortname: 'Shopping', description: 'All about shopping and of course the most important thing to know about: Numbers!', tier: 4, course_id: courseId)
-
-level1 = Level.create(level: 1, level_pass: 0)
-level2 = Level.create(level: 2, level_pass: 100)
-level3 = Level.create(level: 3, level_pass: 200)
 
 act1 = Activity.create!(name: 'Hello World to You', levelpoints: '2', tier: '2', shortname: 'Hello', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example"), level: level1)
 act2 = Activity.create!(name: 'Now you!', levelpoints: '2', tier: '3', shortname: 'You', chapter_id: chap1Id, content: ActivityLecture.new(text: "Example 2"), level: level2)

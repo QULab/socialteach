@@ -56,7 +56,7 @@ class Course < ActiveRecord::Base
 
    def create_default_chapter_and_assessment
      chapter = self.chapters.create!(name: 'Default Chapter', shortname: 'Default', description: 'This is a defualt chapter, containing an initial assessment questionnaire. Feel free to change it', tier: 1)
-     activity = chapter.activities.create!(name: 'Initial Assessment', shortname: 'Assessment', levelpoints: 5, tier: 1, content: ActivityAssessment.create!)
+     activity = chapter.activities.create!(name: 'Initial Assessment', shortname: 'Assessment', levelpoints: 5, tier: 1, content: ActivityAssessment.create!, level: Level.order(:level_pass).first)
      Questionnaire.create!(qu_container: activity.content)
    end
 
