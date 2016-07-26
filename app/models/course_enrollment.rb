@@ -14,6 +14,8 @@ class CourseEnrollment < ActiveRecord::Base
   after_save :set_level
   after_update :set_level
 
+  RECOMMENDATION_NUM = 5
+
   def set_level
   	level = Level.where("level_pass <= ?", self.points(category: "Levelpoints")).order(:level_pass).reverse.first
   	if level != self.level
@@ -108,6 +110,12 @@ class CourseEnrollment < ActiveRecord::Base
     recommend.slice(0, RECOMMENDATION_NUM).uniq
   end
 
+  def next_level
+    next_pass = Level.where("level_pass > ?", self.level.level_pass).order(:level_pass).first.level_pass
+    percent = ((self.points(category: "Levelpoints") - self.level.level_pass ).to_f/(next_pass - self.level.level_pass).to_f * 100).to_i
+    return {:next_pass => next_pass, :percent => percent}
+  end
+
   private
 
   # unfinished (unlocked) activities sorted by tier, difficulty
@@ -161,10 +169,5 @@ class CourseEnrollment < ActiveRecord::Base
       end
     end
     successor_activities.sort_by{|activity| [activity.tier, activity.difficulty]}
-  end
-  def next_level
-    next_pass = Level.where("level_pass > ?", self.level.level_pass).order(:level_pass).first.level_pass
-    percent = ((self.points(category: "Levelpoints") - self.level.level_pass ).to_f/(next_pass - self.level.level_pass).to_f * 100).to_i
-    return {:next_pass => next_pass, :percent => percent}
   end
 end
