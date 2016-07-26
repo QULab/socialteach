@@ -39,6 +39,15 @@
     <h4>
       Recommended Activities
     </h4>
+    <% if course.completed?(current_user) %>
+    <div class='panel panel-success'>
+      <div class='panel-body bg-success text-success'>
+        Congratulations, you completed this course!
+        <%= link_to 'Select Another Course', courses_path , class: "btn btn-primary pull-right"%><br />
+      </div>
+    </div>
+
+    <% end %>
     <% recommended = enrollment.recommended_activities %>
     <% if recommended.empty? %>
       <div class='panel panel-warning'>

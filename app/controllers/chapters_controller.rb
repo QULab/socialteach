@@ -68,10 +68,18 @@ class ChaptersController < ApplicationController
 
   # PUT /chapters/1/skip
   def skip
+    enrollment = @chapter.course.course_enrollments.find_by(user: current_user)
     @chapter.chapter_statuses
-      .find_by(course_enrollment: @chapter.course.course_enrollments.find_by(user: current_user))
+      .find_by(course_enrollment: enrollment)
       .update(skip: true)
-      redirect_to curriculum_course_path(@chapter.course) , notice: "You skipped chapter '#{@chapter.name}'!"
+
+    # Complete Course if all chapters where completed or skipped
+    if @chapter.course.completed?(current_user)
+      enrollment.completed = true
+      enrollment.save
+    end
+
+    redirect_to curriculum_course_path(@chapter.course) , notice: "You skipped chapter '#{@chapter.name}'!"
   end
 
   private

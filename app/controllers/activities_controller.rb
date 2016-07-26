@@ -86,6 +86,12 @@ class ActivitiesController < ApplicationController
         chapter_status.save
       end
 
+      # Complete Course if all chapters where completed or skipped
+      if activity_chapter.course.completed?(current_user)
+        @enrollment.completed = true
+        @enrollment.save
+      end
+
       if @activity.content.is_a?(ActivityExercise) || @activity.content.is_a?(ActivityAssessment)
         redirect_to activity_result_path(@activity) , notice: 'Congratulations, you finished this Activity!'
       else

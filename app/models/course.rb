@@ -59,4 +59,13 @@ class Course < ActiveRecord::Base
      activity = chapter.activities.create!(name: 'Initial Assessment', shortname: 'Assessment', levelpoints: 5, tier: 1, content: ActivityAssessment.create!)
      Questionnaire.create!(qu_container: activity.content)
    end
+
+   ##
+   # Returns true when all chapters of the course are completed or skipped
+   def completed?(user)
+     enrollment = self.course_enrollments.find_by(user: user)
+     enrollment.chapter_statuses.all? do |status|
+       status.skip || status.finished
+     end
+   end
 end
