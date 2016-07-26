@@ -9,7 +9,7 @@ module ActivitiesHelper
 
   # parses mardown and outputs html
   def render_markdown(text)
-    renderer = Redcarpet::Render::HTML.new(escape_html: true, safe_links_only: true)
+    renderer = Redcarpet::Render::HTML.new(escape_html: false, safe_links_only: true)
     markdown = Redcarpet::Markdown.new(renderer, no_intra_emphasis: true, autolink: true, fenced_code_blocks: true)
     return markdown.render(text).html_safe
   end
@@ -47,6 +47,6 @@ module ActivitiesHelper
 
   def get_questions(questions)
     return questions.sample(5) if questions.size > 5
-    return questions 
+    return questions
   end
 end
