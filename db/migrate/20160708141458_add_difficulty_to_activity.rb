@@ -3,7 +3,7 @@ class AddDifficultyToActivity < ActiveRecord::Migration
     add_column :activities, :difficulty, :integer, null: false, default: 0
   end
 
-  Activity.all.each do |act|
+  Activity.find_each do |act|
     unless act.difficulty.present?
       act.update_attributes(:difficulty => 0)
     end
