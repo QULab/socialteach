@@ -9,7 +9,7 @@
     <div class="list-group">
       <% @enrollments.each do |enrollment| %>
         <%- course = enrollment.course %>
-        <%= link_to course_path(course), class: "list-group-item" do %>
+        <%= link_to course_path(course), class: ["list-group-item", ("list-group-item-success" if enrollment.completed)] do %>
           <% if enrollment.completed %>
             <i class="fa fa-3x fa-check-circle" style="float: right"></i>
           <% else %>
