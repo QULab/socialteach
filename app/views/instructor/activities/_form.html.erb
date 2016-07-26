@@ -32,6 +32,10 @@
         <%= f.label :difficulty %><br>
         <%= f.number_field :difficulty, class: "form-control" %>
       </div>
+      <div class="form-group">
+        <%= f.label :Level %><br>
+        <%= f.collection_select :level_id, Level.order(:level), :id, :level, include_blank: true %>
+      </div>
 
 
       <%= f.fields_for :content do |content_form| %>
