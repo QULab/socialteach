@@ -39,10 +39,18 @@
     <h4>
       Recommended Activities
     </h4>
+    <% recommended = enrollment.recommended_activities %>
+    <% if recommended.empty? %>
+      <div class='panel panel-warning'>
+        <div class='panel-body bg-warning text-warning'>
+          There are no activities left recommended for your current chapter and difficulty but you didn't finish the following activities:
+        </div>
+      </div>
+      <% recommended = enrollment.recommend_unfinished %>
+    <% end %>
     <div class="list-group">
-      <%- #TODO use a real function to get recommended activities %>
-      <%- course.chapters.find(2).activities.each do |act| %>
-      <% if act.content.is_a?(ActivityDuell) %>
+      <%- recommended.each do |act| %>
+<% if act.content.is_a?(ActivityDuell) %>
       <% if act.content.master == true %>
         <%= link_to activity_path(act), class: "list-group-item" do %>
         <h4 class="list-group-item-heading">
