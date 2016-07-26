@@ -1,24 +1,32 @@
-<div style="flex-flow: row wrap; display: flex">
-  <div style="flex:1 0 40%;">
-    My learning points:
+<div class="panel panel-default">
+  <div class="panel-heading"> Profile Points </div>
+  <div class="panel-body">
+    <div style="flex-flow: row wrap; display: flex">
+      <div style="flex:1 0 30%;">
+        My learning points:
 
-    <%= line_chart @user.score_points(category: "Learningpoints").group_by_day(:created_at, "sum", "num_points") %>
-  </div>
+        <%= line_chart @user.score_points(category: "Learningpoints").group_by_day(:created_at, "sum", "num_points") %>
+      </div>
 
-  <div style="flex:1 0 40%;">
-    My social points:
+      <div style="flex:1 0 40%;">
+        My social points:
 
-    <%= line_chart @user.score_points(category: "Socialpoints").group_by_day(:created_at, "sum", "num_points") %>
+        <%= line_chart @user.score_points(category: "Socialpoints").group_by_day(:created_at, "sum", "num_points") %>
+      </div>
+    </div>
   </div>
 </div>
 
-<div style="flex-flow: row wrap; display: flex">
-  <% @user.course_enrollments.each do |enrollment| %>
-      <div style="flex:1 0 50%">
-        <%= enrollment.course.name %> - Course: <%= enrollment.points(category: "Levelpoints") %><br>
-        Your current progress in <%= enrollment.course.name %><br>
-        <%= line_chart enrollment.score_points(category: "Levelpoints").group_by_day(:created_at, "sum", "num_points") %>
-        <br>
-      </div>
-  <% end %>
+<div class="panel panel-default">
+  <div class="panel-heading"> Course Points </div>
+  <div class="panel-body" style="flex-flow: row wrap; display: flex">
+    <% @user.course_enrollments.each do |enrollment| %>
+        <div style="flex:1 0 50%">
+          <%= enrollment.course.name %> - Course: <%= enrollment.points(category: "Levelpoints") %><br>
+          Your current progress in <%= enrollment.course.name %><br>
+          <%= line_chart enrollment.score_points(category: "Levelpoints").group_by_day(:created_at, "sum", "num_points") %>
+          <br>
+        </div>
+    <% end %>
+  </div>
 </div>

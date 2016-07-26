@@ -6,6 +6,8 @@
               Add friend
           <%- end %>
       <% end %>
+      <% if @user.id==current_user.id %> <%= link_to "Edit Profile", users_edit_profile_path(), class: "btn btn-primary" %>
+      <% end %>
     </h1>
   </div>
 
@@ -14,14 +16,12 @@
       <p> <%= avatar_for(@user) %></p>
       <% if @user.birthday != nil %> <p> My Birthday : <%= @user.birthday.strftime("%d.%m.%Y") %></p>
       <% end %>
-      <p> My Badges : </p>
       <p> Learning Points : <%= @user.points(category: "Learningpoints") %></p>
       <p> Social Points : <%= @user.points(category: "Socialpoints") %> </p>
     </div>
     <div class="col-xs-6 col-md-4" style="flex: 1 0 100%;">
       <h1>About me :</h1>
       <p><%= @user.aboutme %></p>
-
       <div>
         <h2>My friends on socialteach:</h2>
         <% for friendship in @user.friendships %>
@@ -51,12 +51,28 @@
 
     </div>
 
-
-    <div class="div2">
-
-      <% if @user.id==current_user.id %><p> <%= link_to "Edit Profile", users_edit_profile_path() %></p>
-      <% end %>
+    <div class="panel panel-default" style="flex: 1 0 100%">
+      <div class="panel-heading">General Badges</div>
+      <div class="panel-body">
+        <% @user.badges.each do |badge| %>
+          <%= badge.name %>
+        <% end %>
+      </div>
     </div>
+
+    <div class="panel panel-default" style="flex: 1 0 100%">
+      <div class="panel-heading">Course Badges</div>
+      <div class="panel-body">
+        <% @user.course_enrollments.each do |enrollment| %>
+          <%= enrollment.course.name%>:<br>
+          <% enrollment.course_badges.each do |badge| %>
+            <img src="<%= badge.badge %>"/>
+          <% end %>
+          <hr>
+        <% end %>
+      </div>
+    </div>
+    
   </div>
 </div>
 
