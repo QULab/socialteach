@@ -104,7 +104,28 @@
           Statistics
         </h1>
       </div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <span class="badge">
+            <%= @course.get_number_of_enrollments %>
+          </span>
+          Enrolled Users
+        </li>
+        <li class="list-group-item">
+          <span class="badge">
+            <%= @course.get_number_of_completed_enrollments %>
+          </span>
+          Users who finished this Course
+        </li>
+        <li class="list-group-item">
+          <span class="badge">
+            <%= @course.get_number_of_new_enrollments(30) %>
+          </span>
+          New Users in the last 30 days
+        </li>
+      </ul>
     </div>
+
     <div class="col-md-4">
       <div class="page-header">
         <h1>
@@ -133,12 +154,12 @@
             <td>
               <%= link_to(enrollment[:enrollment].user) do %>
               <img src="http://vector.me/files/images/1/5/153253/male_user_icon_clip_art.jpg" class="img-circle" alt="Cinque Terre" width="46" height="38">
-              
+
               <%= enrollment[:enrollment].user.username %>
               <% end %>
             </td>
             <td><%= enrollment[:points] %></td>
-            
+
           </tr>
 
           <% end %>
@@ -150,7 +171,7 @@
   </div>
 
   <div class="row">
-    <%= render 'shared/feedback', commentable: course %>  
+    <%= render 'shared/feedback', commentable: course %>
   </div>
 
   <div class="row">
