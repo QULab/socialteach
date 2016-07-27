@@ -55,20 +55,23 @@
 
     <div class="panel panel-default" style="flex: 1 0 100%">
       <div class="panel-heading">General Badges</div>
-      <div class="panel-body">
+      <div class="panel-body text-center">
         <% @user.badges.each do |badge| %>
-          <%= badge.name %>
+          <div class="col-xs-1 col-md-1 wrapper text-center">
+            <%= image_tag badge.custom_fields[:image], size:"80x80", alt: badge.name, description: badge.description %>
+            <p> <%= badge.name %> </p>
+         </div>
         <% end %>
       </div>
     </div>
 
     <div class="panel panel-default" style="flex: 1 0 100%">
       <div class="panel-heading">Course Badges</div>
-      <div class="panel-body">
+      <div class="panel-body text-center">
         <% @user.course_enrollments.each do |enrollment| %>
-          <%= enrollment.course.name%>:<br>
+          <%= enrollment.course.name%><br>
           <% enrollment.course_badges.each do |badge| %>
-            <img src="<%= badge.badge %>"/>
+            <img src="<%= badge.badge %>" description="<%= badge.description %>" />
           <% end %>
           <hr>
         <% end %>
