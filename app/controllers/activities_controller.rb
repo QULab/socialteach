@@ -222,6 +222,8 @@ class ActivitiesController < ApplicationController
           @activity.content.enemy_bool = false
           @activity.content.challenger_bool = true
           @activity.save
+          en= User.find(params[:enemy])
+          #DuellMailer.send_invite(current_user,en).deliver_now
           redirect_to curriculum_course_path(@activity.course) , notice: 'You will have to wait for your opponent to complete this now!'
 
         elsif @activity.content.challenger_id != nil && @activity.content.enemy_bool == false &&@activity.content.challenger_bool == true && @activity.content.enemy_id == current_user.id
@@ -237,9 +239,9 @@ class ActivitiesController < ApplicationController
           number = @activity.content.challenger_id.to_i
           challenger= User.find(number)
           enrollment_chall = User.find(number).get_enrollment(@activity.course)
-          status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity})
+          status = ActivityStatus.new({is_completed: true, course_enrollment: enrollment, activity: @activity, status:ActivityStatus.successfull })
           status.save
-          status2 = ActivityStatus.new({is_completed: true, course_enrollment: enrollment_chall, activity: @activity})
+          status2 = ActivityStatus.new({is_completed: true, course_enrollment: enrollment_chall, activity: @activity,status: ActivityStatus.successfull})
           status2.save
           if @activity.content.score < counter
             if challenger.lose == nil
@@ -252,7 +254,8 @@ class ActivitiesController < ApplicationController
             if current_user.win == nil
               current_user.win = 1
             else
-              current_user.win = challenger.win +1
+              tpc = current_user.win
+              current_user.win = tpc +1
             end
             challenger.save
             current_user.save
@@ -269,7 +272,8 @@ class ActivitiesController < ApplicationController
             if current_user.lose == nil
               current_user.lose = 1
             else
-              current_user.lose = challenger.lose +1
+              tpa = current_user.lose
+              current_user.lose = tpa +1 
             end
             challenger.save
             current_user.save
