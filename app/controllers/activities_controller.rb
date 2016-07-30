@@ -245,7 +245,8 @@ class ActivitiesController < ApplicationController
             if challenger.lose == nil
               challenger.lose = 1
             else
-              challenger.lose = challenger.lose +1
+              tmpa= challenger.lose 
+              challenger.lose = tmpa +1
             end
             challenger.save
             if current_user.win == nil
@@ -261,7 +262,8 @@ class ActivitiesController < ApplicationController
             if challenger.win == nil
               challenger.win = 1
             else
-              challenger.win = challenger.win +1
+              tmpc= challenger.win
+              challenger.win = tmpc +1
             end
             challenger.save
             if current_user.lose == nil

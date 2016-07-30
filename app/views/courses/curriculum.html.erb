@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="list-group">
-        <% activities = @active_chapter.activities.order("tier ASC") %>
+        <% activities =filterAct(@active_chapter,current_user)%>
         <%- activities.each do |act| %>
           <% completed = current_user.completed?(act) %>
           <% successfull = current_user.completed_successfull?(act) %>
