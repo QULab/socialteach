@@ -1,0 +1,18 @@
+<p>
+  Hello <%= @user.username %>
+</p>
+<p>
+	Your duell on socialteach has finished.
+</p>
+<% if @flag == true %>
+	<p>
+		You have won the match against <%= @opponent.username %>.
+	</p>
+<% elsif @flag == false %>
+<p>
+	You have lost the match against <%= @opponent.username %>.
+</p>
+<% end %>
+<p>
+	Thanks!
+</p>
