@@ -2,7 +2,12 @@ class Graph::ChaptersController < ApplicationController
   def show
     id = params[:id]
     chapter = Chapter.find id
-    @activities = chapter.activities.where.not(content_type:ActivityDuell)
+    duells = chapter.activities.where(content_type:ActivityDuell)
+    result = duells.select do |act|
+        act.content.master == false
+        end
+    tmp = chapter.activities.all - result
+    @activities = tmp
 
     @edges = @activities.map do |activity|
       activity.successors.map do |succ|
