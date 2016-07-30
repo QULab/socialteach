@@ -15,4 +15,13 @@ module CoursesHelper
     		true
     	end
     end
+    def filterAct(activ,user)
+        activity=activ.activities.order("tier ASC")
+        duells = activ.activities.where(content_type:ActivityDuell)
+        result = duells.select do |act|
+            act.content.enemy_id != user.id && act.content.challenger_id != user.id
+        end
+        tmp = activity - result
+        return tmp
+    end
 end

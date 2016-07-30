@@ -105,7 +105,7 @@ class Instructor::ActivitiesController < Instructor::BaseController
     require_permission(@activity.course)
     @activity.destroy
     respond_to do |format|
-      format.html { redirect_to instructor_chapter_path(@activity.chapter), notice: 'Activity was successfully destroyed.' }
+      format.html { redirect_to edit_instructor_chapter_path(@activity.chapter), notice: 'Activity was successfully destroyed.' }
     end
   end
 

@@ -1,61 +1,83 @@
 <div class="container">
     <div class="page-header">
-  <h1><%= @user.username %>'s Profile
-  <% unless @user.id == current_user.id || Friendship.find_by_user_id_and_friend_id(current_user.id,@user.id)%>
-    <%= link_to friendships_path(:friend_id => @user), :method => :post, class: "btn btn-primary" do %>
-      Add friend
-    <%- end %>
-  <% end %>
-  </h1>
-	</div>
-	<div class="row">
-  <div class="col-xs-6 col-md-4">
-  	<p> <%= avatar_for(@user) %></p> 
-    <% if @user.birthday != nil %> <p> My Birthday : <%= @user.birthday.strftime("%d.%m.%Y")   %></p> <% end %>
-    <p> My Badges :  </p>
-    <p> Learning Points : <%= @user.points(category: "Learningpoints") %></p>
-    <p> Social Points : <%= @user.points(category: "Socialpoints") %> </p>
-    <% if @user.win == nil %> <p> Wins : 0</p> <% else %>Wins : <%= @user.win   %> <% end %>
-    <% if @user.lose == nil %> <p> Loses : 0 </p><%else %> Loses : <%= @user.lose   %> <% end %>
-</div>
-  <div class="col-xs-6 col-md-4">    
-  	<h1>About me :</h1>
-  	<p><%= @user.aboutme %></p>
-
-    <div>
-      <h2>My friends on socialteach:</h2>
-      <% for friendship in @user.friendships %>
-        <li>
-          <%= link_to friendship.friend do %>
-            <%= friendship.friend.username %>
-          <% end %>
-          <% if current_user == @user %>
-            (<%= link_to "remove", friendship, :method => :delete %>)
-          <% end %>
-        </li>
+      <h1><%= @user.username %>'s Profile
+      <% unless @user.id == current_user.id || Friendship.find_by_user_id_and_friend_id(current_user.id,@user.id)%>
+        <%= link_to friendships_path(:friend_id => @user), :method => :post, class: "btn btn-primary" do %>
+          Add friend
+        <%- end %>
       <% end %>
-
-      <h2>Friended by Users:</h2>
-      <% for friendship in @user.inverse_friendships %>
-        <li>
-          <%= link_to friendship.user do %>
-            <%= friendship.user.username %>
-          <% end %>
-        </li>
+      <% if @user.id==current_user.id %> <%= link_to "Edit Profile", users_edit_profile_path(), class: "btn btn-primary" %>
       <% end %>
-    </div>
-    <div>
-      <h2>Points History:</h2>
-      <%= render 'statistics/coursegraph' %>
+      </h1>
     </div>
 
-</div>
+  <div class="column" style="flex-flow: row wrap; display: flex;">
+    <div class="col-xs-6 col-md-4" style="flex: 1 0 100%;">
+      <p> <%= avatar_for(@user) %></p>
+      <% if @user.birthday != nil %> <p> My Birthday : <%= @user.birthday.strftime("%d.%m.%Y") %></p>
+      <% end %>
+      <p> Learning Points : <%= @user.points(category: "Learningpoints") %></p>
+      <p> Social Points : <%= @user.points(category: "Socialpoints") %> </p>
+      <% if @user.win == nil %> <p> Wins : 0</p> <% else %>Wins : <%= @user.win   %> <% end %>
+      <% if @user.lose == nil %> <p> Loses : 0 </p><%else %> Loses : <%= @user.lose   %> <% end %>
+    </div>
+    <div class="col-xs-6 col-md-4" style="flex: 1 0 100%;">
+      <h1>About me :</h1>
+      <p><%= @user.aboutme %></p>
+      <div>
+        <h2>My friends on socialteach:</h2>
+        <% for friendship in @user.friendships %>
+            <li>
+              <%= link_to friendship.friend do %>
+                  <%= friendship.friend.username %>
+              <% end %>
+              <% if current_user == @user %>
+                  (<%= link_to "remove", friendship, :method => :delete %>)
+              <% end %>
+            </li>
+        <% end %>
 
-</div>
+        <h2>Friended by Users:</h2>
+        <% for friendship in @user.inverse_friendships %>
+            <li>
+              <%= link_to friendship.user do %>
+                  <%= friendship.user.username %>
+              <% end %>
+            </li>
+        <% end %>
+      </div>
+      <div>
+        <h2>Points History:</h2>
+        <%= render 'statistics/coursegraph' %>
+      </div>
 
-<div class="div2">
+    </div>
 
-       <% if @user.id==current_user.id %><p> <%= link_to "Edit Profile", users_edit_profile_path() %></p><% end %>
-</div>
+    <div class="panel panel-default" style="flex: 1 0 100%">
+      <div class="panel-heading">General Badges</div>
+      <div class="panel-body text-center">
+        <% @user.badges.each do |badge| %>
+          <div class="col-xs-1 col-md-1 wrapper text-center">
+            <%= image_tag badge.custom_fields[:image], size:"80x80", alt: badge.name, description: badge.description %>
+            <p> <%= badge.name %> </p>
+         </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="panel panel-default" style="flex: 1 0 100%">
+      <div class="panel-heading">Course Badges</div>
+      <div class="panel-body text-center">
+        <% @user.course_enrollments.each do |enrollment| %>
+          <%= enrollment.course.name%><br>
+          <% enrollment.course_badges.each do |badge| %>
+            <img src="<%= badge.badge %>" description="<%= badge.description %>" />
+          <% end %>
+          <hr>
+        <% end %>
+      </div>
+    </div>
+    
+  </div>
 </div>
 

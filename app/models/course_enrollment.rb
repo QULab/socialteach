@@ -111,8 +111,14 @@ class CourseEnrollment < ActiveRecord::Base
   end
 
   def next_level
-    next_pass = Level.where("level_pass > ?", self.level.level_pass).order(:level_pass).first.level_pass
-    percent = ((self.points(category: "Levelpoints") - self.level.level_pass ).to_f/(next_pass - self.level.level_pass).to_f * 100).to_i
+    next_l = Level.where("level_pass > ?", self.level.level_pass).order(:level_pass).first
+    next_pass = self.points(category: "Levelpoints")
+    percent = 100
+    if next_l.present?
+      next_pass = next_l.level_pass
+      percent = ((self.points(category: "Levelpoints") - self.level.level_pass ).to_f/(next_pass - self.level.level_pass).to_f * 100).to_i
+    end
+    
     return {:next_pass => next_pass, :percent => percent}
   end
 

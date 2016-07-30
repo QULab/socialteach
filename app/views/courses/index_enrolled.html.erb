@@ -23,7 +23,7 @@
           </h6>
           <p class="list-group-item-text">
           <label class="label label-info">Level <%= enrollment.level.level %></label>
-          <label class="label label-primary"><%= enrollment.progress[:percent] %>% Complete</label>
+          <label class="label label-primary"><%= (enrollment.progress[:percent]*100).to_i %>% Complete</label>
             <label class="label label-success"><%= enrollment.course_badges.count %> Badges</label>
           </p>
         <%- end %>
