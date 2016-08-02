@@ -66,7 +66,7 @@ class Instructor::ActivitiesController < Instructor::BaseController
   end
 
   ##
-  # Creates a new activity if the content type is ActivityExercise or
+  # Creates a new activity. If the content type is ActivityExercise or
   # ActivityAssessment a questionnaire is created as well. Only the creator of
   # the course may create new activities.
   # --
