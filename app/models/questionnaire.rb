@@ -1,3 +1,6 @@
+##
+# Represents a questionnaire belonging to an exercise, assessment or feedback and
+# containing multiple choice questions.
 class Questionnaire < ActiveRecord::Base
   has_many :m_questions, dependent: :destroy
   has_many :completed_questionnaires

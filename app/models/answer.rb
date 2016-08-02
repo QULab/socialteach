@@ -1,3 +1,5 @@
+##
+# Represents an answer to a MQuestion.
 class Answer < ActiveRecord::Base
   belongs_to :m_question
   # can be the correct answer of a question

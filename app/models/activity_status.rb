@@ -50,10 +50,14 @@ class ActivityStatus < ActiveRecord::Base
 		end
 	end
 
+	##
+	# The value representing a successfully completed activity.
 	def self.successfull
 		1
 	end
 
+	##
+	# The value representing a completed but failed activity.
 	def self.failed
 		-1
 	end

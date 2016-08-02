@@ -1,3 +1,5 @@
+##
+# Represents the enrollment of a specific user in a specific course.
 class CourseEnrollment < ActiveRecord::Base
   has_merit
 
@@ -30,6 +32,8 @@ class CourseEnrollment < ActiveRecord::Base
   	return {:finished_activities => finished_activities, :total_activities => total_activities, :percent => finished_activities.to_f/total_activities.to_f}
   end
 
+  ##
+  # The activities recommended next for the user.
   def recommended_activities
 
     chapters = []
@@ -118,7 +122,7 @@ class CourseEnrollment < ActiveRecord::Base
       next_pass = next_l.level_pass
       percent = ((self.points(category: "Levelpoints") - self.level.level_pass ).to_f/(next_pass - self.level.level_pass).to_f * 100).to_i
     end
-    
+
     return {:next_pass => next_pass, :percent => percent}
   end
 

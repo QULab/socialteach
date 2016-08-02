@@ -1,3 +1,5 @@
+##
+# Represents a multiple choice question in a questionnaire.
 class MQuestion < ActiveRecord::Base
   belongs_to :questionnaire
   belongs_to :correct_answer, class_name: "Answer", :foreign_key => 'correct_answer_id'
