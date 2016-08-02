@@ -23,9 +23,11 @@ class CourseEnrollmentsController < ApplicationController
   def edit
   end
 
+  ##
+  # Create a new enrollment, if the user is not already enrolled in that course.
+  # --
   # POST /course_enrollments
   # POST /course_enrollments.json
-  # Create a new enrollment, if the user is not already enrolled in that course
   def create
     course_id = course_enrollment_params[:course_id]
 

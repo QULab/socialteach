@@ -3,15 +3,19 @@ class CoursesController < BaseController
 
   add_breadcrumb "Home", :root_path
 
+  ##
+  # Shows all courses that are published.
+  # --
   # GET /courses
-  # GET /courses.json
   def index
     add_breadcrumb "Courses", courses_path()
     @courses = Course.all_published_courses
   end
 
+  ##
+  # Show one specific course if it is published.
+  # --
   # GET /courses/1
-  # GET /courses/1.json
   def show
     @duell = ActivityDuell.all.where(enemy_id: current_user.id)
     if @course.published
@@ -21,6 +25,12 @@ class CoursesController < BaseController
     end
   end
 
+  ##
+  # Show the index page for enrollmets:
+  # Shows the current user all courses where he is enrolled. Redirects to
+  # course#index if there are no enrollments for this user.
+  # --
+  # GET /my_courses
   def index_enrolled
     authenticate_user!
     set_enrollments(current_user)
@@ -34,6 +44,11 @@ class CoursesController < BaseController
     end
   end
 
+  ##
+  # Shows the enrolled user an overview over the course content of one specific
+  # course.
+  # --
+  # GET /courses/1/curriculum
   def curriculum
     authenticate_user!
     # check for enrollment
@@ -46,6 +61,9 @@ class CoursesController < BaseController
     @active_chapter = Chapter.find_by_id(params[:chapter]) || current_chapter || @course.chapters.first
   end
 
+  ##
+  # Posts the users feedback to a course. Creates a new completed questionnarie.
+  # --
   # POST /courses/1/feedback
   def feedback
     questionnaire = @course.feedback.questionnaire
