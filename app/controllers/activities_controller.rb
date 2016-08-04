@@ -183,18 +183,22 @@ class ActivitiesController < ApplicationController
         -1
       end
     end
-
+    # Activity is a dell
     def complete_duell
+      # if the duell has not started yet
       if @activity.content.challenger_id == nil
           new_duell_id = ActivityDuell.all.size
           new_duell_id = new_duell_id+1
+          # create a new Duell which is a copy of the one the current user has started
           new_duell = ActivityDuell.new(@activity.content.attributes.merge({:id => new_duell_id}))
           new_duell.master= true
           new_duell.save
           h=Questionnaire.create(qu_container: new_duell)
           h.save
           counter = 0
+          # copying the content of the questionnaire
           @activity.content.questionnaire.m_questions.each_with_index do |i, index|
+            # getting the score of the challenger
             if Answer.find(params[:question][index.to_s.to_sym][:answer_id]).correct
                     counter = counter +1
             end
@@ -210,12 +214,14 @@ class ActivitiesController < ApplicationController
             end
           end
           @activity.content.score = counter
+          # setting the score of the challenger
           @activity.content.save
           puts @activity.content.score
           new_act_id= Activity.all.size
           new_act_id = new_act_id+1
           new_act = Activity.new(@activity.attributes.merge({:id => new_act_id, :content_id => new_duell.id}))
           new_act.save
+          # setting the activities attributes
           @activity.content.master = false
           @activity.content.enemy_id= params[:enemy]
           @activity.content.challenger_id = current_user.id
@@ -223,14 +229,17 @@ class ActivitiesController < ApplicationController
           @activity.content.challenger_bool = true
           @activity.save
           en= User.find(params[:enemy])
+          # deliver an invitation the the opponent user
           DuellMailer.send_invite(current_user,en).deliver_now
           redirect_to curriculum_course_path(@activity.course) , notice: 'You will have to wait for your opponent to complete this now!'
 
         elsif @activity.content.challenger_id != nil && @activity.content.enemy_bool == false &&@activity.content.challenger_bool == true && @activity.content.enemy_id == current_user.id
+          # else the opponent user is the current user completing the duell
           @activity.content.enemy_bool = true
           @activity.save
           counter = 0
           @activity.content.questionnaire.m_questions.each_with_index do |i, index|
+            # calculating the score of the opponent user
             if Answer.find(params[:question][index.to_s.to_sym][:answer_id]).correct
                     counter = counter +1
             end
@@ -244,6 +253,7 @@ class ActivitiesController < ApplicationController
           status2 = ActivityStatus.new({is_completed: true, course_enrollment: enrollment_chall, activity: @activity,status: ActivityStatus.successfull})
           status2.save
           if @activity.content.score < counter
+            # checking for win/lose and setting the user win/lose
             if challenger.lose == nil
               challenger.lose = 1
             else
@@ -260,9 +270,11 @@ class ActivitiesController < ApplicationController
             challenger.save
             current_user.save
             DuellResultMailer.send_result(en, current_user, false)
+            # send the result to the challenger
             redirect_to curriculum_course_path(@activity.course) , notice: 'Congratulations, you won this duell.'
           end
           if @activity.content.score > counter
+            # checking for win/lose and setting the user win/lose
             if challenger.win == nil
               challenger.win = 1
             else
@@ -279,9 +291,11 @@ class ActivitiesController < ApplicationController
             challenger.save
             current_user.save
             DuellResultMailer.send_result(en, current_user, true)
+            # send the result to the challenger
             redirect_to curriculum_course_path(@activity.course) , notice: 'Try harder next time, you lost this duell.'
           end
           if @activity.content.score == counter
+            # else it is a tie
             redirect_to curriculum_course_path(@activity.course) , notice: 'It is a tie!'
           end
       end
