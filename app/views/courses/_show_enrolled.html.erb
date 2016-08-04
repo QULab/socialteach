@@ -100,7 +100,7 @@
         </h1>
       </div>
       <div class="page-body">
-        <% course.course_badges.take(3).each do |badge| %>
+        <% (course.course_badges - enrollment.course_badges).take(3).each do |badge| %>
           <div class="col-md-4">
           <img src="<%= badge.badge %>" title="<%= badge.description %>"/>
           </div>
