@@ -5,16 +5,17 @@ module CoursesHelper
     end
 
     def get_activity(duell)
-
     	return Activity.where(content: duell)[0].id
     end
+
     def get_activity_status(duell)
-    	if duell.enemy_bool == false && duell.challenger_bool ==true 
+    	if duell.enemy_bool == false && duell.challenger_bool ==true
     		return false
     	else
     		true
     	end
     end
+
     def filterAct(activ,user)
         activity=activ.activities.order("tier ASC")
         duells = activ.activities.where(content_type:ActivityDuell)

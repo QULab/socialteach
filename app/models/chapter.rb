@@ -1,5 +1,6 @@
 ##
 # Represents a chapter of a course.
+# Chapters divide a course into different sub topics and can contain several activities.
 class Chapter < ActiveRecord::Base
 
   after_create :create_chapter_statuses

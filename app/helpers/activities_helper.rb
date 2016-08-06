@@ -11,7 +11,7 @@ module ActivitiesHelper
   end
 
   ##
-  # Parses mardown and returns html
+  # Parses markdown input and returns the resulting html
   def render_markdown(text)
     renderer = Redcarpet::Render::HTML.new(escape_html: false, safe_links_only: true)
     markdown = Redcarpet::Markdown.new(renderer, no_intra_emphasis: true, autolink: true, fenced_code_blocks: true)
@@ -63,7 +63,7 @@ module ActivitiesHelper
   end
 
   ##
-  # Returns the percentatge for the given score rounded to two decimal places.
+  # Returns the percentage for the given score rounded to two decimal places.
   def calc_rounded_percentage(score)
     (score * 100).round(2)
   end

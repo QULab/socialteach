@@ -1,5 +1,7 @@
 ##
 # Represents a course.
+# Courses teach a skill or knowledge in a specific area.
+# They can consist of several chapters, each containing activities to a sub topic of the courses topic.
 class Course < ActiveRecord::Base
 
   after_save :create_default_feedback
@@ -23,13 +25,13 @@ class Course < ActiveRecord::Base
     end
 
     ##
-    # Returns the number of enrollments for this course
+    # Returns the number of enrollments for this course (= the number of users who are enrolled)
     def get_number_of_enrollments
       CourseEnrollment.where("course_id = ?", self.id).count
     end
 
     ##
-    # Returns the number of enrollments that are completed
+    # Returns the number of enrollments that are completed (= the number of users who completed this course)
     def get_number_of_completed_enrollments
       CourseEnrollment.where("course_id = ? AND completed = ?", self.id, true).count
     end

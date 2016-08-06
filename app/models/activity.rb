@@ -1,5 +1,6 @@
 ##
 # Represents an activity in a course's chapter.
+# An Activity is the smallest unit of a course and can contain different types of content
 class Activity < ActiveRecord::Base
 	after_save :create_default_feedback
 
@@ -62,9 +63,8 @@ class Activity < ActiveRecord::Base
   end
 
 	##
-	# The color depending on the type of the activity's content.
+	# A hex color code (as string) depending on the type of the activity's content.
 	# --
-  # TODO: Update switch statment as soon as other content classes exist!
   def color
     case content
       when ActivityLecture

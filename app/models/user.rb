@@ -61,7 +61,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  # this method accepts either a course object or a course_id
+  ##
+  # Checks if the user is enrolled in the given course.
+  # This method accepts either a course object or a course_id
   def is_enrolled?(course)
     if course.is_a?(Course)
       return CourseEnrollment.where("user_id = ? AND course_id = ?", self.id, course.id).exists?
@@ -70,7 +72,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  # this method accepts either a course object or a course_id
+  # Returns the CourseEnrollment for the user and the given Course.
+  # This method accepts either a course object or a course_id
   def get_enrollment(course)
     if course.is_a?(Course)
       enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", self.id, course.id).first
@@ -80,11 +83,17 @@ class User < ActiveRecord::Base
     return enrollment
   end
 
+  ##
+  # Checks if the user completed the given activity.
+  # The activity must be passed as an object.
   def completed?(activity)
     enrollment = self.get_enrollment(activity.course)
     return ActivityStatus.where(activity_id: activity.id,course_enrollment_id: enrollment.id, is_completed: true).exists?
   end
 
+  ##
+  # Checks if the user completed the given activity successfully (relevant for exercise, assessment, duell).
+  # The activity must be passed as an object.
   def completed_successfull?(activity)
     enrollment = self.get_enrollment(activity.course)
     status = ActivityStatus.where("activity_id = ? AND course_enrollment_id = ?", activity.id, enrollment.id).order("created_at").last
@@ -95,6 +104,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  ##
+  # Returns an array containing all courses the user created.
   def get_created_courses
     unless self.is_instructor
       return nil
