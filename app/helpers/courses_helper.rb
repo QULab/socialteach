@@ -9,14 +9,16 @@ module CoursesHelper
         # getting the activity of the duell (because the duell is the content of that activity)
     	return Activity.where(content: duell)[0].id
     end
+
     def get_activity_status(duell)
         # checking if the duell is already completed
-    	if duell.enemy_bool == false && duell.challenger_bool ==true 
+    	if duell.enemy_bool == false && duell.challenger_bool ==true
     		return false
     	else
     		true
     	end
     end
+
     def filterAct(activ,user)
         # filtering for the activities without the false duells
         activity=activ.activities.order("tier ASC")

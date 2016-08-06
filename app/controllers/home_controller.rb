@@ -2,7 +2,9 @@ class HomeController < ApplicationController
 
   include ApplicationHelper
 
-
+  ##
+  # Root path shows index. Redirects to login/register page if user is not
+  # signed in.
   def index
     if user_signed_in?
     	add_breadcrumb "Home", root_path()

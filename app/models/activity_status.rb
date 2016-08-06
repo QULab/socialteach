@@ -1,3 +1,5 @@
+##
+# An ActivityStatus saves one user's progress on one activity.
 class ActivityStatus < ActiveRecord::Base
 	belongs_to :activity
 	belongs_to :course_enrollment
@@ -50,10 +52,14 @@ class ActivityStatus < ActiveRecord::Base
 		end
 	end
 
+	##
+	# The value representing a successfully completed activity.
 	def self.successfull
 		1
 	end
 
+	##
+	# The value representing a completed but failed activity.
 	def self.failed
 		-1
 	end

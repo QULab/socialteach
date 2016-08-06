@@ -1,3 +1,6 @@
+##
+# Represents a chapter of a course.
+# Chapters divide a course into different sub topics and can contain several activities.
 class Chapter < ActiveRecord::Base
 
   after_create :create_chapter_statuses
@@ -27,7 +30,8 @@ class Chapter < ActiveRecord::Base
 
   before_validation :assign_tier
 
-  # returns a list of all chapters, that are valid predecessors for this chapter
+  ##
+  # Returns a list of all chapters, that are valid predecessors for this chapter
   def valid_predecessors
     course_chapters = self.course.chapters.where.not(id: self.id).to_a
     course_chapters.select! do |chapter|
@@ -59,8 +63,8 @@ class Chapter < ActiveRecord::Base
     return {:total_activities => total_activities, :finished_activities => finished_activities, :percent => percent}
   end
 
-
-  # whether the given user completed all actvities of the chapter
+  ##
+  # Whether the given user completed all actvities of the chapter
   def completed?(user)
     course_enrollment = self.course.course_enrollments.find_by(user: user)
 
@@ -71,14 +75,16 @@ class Chapter < ActiveRecord::Base
     end
   end
 
+  ##
+  # The chapter status for the given user.
   def get_status(user)
     course_enrollment = self.course.course_enrollments.find_by(user: user)
     self.chapter_statuses.find_by(course_enrollment: course_enrollment)
   end
 
   ##
-  # checks if this chapter is locked for the given user
-  # locked chapters are those, where the user has not completed the necessary requirements
+  # Checks if this chapter is locked for the given user
+  # Locked chapters are those, where the user has not completed the necessary requirements
   def locked?(user)
     predecessors = self.predecessors.to_a
     enrollment = CourseEnrollment.where("user_id = ? AND course_id = ?", user.id, self.course.id).first

@@ -5,6 +5,9 @@ class ActivitiesController < ApplicationController
   before_action :set_enrollment, only: [:complete, :feedback]
 
 
+  ##
+  # Show the activity to the authenticated and enrolled user
+  # --
   # GET /activities/1
   # GET /activities/1.json
   def show
@@ -31,6 +34,9 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  ##
+  # Called whenever a User completes an activity. Creates an ActivityStatus and
+  # a CompletedQuestionnaire if activity was an exercise/assessment.
   def complete
     if  @activity.content.is_a?(ActivityDuell)
       complete_duell
@@ -101,6 +107,10 @@ class ActivitiesController < ApplicationController
     #redirect_to curriculum_course_path(@activity.course) , notice: 'Nothing'
   end
 
+  ##
+  # Posts the feedback of a user. Creates a CompletedQuestionnaire for this
+  # activity's feedback questionnaire.
+  # --
   # POST /activities/1/feedback
   def feedback
     questionnaire = @activity.feedback.questionnaire
@@ -130,6 +140,10 @@ class ActivitiesController < ApplicationController
     head :no_content
   end
 
+  ##
+  # Gets the results page for an ActivityExercise or Assessment. Always uses the
+  # most recent results.
+  # --
   # GET /activities/1/result
   def result
     # check enrollment
@@ -257,7 +271,7 @@ class ActivitiesController < ApplicationController
             if challenger.lose == nil
               challenger.lose = 1
             else
-              tmpa= challenger.lose 
+              tmpa= challenger.lose
               challenger.lose = tmpa +1
             end
             challenger.save
@@ -286,7 +300,7 @@ class ActivitiesController < ApplicationController
               current_user.lose = 1
             else
               tpa = current_user.lose
-              current_user.lose = tpa +1 
+              current_user.lose = tpa +1
             end
             challenger.save
             current_user.save

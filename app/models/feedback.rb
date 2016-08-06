@@ -1,3 +1,5 @@
+##
+# Returns a feedback containing a questionnaire.
 class Feedback < ActiveRecord::Base
   has_one :questionnaire, as: :qu_container
 

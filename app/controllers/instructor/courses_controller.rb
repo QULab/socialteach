@@ -1,6 +1,8 @@
 class Instructor::CoursesController < Instructor::BaseController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
 
+  ##
+  # Shows all courses created by the current user.
   def index
     @courses = current_user.get_created_courses
   end
@@ -12,9 +14,11 @@ class Instructor::CoursesController < Instructor::BaseController
     require_permission(@course)
   end
 
+  ##
+  # Creates a new course.
   def create
     @course = Course.new(course_params)
-    
+
 
     respond_to do |format|
       if @course.save
@@ -25,10 +29,14 @@ class Instructor::CoursesController < Instructor::BaseController
     end
   end
 
+  ##
+  # Shows the new page for courses.
   def new
     @course = Course.new
   end
 
+  ##
+  # Deletes a specific course.
   def destroy
     require_permission(@course)
     @course.destroy
@@ -37,6 +45,8 @@ class Instructor::CoursesController < Instructor::BaseController
     end
   end
 
+  ##
+  # Changes an existing course.
   def update
     require_permission(@course)
     respond_to do |format|

@@ -1,6 +1,10 @@
 class Instructor::ChaptersController < Instructor::BaseController
   before_action :set_chapter, only: [:edit, :update, :destroy, :predec, :tier]
 
+  ##
+  # Shows the new page for chapters.
+  # Expects a param for the :course_id
+  # --
   # GET /chapters/new
   def new
     @chapter = Chapter.new(params.permit(:course_id))
@@ -11,8 +15,11 @@ class Instructor::ChaptersController < Instructor::BaseController
     require_permission(@chapter.course)
   end
 
+  ##
+  # Creates a new chapter. Only the creator of the course may create new
+  # chapters.
+  # --
   # POST /chapters
-  # POST /chapters.json
   def create
     @chapter = Chapter.new(chapter_params)
 
@@ -26,8 +33,10 @@ class Instructor::ChaptersController < Instructor::BaseController
     end
   end
 
+  ##
+  # Changes an existing chapter.
+  # --
   # PATCH/PUT /chapters/1
-  # PATCH/PUT /chapters/1.json
   def update
     require_permission(@chapter.course)
     respond_to do |format|
@@ -39,8 +48,10 @@ class Instructor::ChaptersController < Instructor::BaseController
     end
   end
 
+  ##
+  # Deletes a specific chapter.
+  # --
   # DELETE /chapters/1
-  # DELETE /chapters/1.json
   def destroy
     course = @chapter.course
     require_permission(course)
@@ -50,11 +61,15 @@ class Instructor::ChaptersController < Instructor::BaseController
     end
   end
 
+  ##
+  # Renders the partial for editing the predecessors for a chapter.
   respond_to :js
   def predec
     render partial: 'instructor/courses/chapter_predec', locals: {chapter: @chapter}
   end
 
+  ##
+  # Renders the partial for editing the tier for a chapter.
   respond_to :js
   def tier
     render partial: 'instructor/courses/chapter_tier', locals: {chapter: @chapter}

@@ -1,3 +1,6 @@
+##
+# Represents an activity in a course's chapter.
+# An Activity is the smallest unit of a course and can contain different types of content
 class Activity < ActiveRecord::Base
 	after_save :create_default_feedback
 
@@ -33,6 +36,12 @@ class Activity < ActiveRecord::Base
 
   before_validation :assign_tier
 
+	##
+	# Calculates the valid predecessors of the activity. Valid predecessors are
+	# all activities of the same chapter with a tier lesser than the smallest tier
+	# of the the activity's successor's tier - 1.
+	# For activities without a tier all activities of the same chapter with a set
+	# tier are valid predecessors.
   def valid_predecessors
     chapter_activities = self.chapter.activities.where.not(id: self.id).to_a
     chapter_activities.select! do |activity|
@@ -53,7 +62,9 @@ class Activity < ActiveRecord::Base
     chapter_activities
   end
 
-  # Update switch statment as soon as other content classes exist!
+	##
+	# A hex color code (as string) depending on the type of the activity's content.
+	# --
   def color
     case content
       when ActivityLecture
@@ -67,12 +78,14 @@ class Activity < ActiveRecord::Base
     end
   end
 
+	##
+	# The course the activity belongs to.
   def course
     chapter.course
   end
 
   ##
-  # checks if this activity is locked for the given user
+  # Checks if this activity is locked for the given user.
   # locked activities are those, where the user has not completed the necessary requirements
   def locked?(user)
     predecessors = self.predecessors.to_a
@@ -92,6 +105,8 @@ class Activity < ActiveRecord::Base
     locked
   end
 
+	##
+	# Creates a default feedback questionnaire for the activity.
 	def create_default_feedback
 		questionnaire = Questionnaire.create!(qu_container: Feedback.create!(commentable: self))
 		question = questionnaire.m_questions.create!(text: 'How difficult was this unit?')
