@@ -18,6 +18,8 @@ class CourseEnrollment < ActiveRecord::Base
 
   RECOMMENDATION_NUM = 5
 
+  ##
+  # Take level from level table and set right level to enrollment
   def set_level
   	level = Level.where("level_pass <= ?", self.points(category: "Levelpoints")).order(:level_pass).reverse.first
   	if level != self.level
@@ -26,6 +28,9 @@ class CourseEnrollment < ActiveRecord::Base
   	return false
   end
 
+  ##
+  # Give progress back of enrollment
+  # gives count of finished activities, total activities and progress (between 0 and 1) of enrollment for course back
   def progress
   	finished_activities = self.activity_statuses.where(is_completed: true, status: 1).select(:activity_id).distinct.count
   	total_activities = self.course.activities.distinct.count

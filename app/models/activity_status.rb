@@ -9,15 +9,20 @@ class ActivityStatus < ActiveRecord::Base
 	after_save :create_points_badges
 	after_update :create_points_badges
 
+	##
+	# Core methode to assigned badges, levels and levelpoints
 	def create_points_badges
 		if self.is_completed?
+			# Check if already assigned stuff
 			if self.learningpoints_id == nil
 				user = self.course_enrollment.user
+				# Check if activity was succesful completed
 				if self.status == 1
 					points = (self.activity.level.level.to_f/self.course_enrollment.level.level.to_f * self.activity.levelpoints).to_i
 					levelpoints = self.course_enrollment.add_points(points, category: "Levelpoints")
 					self.activity.unlock_course_badges.each do |badge|
 						course_badge = badge.course_badge
+						# Check if course badges to assigne
 						if self.course_enrollment.course_badges.exclude?(course_badge)
 							all_completed = true
 							course_badge.unlock_course_badges.each do |unlock|
@@ -36,9 +41,11 @@ class ActivityStatus < ActiveRecord::Base
 				learningpoints = user.add_points(1,category: "Learningpoints")
 				self.update(learningpoints: learningpoints, levelpoints: levelpoints)
 
+				# Check if next level has to be set
 				self.course_enrollment.set_level
 				Merit::Badge.all.each do |general_badge|
 					user = self.course_enrollment.user
+					# Check for general badges to assigne
 					if user.badges.exclude?(general_badge)
 						fields = general_badge.custom_fields
 						if fields[:type] == :learning and fields[:condition] <= user.points(category: "Learningpoints")

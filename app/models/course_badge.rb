@@ -1,3 +1,6 @@
+##
+# Represents a course badge
+# Only used for a course badge general badges definied in intelizers/merit.rb (merit gem used)
 class CourseBadge < ActiveRecord::Base
 	belongs_to :course
 	belongs_to :creator, :class_name => 'User', :foreign_key => 'user_id'
@@ -12,6 +15,8 @@ class CourseBadge < ActiveRecord::Base
 
 	validate :check_badge_dimensions
 
+	##
+	# valides right for image size of course_badge
 	def check_badge_dimensions
 	    ::Rails.logger.info "Avatar upload dimensions: #{self.width}x#{self.height}"
 	    errors.add :avatar, "Dimensions of uploaded avatar should be exactly 80x80 pixels." if self.width != 80 && height != 80

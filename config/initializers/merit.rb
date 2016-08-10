@@ -32,6 +32,10 @@ end
 #   Merit::Badge.create! attrs
 # end
 
+
+# General badges (has to contain condition, type and image)
+# type and condition are used in activity_status to apply badges
+# image to represent in user profile
 Merit::Badge.create!(
   id: 1,
   name: "5 Socialpoints",

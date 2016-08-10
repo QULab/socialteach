@@ -1,5 +1,8 @@
 module Merit
   class Score < ActiveRecord::Base
+    ##
+    # Method to get leaderboard for specified course
+    # Don't contain friends leaderboard because no access to current user (check controller leaderboard)
     def self.top_scored_enrolled(options = {})
       options[:since_date] ||= 0
       options[:limit]      ||= 184
