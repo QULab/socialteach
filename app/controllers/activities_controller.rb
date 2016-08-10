@@ -249,6 +249,7 @@ class ActivitiesController < ApplicationController
 
         elsif @activity.content.challenger_id != nil && @activity.content.enemy_bool == false &&@activity.content.challenger_bool == true && @activity.content.enemy_id == current_user.id
           # else the opponent user is the current user completing the duell
+          en= User.find(params[:enemy])
           @activity.content.enemy_bool = true
           @activity.save
           counter = 0
@@ -283,7 +284,7 @@ class ActivitiesController < ApplicationController
             end
             challenger.save
             current_user.save
-            DuellResultMailer.send_result(en, current_user, false)
+            DuellResultMailer.send_result(en, current_user, false).deliver_now
             # send the result to the challenger
             redirect_to curriculum_course_path(@activity.course) , notice: 'Congratulations, you won this duell.'
           end
@@ -304,7 +305,7 @@ class ActivitiesController < ApplicationController
             end
             challenger.save
             current_user.save
-            DuellResultMailer.send_result(en, current_user, true)
+            DuellResultMailer.send_result(en, current_user, true).deliver_now
             # send the result to the challenger
             redirect_to curriculum_course_path(@activity.course) , notice: 'Try harder next time, you lost this duell.'
           end
